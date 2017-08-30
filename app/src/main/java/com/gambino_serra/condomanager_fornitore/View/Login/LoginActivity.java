@@ -137,19 +137,15 @@ public class LoginActivity extends BaseActivity implements Response.Listener<Str
                             utente = firebaseAuth.getCurrentUser();
 
                             checkTipologia(utente.getUid().toString());
-
-
                         }
                         else
-                        {
-                            Toast.makeText(getApplicationContext(), "UTENTE NON VALIDO", Toast.LENGTH_SHORT).show();
-                        }
+                            { Toast.makeText(getApplicationContext(), "UTENTE NON VALIDO", Toast.LENGTH_SHORT).show(); }
                     }
                     else
-                    {
+                        {
                         hideProgressDialog();
                         Toast.makeText(getApplicationContext(), "DATI NON CORRETTI", Toast.LENGTH_SHORT).show();
-                    }
+                        }
                  }
             });
             }
@@ -160,9 +156,7 @@ public class LoginActivity extends BaseActivity implements Response.Listener<Str
     @Override
     protected void onResume() {
         super.onResume();
-
-
-    }
+        }
 
     /**
      * Il metodo imposta il messaggio della Dialog.
@@ -223,41 +217,41 @@ public class LoginActivity extends BaseActivity implements Response.Listener<Str
         }
 
 
-    private void checkTipologia(final String UID){
-
+    private void checkTipologia(final String UID) {
 
         //PUNTO NELLA TABELLA "CONDOMINI" ALL'UTENTE LOGGATO
 
         hideProgressDialog();
 
         userRef = FirebaseDB.getCondomini().child(UID);
-
         userRef.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if ( dataSnapshot.exists() )
-                {
+                    {
                     Toast.makeText(getApplicationContext(), "LOGIN EFFETTUATO", Toast.LENGTH_SHORT).show();
                     Intent in = new Intent(getApplicationContext(), MainDrawer.class);
                     in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(in);
-                }else{
-                    Toast.makeText(getApplicationContext(), "UTENTE DI ALTRA TIPOLOGIA", Toast.LENGTH_SHORT).show();
-                }
+                    }
+                else
+                    { Toast.makeText(getApplicationContext(), "UTENTE DI ALTRA TIPOLOGIA", Toast.LENGTH_SHORT).show(); }
             }
 
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
+            public void onCancelled(FirebaseError firebaseError) { }
         });
+    }
+}
 
-/**UTILIZZO TIPICO DI VALUE_EVENT_LISTENER
+
+/**
+//   UTILIZZO TIPICO DI VALUE_EVENT_LISTENER
 //        public void searchemail(String email){
 //
 //            Firebase ref = new Firebase("https://<myfirebase>.firebaseio.com/users");
 //            Query queryRef = ref.orderByChild("Email").equalTo(email);
-//
 //
 //            ValueEventListener listener = new ValueEventListener() {
 //
@@ -268,7 +262,7 @@ public class LoginActivity extends BaseActivity implements Response.Listener<Str
 //                            homeintent.putExtra("key", child.getKey());
 //                            startActivity(homeintent);
 //                            break; // exit for loop, we only want one match
-//                        }
+//                          }
 //                    }
 //                    else {
 //                        Toast toast = Toast.makeText(this, "email not found", Toast.LENGTH_SHORT);
@@ -277,7 +271,4 @@ public class LoginActivity extends BaseActivity implements Response.Listener<Str
 //            };
 //            queryRef.addValueEventListener(listener);
 //        }
-   */
-
-    }
-}
+ */
