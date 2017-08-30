@@ -1,5 +1,52 @@
 <resources>
 
+
+    <!--Navigation Drawer-->
+    <string name="app_name">CondoManager</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="openDrawer">open_drawer</string>
+    <string name="closeDrawer">close_drawer</string>
+
+    <!-- Navigation Drawer menu labels -->
+    <string name="nav_home">Home</string>
+    <string name="nav_messaggi">Messaggi</string>
+    <string name="nav_info_personali">Informazioni personali</string>
+    <string name="nav_storico_interventi">Storico interventi</string>
+    <string name="nav_storico_avvisi">Storico avvisi</string>
+    <string name="nav_lista_fornitori">Lista fornitori</string>
+    <string name="nav_photos">Photos</string>
+    <string name="nav_movies">Movies</string>
+    <string name="nav_notifications">Notifications</string>
+    <string name="nav_about_us">About Us</string>
+
+
+    <!-- Toolbar titles when navigation menu item is selected -->
+    <string-array name="nav_item_activity_titles">
+        <item>Home</item>
+        <item>Messaggi</item>
+        <item>Informazioni personali</item>
+        <item>Storico interventi</item>
+        <item>Storico avvisi</item>
+        <item>Lista fornitori</item>
+    </string-array>
+
+    <!--Navigation Bar Home-->
+    <string name="item_sondaggi">Sondaggi</string>
+    <string name="item_avvisi">Avvisi</string>
+    <string name="item_interventi">Interventi</string>
+
+
+    <string name="activity_title_about_us">About Us</string>
+    <string name="activity_title_privacy_policy">Privacy Policy</string>
+    <string name="action_clear_all">Clear All</string>
+    <string name="action_logout">Logout</string>
+    <string name="action_mark_all_read">Mark All as Read</string>
+    <string name="logout">Logout</string>
+
+
+    <!--Old condomanager-->
     <string name="menu">Menu</string>
     <string name="action_search">Search</string>
     <string name="action_cart">Cart</string>
@@ -11,8 +58,6 @@
     <string name="hot_deals_fragment">Hot Deals Fragment</string>
 
 
-    <string name="app_name">CondomiNew</string>
-
     <!-- title activity -->
     <string name="title_login">Login</string>
     <string name="title_register">Registration</string>
@@ -21,14 +66,14 @@
     <string name="title_condomino_home">Condomino home</string>
     <string name="title_details_segnalazione">Dettagli segnalazione</string>
 
-    <!-- content_login -->
+    <!-- old_content_login -->
     <string name="enter_mail"> Enter mail</string>
     <string name="enter_password">Enter password</string>
     <string name="str_login">LOGIN</string>
     <string name="str_signin">SIGN IN</string>
     <string name="logo_app">logo application</string>
 
-    <!-- LoginActivity -->
+    <!-- LoginActivity_old -->
     <string name="err_read_google"> Error while reading Google</string>
     <string name="err_login">Incorrect username and password</string>
     <string name="auth_failed">Authentication failed</string>
@@ -46,7 +91,7 @@
     <string name="connection_failed">Connection failded!</string>
     <string name="ok">ok</string>
 
-    <!-- activity_amministratore_register -->
+    <!-- activity_amministratore_register_old -->
     <string name="hint_username">Username</string>
     <string name="hint_password">Password</string>
     <string name="hint_studio">Studio di amministrazione</string>
@@ -59,7 +104,7 @@
     <string name="radiogroup_fornitore">FORNITORE</string>
     <string name="confirm">CONFIRM</string>
 
-    <!-- activity_fornitore_register -->
+    <!-- old_activity_fornitore_register -->
     <string name="hint_username_f">Username</string>
     <string name="hint_password_f">Password</string>
     <string name="hint_azienda_f">Azienda</string>
@@ -96,9 +141,11 @@
     <string name="rapporto_intervento_annulla">chiudi</string>
     <string name="rapporto_intervento_conferma">conferma</string>
 
-    <!-- dialog nuova segnalazione - lato condomino -->
+    <!-- dialog nuova segnalazione/messaggio - lato condomino -->
     <string name="title_nuova_segnalazione">Nuova segnalazione</string>
+    <string name="title_nuovo_messaggio">Nuovo messaggio</string>
     <string name="nuova_segnalazione">Inserire la segnalazione di guasto riscontrata nel condominio</string>
+    <string name="nuovo_messaggio">Inserire il messaggio da inviare all\'amministratore</string>
     <string name="nuova_segnalazione_annulla">chiudi</string>
     <string name="nuova_segnalazione_conferma">invia</string>
 
@@ -126,7 +173,7 @@
     <string name="registration_success">Registration successfully occurred.\n\nPress
         ok to enter in your personal area. </string>
 
-    <!-- splash_layout-->
+    <!-- splash_layout_old-->
     <string name="splash_descr">image load app</string>
     <string name="title_activity_main">MainActivity</string>
 

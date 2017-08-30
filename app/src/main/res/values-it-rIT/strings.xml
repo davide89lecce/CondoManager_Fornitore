@@ -11,14 +11,14 @@
     <string name="title_condomino_home">Condomino home</string>
     <string name="title_details_segnalazione">Dettagli segnalazione</string>
 
-        <!-- content_login -->
+        <!-- old_content_login -->
     <string name="enter_mail"> Inserisci mail</string>
     <string name="enter_password">Inserisci password</string>
     <string name="str_login">ACCEDI</string>
     <string name="str_signin">REGISTRATI</string>
     <string name="logo_app">logo dell\'applicazione kiu</string>
 
-    <!-- LoginActivity -->
+    <!-- LoginActivity_old -->
     <string name="err_read_google"> Errore nella lettura di Google</string>
     <string name="err_login"> username e password non corretti</string>
     <string name="auth_failed">Autenticazione fallita</string>
@@ -35,7 +35,7 @@
     <string name="registration_problem">Un errore si è verificato durante la registrazione</string>
     <string name="connection_failed">Connessione fallita!</string>
 
-    <!-- activity_amministratore_register -->
+    <!-- activity_amministratore_register_old -->
     <string name="hint_username">Username</string>
     <string name="hint_password">Password</string>
     <string name="hint_studio">Studio di amministrazione</string>

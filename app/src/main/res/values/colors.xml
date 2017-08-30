@@ -22,4 +22,8 @@
     <color name="backgroundSegnalazione">#E3F2FD</color>
     <color name="primarySegnalazione">#2979FF</color>
     <color name="tabColor">#ffb74d</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="white_trans">#99FFFFFF</color>
+
 </resources>
