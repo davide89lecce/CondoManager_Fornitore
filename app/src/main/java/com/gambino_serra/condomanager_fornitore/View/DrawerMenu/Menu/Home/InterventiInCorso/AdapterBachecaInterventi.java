@@ -1,4 +1,4 @@
-package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.Interventi;
+package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiInCorso;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -50,7 +50,7 @@ public class AdapterBachecaInterventi extends RecyclerView.Adapter<AdapterBachec
         //TODO: sistemare card_intervento_bacheca
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_intervento_bacheca, parent, false);
 
-        //Setta l'onclick sulla recycler view presente nella classe Interventi
+        //Setta l'onclick sulla recycler view presente nella classe InterventiInCorso
         view.setOnClickListener(BachecaInterventi.myOnClickListener);
 
         MyViewHolder myViewHolder = new MyViewHolder(view);

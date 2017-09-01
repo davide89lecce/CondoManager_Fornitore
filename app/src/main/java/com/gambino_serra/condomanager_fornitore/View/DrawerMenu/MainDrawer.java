@@ -41,8 +41,6 @@ public class MainDrawer extends AppCompatActivity {
     private FloatingActionButton fab;
     private FirebaseAuth firebaseAuth;
 
-
-
     // urls to load navigation header background image and profile image TODO: CAMBIARE IMMAGINI
     private static final String urlNavHeaderBg = "http://api.androidhive.info/images/nav-menu-header-bg.jpg";
     private static final String urlProfileImg = "https://lh3.googleusercontent.com/eCtE_G34M9ygdkmOpYvCag1vBARCmZwnVS6rS5t4JLzJ6QgQSBquM0nuTsCpLhYbKljoyS-txg";
@@ -54,9 +52,6 @@ public class MainDrawer extends AppCompatActivity {
     private static final String TAG_HOME = "home";
     private static final String TAG_INFO = "info_personali";
     private static final String TAG_STORICO_INTERVENTI = "storico_interventi";
-    private static final String TAG_STORICO_AVVISI = "storico_avvisi";
-    private static final String TAG_LISTA_FORNITORI = "lista_fornitori";
-    private static final String TAG_MESSAGGI = "bacheca_messaggi";
     public static String CURRENT_TAG = TAG_HOME;
 
     // toolbar titles respected to selected nav menu item
@@ -119,8 +114,6 @@ public class MainDrawer extends AppCompatActivity {
 
     /***
      * Load navigation menu header information
-     * like background image, profile image
-     * name, website, notifications action view (dot)
      */
     private void loadNavHeader() {
         // name, website
@@ -144,8 +137,7 @@ public class MainDrawer extends AppCompatActivity {
     }
 
     /***
-     * Returns respected Menu that user
-     * selected from navigation menu
+     * Returns respected Menu that user selected from navigation menu
      */
     private void loadHomeFragment() {
 
@@ -203,25 +195,13 @@ public class MainDrawer extends AppCompatActivity {
                 Home homeFragment = new Home();
                 return homeFragment;
             case 1:
-                // bacheca_messaggi
-                BachecaMessaggi messaggiFragment = new BachecaMessaggi();
-                return messaggiFragment;
-            case 2:
                 // info personali
                 InformazioniPersonali infoFragment = new InformazioniPersonali();
                 return infoFragment;
-            case 3:
+            case 2:
                 // storico inteventi
                 StoricoInterventi interventiFragment = new StoricoInterventi();
                 return interventiFragment;
-            case 4:
-                // storico avvisi
-                StoricoAvvisi avvisiFragment = new StoricoAvvisi();
-                return avvisiFragment;
-            case 5:
-                // lista fornitori
-                ListaFornitori listaFornitoriFragment = new ListaFornitori();
-                return listaFornitoriFragment;
             default:
                 return new Home();
         }
@@ -235,9 +215,6 @@ public class MainDrawer extends AppCompatActivity {
         navigationView.getMenu().getItem(0).setChecked(false);
         navigationView.getMenu().getItem(1).setChecked(false);
         navigationView.getMenu().getItem(2).setChecked(false);
-        navigationView.getMenu().getItem(3).setChecked(false);
-        navigationView.getMenu().getItem(4).setChecked(false);
-        navigationView.getMenu().getItem(5).setChecked(false);
 
         navigationView.getMenu().getItem(navItemIndex).setChecked(true);
 
@@ -260,35 +237,15 @@ public class MainDrawer extends AppCompatActivity {
                         navigationView.getMenu().getItem(0).setChecked(true);
                         CURRENT_TAG = TAG_HOME;
                         break;
-                    case R.id.nav_messaggi:
-                        navItemIndex = 1;
-                        CURRENT_TAG = TAG_MESSAGGI;
-                        break;
                     case R.id.nav_info_personali:
-                        navItemIndex = 2;
+                        navItemIndex = 1;
                         CURRENT_TAG = TAG_INFO;
                         break;
                     case R.id.nav_storico_interventi:
-                        navItemIndex = 3;
+                        navItemIndex = 2;
                         CURRENT_TAG = TAG_STORICO_INTERVENTI;
                         break;
-                    case R.id.nav_storico_avvisi:
-                        navItemIndex = 4;
-                        CURRENT_TAG = TAG_STORICO_AVVISI;
-                        break;
-                    case R.id.nav_lista_fornitori:
-                        navItemIndex = 5;
-                        CURRENT_TAG = TAG_LISTA_FORNITORI;
-                        break;
-
-//                    case R.id.nav_about_us:
-//                        // launch new intent instead of loading Menu
-//                        startActivity(new Intent(MainDrawer.this, AboutUsActivity.class));
-//                        drawer.closeDrawers();
-//                        return true;
                     case R.id.nav_logout:
-                        // launch new intent instead of loading Menu
-                       // startActivity(new Intent(MainDrawer.this, PrivacyPolicyActivity.class));
                         drawer.closeDrawers();
                         firebaseAuth.signOut();
                         startActivity(new Intent(MainDrawer.this, com.gambino_serra.condomanager_fornitore.View.Login.LoginActivity.class));

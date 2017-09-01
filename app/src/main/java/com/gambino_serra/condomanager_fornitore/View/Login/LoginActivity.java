@@ -26,9 +26,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-//import static com.gambino_serra.condomanager_fornitore.Old_Controller.Login.checkLogin;
 
-public class LoginActivity extends BaseActivity implements Response.Listener<String>, Response.ErrorListener {
+public class LoginActivity extends BaseActivity  {
 
     //Firebase
     private Firebase DBref;                 //Riferimento al DB
@@ -36,17 +35,12 @@ public class LoginActivity extends BaseActivity implements Response.Listener<Str
     private FirebaseUser utente;            //oggetto per definire l'utente del DB
     private Firebase userRef;               //posso conservare altri riferimenti ad oggetto che punto a piacere
 
-    boolean exist;
-    String Tipologia = new String("N");
-    boolean check = false ;
 
     EditText etUsername, etPassword;
     Button btnLogin;
     Button btnRegister;
     String username;
     String password;
-    Response.Listener<String> listener = this;
-    Response.ErrorListener errorListener = this;
 
     private static final String MY_PREFERENCES = "preferences";
     private static final String TIPO_UTENTE = "tipoUtente";
@@ -77,18 +71,12 @@ public class LoginActivity extends BaseActivity implements Response.Listener<Str
 
             //controllo nel caso in cui l'utente sia loggato con un altra app che utilizza lo stesso DB
             checkTipologia( firebaseAuth.getCurrentUser().getUid().toString() );
-
         }
-
-        userState();
-        //firebaseAuth.signOut();
 
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnRegister = (Button) findViewById(R.id.btnRegister);
-
-
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
 
@@ -126,21 +114,20 @@ public class LoginActivity extends BaseActivity implements Response.Listener<Str
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
-                    if(task.isSuccessful()) {
+                    if(task.isSuccessful())
+                        {
+                        // Ad operazione effettuata, tramite l'if controllo che l'utente restituito non sia null, ovvero che i dati siano validi
 
-                        // Ad operazione effettuata, tramite l'if controllo che l'utente restituito
-                        // non sia null, ovvero che i dati siano validi
-
-                        if (firebaseAuth.getCurrentUser() != null) {
-
+                        if (firebaseAuth.getCurrentUser() != null)
+                            {
                             // PRENDO IL RIFERIMENTO DELL'UTENTE LOGGATO
                             utente = firebaseAuth.getCurrentUser();
-
                             checkTipologia(utente.getUid().toString());
-                        }
+                            }
                         else
-                            { Toast.makeText(getApplicationContext(), "UTENTE NON VALIDO", Toast.LENGTH_SHORT).show(); }
-                    }
+                            {
+                            Toast.makeText(getApplicationContext(), "UTENTE NON VALIDO", Toast.LENGTH_SHORT).show(); }
+                            }
                     else
                         {
                         hideProgressDialog();
@@ -166,55 +153,16 @@ public class LoginActivity extends BaseActivity implements Response.Listener<Str
         mProgressDialog.setMessage(getString(R.string.login));
         }
 
-    /**
-     * Il metodo e' invocato alla risposta (dati ricevuti da database altervista) della richiesta di autenticazione.
-     */
-    @Override
-    public void onResponse(String response) {
-//        hideProgressDialog();
-//        checkLogin(response, getApplicationContext(),username);
-        }
 
-    /**
-     * Il metodo viene invocato in caso di problemi nella ricezione della risposta.
-     */
-    @Override
-    public void onErrorResponse(VolleyError error) { }
 
-    /**
-     *  Il metodo verifica che le SharedPreferences contengano dati, nel caso contrario l'utente risulterà non connesso.
-     */
-    public void userState(){
-
-        final SharedPreferences sharedPrefs = getSharedPreferences(MY_PREFERENCES, MODE_PRIVATE);
-        if (!sharedPrefs.getAll().isEmpty()) {
-            getStatusAndGoHome();
-            }
-        }
-
-    /**
-     * Il metodo verifica il tipo di utente e lo indirizza nella sua Home Activity.
-     */
-    private void getStatusAndGoHome() {
-
-        final SharedPreferences sharedPrefs = getSharedPreferences(MY_PREFERENCES, MODE_PRIVATE);
-
-        if (sharedPrefs.getString(TIPO_UTENTE, "").equals("C"))
-            {
-            Intent in = new Intent(this, MainDrawer.class);
-            in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(in);
-            }
-    }
-
-    private void writeSharedPreferences(String username, String password, String tipo_utente){
-
-        final SharedPreferences sharedPrefs = getSharedPreferences(MY_PREFERENCES, MODE_PRIVATE);
-        SharedPreferences.Editor editor =sharedPrefs.edit();
-        editor.putString(TIPO_UTENTE,tipo_utente);
-        editor.putString(LOGGED_USER,username);
-        editor.apply();
-        }
+//    private void writeSharedPreferences(String username, String password, String tipo_utente){
+//
+//        final SharedPreferences sharedPrefs = getSharedPreferences(MY_PREFERENCES, MODE_PRIVATE);
+//        SharedPreferences.Editor editor =sharedPrefs.edit();
+//        editor.putString(TIPO_UTENTE,tipo_utente);
+//        editor.putString(LOGGED_USER,username);
+//        editor.apply();
+//        }
 
 
     private void checkTipologia(final String UID) {
@@ -223,7 +171,7 @@ public class LoginActivity extends BaseActivity implements Response.Listener<Str
 
         hideProgressDialog();
 
-        userRef = FirebaseDB.getCondomini().child(UID);
+        userRef = FirebaseDB.getFornitori().child(UID);
         userRef.addValueEventListener(new ValueEventListener() {
 
             @Override

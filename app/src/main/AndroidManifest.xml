@@ -28,15 +28,8 @@
 
         <activity
             android:name="com.gambino_serra.condomanager_fornitore.View.DrawerMenu.MainDrawer"
-            android:label="@string/activity_title_privacy_policy"
             android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity
-            android:name="com.gambino_serra.condomanager_fornitore.View.DrawerMenu.AboutUsActivity"
-            android:label="@string/activity_title_about_us" />
-        <activity
-            android:name="com.gambino_serra.condomanager_fornitore.View.DrawerMenu.PrivacyPolicyActivity"
-            android:label="@string/activity_title_privacy_policy" />
 
         <activity
             android:name="com.gambino_serra.condomanager_fornitore.Old_View.Utente.LoginActivity_old"
@@ -55,7 +48,7 @@
         </activity>
 
         <activity
-            android:name="com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.Interventi.DettaglioIntervento"
+            android:name="com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiInCorso.DettaglioIntervento"
             android:label="@string/title_details_segnalazione"
             android:parentActivityName="com.gambino_serra.condomanager_fornitore.View.DrawerMenu.MainDrawer"
             android:screenOrientation="portrait" />

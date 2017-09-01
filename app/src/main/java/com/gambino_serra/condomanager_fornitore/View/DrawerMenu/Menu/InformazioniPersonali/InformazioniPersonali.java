@@ -1,43 +1,71 @@
 package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.InformazioniPersonali;
 
-import android.content.Context;
-import android.net.Uri;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.TextView;
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
+import com.gambino_serra.condomanager_fornitore.Model.Entity.Fornitore;
+import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this Menu must implement the
- * {@link InformazioniPersonali.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link InformazioniPersonali#newInstance} factory method to
- * create an instance of this Menu.
- */
 public class InformazioniPersonali extends Fragment {
-    // the Menu initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String MY_PREFERENCES = "preferences";
+    private static final String LOGGED_USER = "username";
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private String mParam1;
-    private String mParam2;
+    String nome_azienda = "";
+    String nome = "";
+    String categoria = "";
+    String partita_iva = "";
+    String telefono = "";
+    String email = "";
+    String indirizzo = "";
 
-    private OnFragmentInteractionListener mListener;
+    TextView Tnome_azienda;
+    TextView Tnome;
+    TextView Tcategoria;
+    TextView Ttelefono;
+    TextView Tpartita_iva;
+    TextView Temail;
+    TextView Tindirizzo;
+    String uidFornitore;
 
-    public InformazioniPersonali() {
-        // Required empty public constructor
-    }
+    private Firebase firebaseDB;
+    private FirebaseUser firebaseUser;
+    private FirebaseAuth firebaseAuth;
+    private DatabaseReference databaseReference;
+    private FirebaseDatabase firebaseDatabase;
+
+    Map<String, Object> dettaglioFornitoreMap;
+
+    Bundle bundle;
+
+
+    public InformazioniPersonali() {}
 
     /**
      * Use this factory method to create a new instance of this Menu using the provided parameters.
      */
-    public static InformazioniPersonali newInstance(String param1, String param2) {
-        InformazioniPersonali fragment = new InformazioniPersonali();
+    public static com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.ListaFornitori.ListaFornitori newInstance(String param1, String param2) {
+        com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.ListaFornitori.ListaFornitori fragment = new com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.ListaFornitori.ListaFornitori();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -46,50 +74,92 @@ public class InformazioniPersonali extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this Menu
-        return inflater.inflate(R.layout.bacheca_informazioni_personali, container, false);
-    }
-
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+        View view = inflater.inflate(R.layout.bacheca_informazioni_personali,container,false);
+         Tnome = (TextView) view.findViewById(R.id.FornNome);
+         Tnome_azienda = (TextView) view.findViewById(R.id.FornNomeAzienda);
+         Tcategoria = (TextView) view.findViewById(R.id.FornSettore);
+         Tpartita_iva = (TextView) view.findViewById(R.id.FornPartIVA);
+         Ttelefono = (TextView) view.findViewById(R.id.FornTelefono);
+         Temail = (TextView) view.findViewById(R.id.FornEmail);
+         Tindirizzo = (TextView) view.findViewById(R.id.FornIndirizzo);
+        return view;
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
+    public void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+        uidFornitore = firebaseUser.getUid().toString();
+
+//        if (getIntent().getExtras() != null) {
+//
+//            bundle = getIntent().getExtras();
+//            uidFornitore = bundle.get("uidFornitore").toString();
+//
+//            SharedPreferences.Editor editor = sharedPrefs.edit();
+//            editor.putString("uidfornitore", uidFornitore);
+//            editor.apply();
+//
 //        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
+//
+//            uidFornitore = sharedPrefs.getString("uidFornitore", "").toString();
+//
+//            bundle = new Bundle();
+//            bundle.putString("uidFornitore", uidFornitore);
+//
 //        }
-    }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * Menu to allow an interaction in this Menu to be communicated
-     * to the activity and potentially other fragments contained in that activity.
-     */
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
+
+        Query prova;
+        prova = FirebaseDB.getFornitori().orderByKey().equalTo(uidFornitore);
+
+        prova.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+
+                dettaglioFornitoreMap = new HashMap<String, Object>();
+                dettaglioFornitoreMap.put("uidFornitore", dataSnapshot.getKey());
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    dettaglioFornitoreMap.put(child.getKey(), child.getValue());
+                }
+
+                Fornitore fornitore = new Fornitore(
+                        dettaglioFornitoreMap.get("uidFornitore").toString(),
+                        dettaglioFornitoreMap.get("nome").toString(),
+                        dettaglioFornitoreMap.get("nome_azienda").toString(),
+                        dettaglioFornitoreMap.get("categoria").toString(),
+                        dettaglioFornitoreMap.get("partita_iva").toString(),
+                        dettaglioFornitoreMap.get("telefono").toString(),
+                        dettaglioFornitoreMap.get("indirizzo").toString(),
+                        dettaglioFornitoreMap.get("email").toString());
+
+                Tnome.setText(fornitore.getNome());
+                Tnome_azienda.setText(fornitore.getNome_azienda());
+                Tcategoria.setText(fornitore.getCategoria());
+                Tpartita_iva.setText(fornitore.getPartita_iva());
+                Ttelefono.setText(fornitore.getTelefono());
+                Temail.setText(fornitore.getEmail());
+                Tindirizzo.setText(fornitore.getIndirizzo());
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) { }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) { }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) { }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) { }
+        });
     }
 }

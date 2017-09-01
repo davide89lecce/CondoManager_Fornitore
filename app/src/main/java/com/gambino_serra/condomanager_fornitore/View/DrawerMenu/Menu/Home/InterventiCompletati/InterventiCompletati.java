@@ -18,7 +18,7 @@
  *
  */
 
-package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.Sondaggi;
+package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiCompletati;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -28,9 +28,9 @@ import android.view.ViewGroup;
 
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 
-public class BachecaSondaggi extends Fragment {
-    public static BachecaSondaggi newInstance() {
-        BachecaSondaggi fragment = new BachecaSondaggi();
+public class InterventiCompletati extends Fragment {
+    public static InterventiCompletati newInstance() {
+        InterventiCompletati fragment = new InterventiCompletati();
         return fragment;
     }
 
@@ -42,6 +42,6 @@ public class BachecaSondaggi extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.bacheca_sondaggi, container, false);
+        return inflater.inflate(R.layout.bacheca_storico_avvisi, container, false);
     }
 }

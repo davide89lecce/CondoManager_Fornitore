@@ -47,7 +47,7 @@ public class AdapterMessaggi extends RecyclerView.Adapter<AdapterMessaggi.MyView
         //TODO: sistemare card_messaggio_bacheca
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_messaggio_bacheca, parent, false);
 
-        //Setta l'onclick sulla recycler view presente nella classe Interventi
+        //Setta l'onclick sulla recycler view presente nella classe InterventiInCorso
         view.setOnClickListener(BachecaMessaggi.myOnClickListener);
 
         MyViewHolder myViewHolder = new MyViewHolder(view);

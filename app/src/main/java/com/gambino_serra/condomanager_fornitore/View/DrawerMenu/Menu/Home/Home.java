@@ -1,6 +1,5 @@
 package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home;
 
-import android.app.DialogFragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,34 +11,22 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.Avvisi.BachecaAvvisi;
-import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.Sondaggi.BachecaSondaggi;
-import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.Interventi.BachecaInterventi;
-import com.gambino_serra.condomanager_fornitore.View.NuovaSegnalazione.DialogNuovaSegnalazione;
-import com.gambino_serra.condomanager_fornitore.View.NuovoMessaggio.DialogNuovoMessaggio;
+import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiCompletati.InterventiCompletati;
+import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.RichiesteIntervento.RichiesteIntervento;
+import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiInCorso.BachecaInterventi;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
-import com.github.clans.fab.FloatingActionButton;
-import com.github.clans.fab.FloatingActionMenu;
-
 
 public class Home extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    FloatingActionMenu materialDesignFAM;
-    FloatingActionButton floatingActionButton1, floatingActionButton2, floatingActionButton3;
-    FrameLayout fl;
-
     private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
-    public Home() {
-        // Required empty public constructor
-    }
+    public Home() { }
 
     /**
      * Use this factory method to create a new instance of this Menu using the provided parameters.
@@ -87,13 +74,13 @@ public class Home extends Fragment {
                         Fragment selectedFragment = null;
                         switch (item.getItemId()) {
                             case R.id.action_item1:
-                                selectedFragment = BachecaAvvisi.newInstance();
+                                selectedFragment = InterventiCompletati.newInstance();
                                 break;
                             case R.id.action_item2:
                                 selectedFragment = BachecaInterventi.newInstance();
                                 break;
                             case R.id.action_item3:
-                                selectedFragment = BachecaSondaggi.newInstance();
+                                selectedFragment = RichiesteIntervento.newInstance();
                                 break;
                         }
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
@@ -105,66 +92,8 @@ public class Home extends Fragment {
 
         //Manually displaying the first Menu - one time only
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, BachecaAvvisi.newInstance());
+        transaction.replace(R.id.frame_layout, InterventiCompletati.newInstance());
          transaction.commit();
-
-        //Used to select an item programmatically
-        //bottomNavigationView.getMenu().getItem(2).setChecked(true);
-        //ListView lv = (ListView) view.findViewById(R.id.lvSome);
-        //lv.setAdapter(adapter);
-
-        //Floating button
-        materialDesignFAM = (FloatingActionMenu) getActivity().findViewById(R.id.material_design_android_floating_action_menu);
-        floatingActionButton1 = (FloatingActionButton) getActivity().findViewById(R.id.material_design_floating_action_menu_item1);
-        floatingActionButton2 = (FloatingActionButton) getActivity().findViewById(R.id.material_design_floating_action_menu_item2);
-        floatingActionButton3 = (FloatingActionButton) getActivity().findViewById(R.id.material_design_floating_action_menu_item3);
-
-        materialDesignFAM.hideMenu(true);
-        materialDesignFAM.setClosedOnTouchOutside(true);
-        materialDesignFAM.showMenu(true);
-        fl = (FrameLayout)view.findViewById(R.id.frame_layout);
-
-
-       // materialDesignFAM.setOnTouchListener(new View.OnTouchListener() {
-       //     @Override
-       //     public boolean onTouch(View v, MotionEvent event) {
-       //         //if(event.getAction() == MotionEvent.ACTION_UP){
-       //
-       //             if(materialDesignFAM.isOpened())
-       //             { fl.setBackgroundColor(Color.GRAY);
-       //
-       //             }
-       //             else
-       //             { fl.setBackgroundColor(Color.TRANSPARENT); }
-       //             // Do what you want
-       //             return true;
-       //         }
-       //         return true; // consume the event
-       //     }
-       // });
-        
-
-        floatingActionButton1.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                DialogFragment newFragment = new DialogNuovaSegnalazione();
-                newFragment.show(getActivity().getFragmentManager(), "NuovaSegnalazione");
-                getActivity().overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
-                materialDesignFAM.close(true);
-            }
-        });
-        floatingActionButton2.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                DialogFragment newFragment = new DialogNuovoMessaggio();
-                newFragment.show(getActivity().getFragmentManager(), "NuovoMessaggio");
-                getActivity().overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
-                materialDesignFAM.close(true);
-            }
-        });
-        floatingActionButton3.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {  }
-        });
     }
 
 

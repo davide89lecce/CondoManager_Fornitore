@@ -18,7 +18,7 @@
  *
  */
 
-package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.Avvisi;
+package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.RichiesteIntervento;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -28,9 +28,9 @@ import android.view.ViewGroup;
 
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 
-public class BachecaAvvisi extends Fragment {
-    public static BachecaAvvisi newInstance() {
-        BachecaAvvisi fragment = new BachecaAvvisi();
+public class RichiesteIntervento extends Fragment {
+    public static RichiesteIntervento newInstance() {
+        RichiesteIntervento fragment = new RichiesteIntervento();
         return fragment;
     }
 
@@ -42,6 +42,6 @@ public class BachecaAvvisi extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.bacheca_storico_avvisi, container, false);
+        return inflater.inflate(R.layout.bacheca_sondaggi, container, false);
     }
 }

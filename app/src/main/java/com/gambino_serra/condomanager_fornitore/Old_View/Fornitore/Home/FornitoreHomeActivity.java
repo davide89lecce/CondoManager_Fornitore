@@ -35,8 +35,8 @@ public class FornitoreHomeActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("Richieste intervento"));
-        tabLayout.addTab(tabLayout.newTab().setText("Interventi in programma"));
-        tabLayout.addTab(tabLayout.newTab().setText("Interventi completati"));
+        tabLayout.addTab(tabLayout.newTab().setText("InterventiInCorso in programma"));
+        tabLayout.addTab(tabLayout.newTab().setText("InterventiInCorso completati"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
@@ -72,7 +72,7 @@ public class FornitoreHomeActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.botton_menu_old, menu);
+        inflater.inflate(R.menu.old_botton_menu, menu);
         return true;
     }
 
