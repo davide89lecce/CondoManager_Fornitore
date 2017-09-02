@@ -1,5 +1,4 @@
 package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiInCorso;
-
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,9 @@ import com.gambino_serra.condomanager_fornitore.tesi.R;
 
 import java.util.ArrayList;
 
-import static com.gambino_serra.condomanager_fornitore.tesi.R.id.imageView;
+import static com.gambino_serra.condomanager_fornitore.tesi.R.id.D_Priorità;
+import static com.gambino_serra.condomanager_fornitore.tesi.R.id.Logo_Interv;
+import static com.gambino_serra.condomanager_fornitore.tesi.R.id.pin;
 
 
 public class AdapterBachecaInterventi extends RecyclerView.Adapter<AdapterBachecaInterventi.MyViewHolder> {
@@ -23,21 +24,23 @@ public class AdapterBachecaInterventi extends RecyclerView.Adapter<AdapterBachec
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewSegnalazione;
-        ImageView imageViewIcon;
-        TextView textViewIdSegnalazione;
-        TextView textViewData;
-        TextView textStato;
+        TextView mStabile;
+        TextView mIndirizzo;
+        TextView mOggetto;
 
+        ImageView mLogoPriorità;
+        TextView IdTicket;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            this.textViewSegnalazione = (TextView) itemView.findViewById(R.id.textViewSegnalazione);
-            this.imageViewIcon = (ImageView) itemView.findViewById(imageView);
-            this.textViewIdSegnalazione = (TextView) itemView.findViewById(R.id.textViewIdSegnalazione);
-            this.textViewData = (TextView) itemView.findViewById(R.id.textViewData);
-            this.textStato = (TextView) itemView.findViewById(R.id.textStato);
 
+            this.mStabile = (TextView) itemView.findViewById(R.id.D_Condominio);
+            this.mIndirizzo = (TextView) itemView.findViewById(R.id.D_Indirizzo);
+            this.mOggetto = (TextView) itemView.findViewById(R.id.D_OggettoInterv);
+
+            this.mLogoPriorità = (ImageView) itemView.findViewById(D_Priorità);
+            //Campo nascosto per recuperare il riferimento
+            this.IdTicket = (TextView) itemView.findViewById(R.id.IDTicket);
         }
     }
 
@@ -47,11 +50,10 @@ public class AdapterBachecaInterventi extends RecyclerView.Adapter<AdapterBachec
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        //TODO: sistemare card_intervento_bacheca
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_intervento_bacheca, parent, false);
 
-        //Setta l'onclick sulla recycler view presente nella classe InterventiInCorso
-        view.setOnClickListener(BachecaInterventi.myOnClickListener);
+        //Setta l'onclick sulla recycler view presente nella classe Interventi
+        view.setOnClickListener(BachecaInterventiInCorso.myOnClickListener);
 
         MyViewHolder myViewHolder = new MyViewHolder(view);
         return myViewHolder;
@@ -60,48 +62,46 @@ public class AdapterBachecaInterventi extends RecyclerView.Adapter<AdapterBachec
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int listPosition) {
 
-        TextView textViewSegnalazione = holder.textViewSegnalazione;
-        ImageView imageView = holder.imageViewIcon;
-        TextView textViewIdSegnalazione = holder.textViewIdSegnalazione;
-        TextView textViewData = holder.textViewData;
-        TextView textStato = holder.textStato;
+        TextView mStabile = holder.mStabile;
+        TextView mIndirizzo = holder.mIndirizzo;
+        TextView mOggetto = holder.mOggetto;
 
-        textViewSegnalazione.setText( dataset.get(listPosition).getOggetto());
-        textViewIdSegnalazione.setText(dataset.get(listPosition).getIdTicketIntervento().toString());
-        textViewData.setText(dataset.get(listPosition).getDataTicket());
-        textStato.setText(dataset.get(listPosition).getStato());
+        ImageView mLogoPriorità = holder.mLogoPriorità;
+        TextView IdTicket = holder.IdTicket;
 
-        String stato = dataset.get(listPosition).getStato();
 
-        switch(stato) {
+        mStabile.setText(dataset.get(listPosition).getStabile());
+        mIndirizzo.setText("PER ORA NON C'E'");
+        mOggetto.setText(dataset.get(listPosition).getOggetto());
 
-            case "A":
-                imageView.setImageResource(R.drawable.invia);
+        IdTicket.setText(dataset.get(listPosition).getIdTicketIntervento());
+
+
+        // Stringa usata per tenere traccia della priorità e lavorare sullimmagine rappresentata
+        String priorità = dataset.get(listPosition).getPriorità();
+
+//TODO : cerca di colorare sia il padding della card che l'immagine sulla parte sinistra
+        switch(priorità) {
+            // intervento richiesto o rifiutato (al condomino interressa solo che sia stato processato
+            // dall'amministratore, se un fornitore lo rifiuterà, lui lo vedrà ancora in attesa
+            // di essere preso in carico
+            case "1" :
+            {
+                mLogoPriorità.setBackgroundColor(0xFF00FF00);
                 break;
+            }
 
-            case "B":
-                imageView.setImageResource(R.drawable.wrench);
+            case "2": // intervento in corso
+            {
+                mLogoPriorità.setBackgroundColor(0xF220F550);
                 break;
+            }
+            case "3":   // intervento concluso
+            {
+                mLogoPriorità.setBackgroundColor(0xFF00FF00);
+                break;
+            }
 
-            case "C":
-                imageView.setImageResource(R.drawable.wrench);
-                break;
-
-            case "D":
-                imageView.setImageResource(R.drawable.wrench);
-                break;
-
-            case "E":
-                imageView.setImageResource(R.drawable.checked);
-                break;
-
-            case "F":
-                imageView.setImageResource(R.drawable.checked);
-                break;
-
-            case "G":
-                imageView.setImageResource(R.drawable.error);
-                break;
             default:
         }
 

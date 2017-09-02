@@ -33,7 +33,7 @@ public class DettaglioIntervento extends AppCompatActivity {
     private static final String LOGGED_USER = "username";
 
     String username = "";
-    String idSegnalazione = "";
+    String idIntervento = "";
     String data = "";
     String segnalazione = "";
     String usernameCondomino = "";
@@ -89,18 +89,18 @@ public class DettaglioIntervento extends AppCompatActivity {
         if (getIntent().getExtras() != null) {
 
             bundle = getIntent().getExtras();
-            idSegnalazione = bundle.get("idSegnalazione").toString();
+            idIntervento = bundle.get("idIntervento").toString();
 
             SharedPreferences.Editor editor = sharedPrefs.edit();
-            editor.putString("idSegnalazione", idSegnalazione);
+            editor.putString("idIntervento", idIntervento);
             editor.apply();
 
         } else {
             //TODO: perchè
-            idSegnalazione = sharedPrefs.getString("idSegnalazione", "").toString();
+            idIntervento = sharedPrefs.getString("idSegnalazione", "").toString();
 
             bundle = new Bundle();
-            bundle.putString("idSegnalazione", idSegnalazione);
+            bundle.putString("idSegnalazione", idIntervento);
 
         }
 
@@ -126,7 +126,7 @@ public class DettaglioIntervento extends AppCompatActivity {
 
         ticketInterventoMap = new HashMap<String, Object>();
         // Avvalora il primo oggetto del map con l'ID dell'intervento recuperato
-        ticketInterventoMap.put("id", idSegnalazione);
+        ticketInterventoMap.put("id", idIntervento);
 
         Query intervento;
         intervento = FirebaseDB.getInterventi().orderByKey().equalTo("idSegnalazione");

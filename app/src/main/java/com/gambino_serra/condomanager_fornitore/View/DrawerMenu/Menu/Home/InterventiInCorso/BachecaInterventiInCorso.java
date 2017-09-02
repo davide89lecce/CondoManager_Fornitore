@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BachecaInterventi extends Fragment {
+public class BachecaInterventiInCorso extends Fragment {
 
     private static final String MY_PREFERENCES = "preferences";
     private static final String LOGGED_USER = "username";
@@ -53,13 +53,13 @@ public class BachecaInterventi extends Fragment {
     private DatabaseReference databaseReference;
     private FirebaseDatabase firebaseDatabase;
 
-    private String uidCondomino;
+    private String uidFornitore;
     private String stabile;
     Map<String, Object> ticketInterventoMap;
     ArrayList<TicketIntervento> interventi;
 
-    public static BachecaInterventi newInstance() {
-        BachecaInterventi fragment = new BachecaInterventi();
+    public static BachecaInterventiInCorso newInstance() {
+        BachecaInterventiInCorso fragment = new BachecaInterventiInCorso();
         return fragment;
     }
 
@@ -95,81 +95,59 @@ public class BachecaInterventi extends Fragment {
 
 
         //lettura uid condomino -->  codice fiscale stabile, uid amministratore
-        uidCondomino = firebaseAuth.getCurrentUser().getUid().toString();
-        firebaseDB = FirebaseDB.getCondomini().child(uidCondomino);
-        firebaseDB.addChildEventListener(new ChildEventListener() {
+        uidFornitore = firebaseAuth.getCurrentUser().getUid().toString();
+        firebaseDB = FirebaseDB.getInterventi().child(uidFornitore);
+
+        Query query;
+        query = FirebaseDB.getInterventi().orderByChild("fornitore").equalTo(uidFornitore);
+
+
+        // la query seleziona solo gli interventi con un determinato fornitore
+        //il listener lavora sui figli della query, ovvero su titti gli interventi recuperati
+        query.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(com.firebase.client.DataSnapshot dataSnapshot, String s) {
 
-                if(dataSnapshot.getKey().toString().equals("stabile")){
-                    //ricavo codicefiscale stabile
-                    stabile = dataSnapshot.getValue().toString();
+                //HashMap temporaneo per immagazzinare i dati di un ticket
+                ticketInterventoMap = new HashMap<String,Object>();
+                ticketInterventoMap.put("id", dataSnapshot.getKey()); //primo campo del MAP
 
-                    Query prova;
-                    prova = FirebaseDB.getInterventi().orderByChild("stabile").equalTo(stabile);
-
-                    prova.addChildEventListener(new ChildEventListener() {
-                        @Override
-                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                            String temp = dataSnapshot.getKey().toString();
-
-                            ticketInterventoMap = new HashMap<String,Object>();
-                            ticketInterventoMap.put("id", dataSnapshot.getKey());
-                            for ( DataSnapshot child : dataSnapshot.getChildren() ) {
-                                ticketInterventoMap.put(child.getKey(), child.getValue());
-                            }
-
-                            try{
-
-
-
-                                TicketIntervento ticketIntervento = new TicketIntervento(
-                                        ticketInterventoMap.get("id").toString(),
-                                        ticketInterventoMap.get("amministratore").toString(),
-                                        ticketInterventoMap.get("data_ticket").toString(),
-                                        ticketInterventoMap.get("data_ultimo_aggiornamento").toString(),
-                                        ticketInterventoMap.get("fornitore").toString(),
-                                        ticketInterventoMap.get("messaggio_condomino").toString(),
-                                        ticketInterventoMap.get("aggiornamento_condomini").toString(),
-                                        ticketInterventoMap.get("descrizione_condomini").toString(),
-                                        ticketInterventoMap.get("oggetto").toString(),
-                                        ticketInterventoMap.get("rapporti_intervento").toString(),
-                                        ticketInterventoMap.get("richiesta").toString(),
-                                        ticketInterventoMap.get("stabile").toString(),
-                                        ticketInterventoMap.get("stato").toString() );
-
-                                interventi.add(ticketIntervento);
-                                }catch (NullPointerException e) {
-                                Toast.makeText(getActivity().getApplicationContext(), "Non riesco ad aprire l'oggetto"+ e.toString(), Toast.LENGTH_LONG).show();
-                                }
-
-
-                            adapter = new AdapterBachecaInterventi(interventi);
-                            recyclerView.setAdapter(adapter);
-
-                        }
-
-                        @Override
-                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                        }
-
-                        @Override
-                        public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                        }
-
-                        @Override
-                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                        }
-
-                        @Override
-                        public void onCancelled(FirebaseError firebaseError) {
-
-                        }
-                    });
+                // per ognuno dei figli presenti nello snapshot, ovvero per tutti i figli di un singolo nodo Interv
+                // recuperiamo i dati per inserirli nel MAP
+                for ( DataSnapshot child : dataSnapshot.getChildren() ) {
+                    ticketInterventoMap.put(child.getKey(), child.getValue());
                 }
+
+                // Avvaloriamo una variabile TicketIntervento appositamente creata in modo da inserire poi questo
+                // oggetto all'interno di un Array di interventi che utilizzeremo per popolare la lista Recycle
+                try{
+                    TicketIntervento ticketIntervento = new TicketIntervento(
+                            ticketInterventoMap.get("id").toString(),
+                            ticketInterventoMap.get("amministratore").toString(),
+                            ticketInterventoMap.get("data_ticket").toString(),
+                            ticketInterventoMap.get("data_ultimo_aggiornamento").toString(),
+                            ticketInterventoMap.get("fornitore").toString(),
+                            ticketInterventoMap.get("messaggio_condomino").toString(),
+                            ticketInterventoMap.get("aggiornamento_condomini").toString(),
+                            ticketInterventoMap.get("descrizione_condomini").toString(),
+                            ticketInterventoMap.get("oggetto").toString(),
+                            ticketInterventoMap.get("rapporti_intervento").toString(),
+                            ticketInterventoMap.get("richiesta").toString(),
+                            ticketInterventoMap.get("stabile").toString(),
+                            ticketInterventoMap.get("stato").toString() ,
+                            ticketInterventoMap.get("priorità").toString()  );
+
+                    // inserisce l'oggetto ticket nell'array interventi
+                    interventi.add(ticketIntervento);
+
+                }catch (NullPointerException e) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Non riesco ad aprire l'oggetto "+ e.toString(), Toast.LENGTH_LONG).show();
+                }
+
+                // Utilizziamo l'adapter per popolare la recycler view
+                adapter = new AdapterBachecaInterventi(interventi);
+                recyclerView.setAdapter(adapter);
+
             }
 
             @Override
@@ -194,7 +172,6 @@ public class BachecaInterventi extends Fragment {
         });
 
 
-
     }
 
     private static class MyOnClickListener extends AppCompatActivity implements View.OnClickListener {
@@ -207,20 +184,18 @@ public class BachecaInterventi extends Fragment {
 
         @Override
         public void onClick(View v) {
-            detailsSegnalazione(v);
+            detailsIntervento(v);
         }
 
-        private void detailsSegnalazione(View v) {
+        private void detailsIntervento(View v) {
 
             int selectedItemPosition = recyclerView.getChildPosition(v);
-            RecyclerView.ViewHolder viewHolder
-                    = recyclerView.findViewHolderForPosition(selectedItemPosition);
-            TextView textViewName
-                    = (TextView) viewHolder.itemView.findViewById(R.id.textViewIdSegnalazione);
+            RecyclerView.ViewHolder viewHolder = recyclerView.findViewHolderForPosition(selectedItemPosition);
+            TextView textViewName = (TextView) viewHolder.itemView.findViewById(R.id.textViewIdSegnalazione);
             String selectedName = (String) textViewName.getText();
 
             Bundle bundle = new Bundle();
-            bundle.putString("idSegnalazione", selectedName);
+            bundle.putString("idIntervento", selectedName);
 
             Intent intent = new Intent(context, DettaglioIntervento.class);
             intent.putExtras(bundle);

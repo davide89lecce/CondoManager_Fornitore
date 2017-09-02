@@ -19,6 +19,7 @@ public class TicketIntervento {
     private String richiesta;
     private String stabile;
     private String stato;
+    private String priorità;
 
     public TicketIntervento(String idTicketIntervento,
                             String uidAmministratore,
@@ -32,7 +33,8 @@ public class TicketIntervento {
                             String rapportiIntervento,
                             String richiesta,
                             String stabile,
-                            String stato) {
+                            String stato,
+                            String priorità) {
 
         this.idTicketIntervento = idTicketIntervento;
         this.uidAmministratore = uidAmministratore;
@@ -47,6 +49,7 @@ public class TicketIntervento {
         this.richiesta = richiesta;
         this.stabile = stabile;
         this.stato = stato;
+        this.priorità = priorità;
     }
 
     public String getIdTicketIntervento() {
@@ -101,8 +104,8 @@ public class TicketIntervento {
         return aggiornamentoCondomini;
     }
 
-    public void setAggiornamentoCondomini(String noteCondomini) {
-        this.aggiornamentoCondomini = noteCondomini;
+    public void setAggiornamentoCondomini(String aggiornamentoCondomini) {
+        this.aggiornamentoCondomini = aggiornamentoCondomini;
     }
 
     public String getDescrizioneCondomini() {
@@ -151,5 +154,13 @@ public class TicketIntervento {
 
     public void setStato(String stato) {
         this.stato = stato;
+    }
+
+    public String getPriorità() {
+        return priorità;
+    }
+
+    public void setPriorità(String priorità) {
+        this.priorità = priorità;
     }
 }

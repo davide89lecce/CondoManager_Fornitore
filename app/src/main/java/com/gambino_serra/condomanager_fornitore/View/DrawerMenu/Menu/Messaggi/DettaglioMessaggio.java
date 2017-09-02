@@ -136,7 +136,8 @@ public class DettaglioMessaggio extends AppCompatActivity {
                         ticketInterventoMap.get("rapporti_intervento").toString(),
                         ticketInterventoMap.get("richiesta").toString(),
                         ticketInterventoMap.get("stabile").toString(),
-                        ticketInterventoMap.get("stato").toString());
+                        ticketInterventoMap.get("stato").toString(),
+                        ticketInterventoMap.get("priorità").toString());
 
                 if(ticketIntervento.getStato().equals("A")){
                     descrizioneStatoT.setText("Questa richiesta è in attesa di essere presa in carico");

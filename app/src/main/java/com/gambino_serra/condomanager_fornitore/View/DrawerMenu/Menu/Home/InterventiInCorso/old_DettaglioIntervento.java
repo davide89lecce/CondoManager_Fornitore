@@ -1,3 +1,4 @@
+/*
 package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiInCorso;
 
 import android.app.DialogFragment;
@@ -26,9 +27,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.Map;
 
+*/
 /**
  * Created by condomanager_fornitore on 06/03/17.
- */
+ *//*
+
 
 public class old_DettaglioIntervento extends AppCompatActivity {
 
@@ -159,7 +162,8 @@ public class old_DettaglioIntervento extends AppCompatActivity {
                 segnalazioneT.setText(ticketIntervento.getOggetto());
                 condominioT.setText(ticketIntervento.getDataUltimoAggiornamento());
                 descrizioneStatoT.setText(ticketIntervento.getMessaggioCondomino());
-                /*
+                */
+/*
                 final SharedPreferences sharedPrefs = getSharedPreferences(MY_PREFERENCES, MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPrefs.edit();
                 editor.putString("data", ticketIntervento.getDataTicket());
@@ -169,7 +173,8 @@ public class old_DettaglioIntervento extends AppCompatActivity {
                 editor.putString("fornitore", fornitore);
                 editor.putString("stato", stato);
                 editor.apply();
-                */
+                *//*
+
 
             }
 
@@ -211,4 +216,4 @@ public class old_DettaglioIntervento extends AppCompatActivity {
     }
 
 
-}
+}*/
