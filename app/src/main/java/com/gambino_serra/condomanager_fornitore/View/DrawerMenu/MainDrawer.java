@@ -21,7 +21,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.Home;
 import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.InformazioniPersonali.InformazioniPersonali;
 import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.ListaFornitori.ListaFornitori;
-import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Messaggi.BachecaMessaggi;
 import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.StoricoAvvisi.StoricoAvvisi;
 import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.StoricoInterventi.StoricoInterventi;
 import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.other.CircleTransform;
