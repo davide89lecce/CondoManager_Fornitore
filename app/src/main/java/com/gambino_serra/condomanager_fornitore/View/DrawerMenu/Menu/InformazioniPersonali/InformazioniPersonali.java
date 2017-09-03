@@ -1,9 +1,7 @@
 package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.InformazioniPersonali;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,24 +18,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class InformazioniPersonali extends Fragment {
-    private static final String MY_PREFERENCES = "preferences";
-    private static final String LOGGED_USER = "username";
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    String nome_azienda = "";
-    String nome = "";
-    String categoria = "";
-    String partita_iva = "";
-    String telefono = "";
-    String email = "";
-    String indirizzo = "";
 
     TextView Tnome_azienda;
     TextView Tnome;
@@ -48,16 +36,10 @@ public class InformazioniPersonali extends Fragment {
     TextView Tindirizzo;
     String uidFornitore;
 
-    private Firebase firebaseDB;
     private FirebaseUser firebaseUser;
     private FirebaseAuth firebaseAuth;
-    private DatabaseReference databaseReference;
-    private FirebaseDatabase firebaseDatabase;
 
     Map<String, Object> dettaglioFornitoreMap;
-
-    Bundle bundle;
-
 
     public InformazioniPersonali() {}
 
@@ -85,7 +67,7 @@ public class InformazioniPersonali extends Fragment {
          Temail = (TextView) view.findViewById(R.id.FornEmail);
          Tindirizzo = (TextView) view.findViewById(R.id.FornIndirizzo);
         return view;
-    }
+        }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -96,39 +78,19 @@ public class InformazioniPersonali extends Fragment {
         firebaseUser = firebaseAuth.getCurrentUser();
         uidFornitore = firebaseUser.getUid().toString();
 
-//        if (getIntent().getExtras() != null) {
-//
-//            bundle = getIntent().getExtras();
-//            uidFornitore = bundle.get("uidFornitore").toString();
-//
-//            SharedPreferences.Editor editor = sharedPrefs.edit();
-//            editor.putString("uidfornitore", uidFornitore);
-//            editor.apply();
-//
-//        } else {
-//
-//            uidFornitore = sharedPrefs.getString("uidFornitore", "").toString();
-//
-//            bundle = new Bundle();
-//            bundle.putString("uidFornitore", uidFornitore);
-//
-//        }
-
-
-
         Query prova;
         prova = FirebaseDB.getFornitori().orderByKey().equalTo(uidFornitore);
-
         prova.addChildEventListener(new ChildEventListener() {
+
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
-
                 dettaglioFornitoreMap = new HashMap<String, Object>();
                 dettaglioFornitoreMap.put("uidFornitore", dataSnapshot.getKey());
+
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     dettaglioFornitoreMap.put(child.getKey(), child.getValue());
-                }
+                    }
 
                 Fornitore fornitore = new Fornitore(
                         dettaglioFornitoreMap.get("uidFornitore").toString(),
