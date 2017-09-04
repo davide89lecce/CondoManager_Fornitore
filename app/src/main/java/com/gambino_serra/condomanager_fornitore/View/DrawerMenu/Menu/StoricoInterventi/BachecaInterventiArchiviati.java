@@ -1,4 +1,4 @@
-package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiInCorso;
+package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.StoricoInterventi;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
@@ -21,12 +22,12 @@ import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BachecaInterventiInCorso extends Fragment {
-
+public class BachecaInterventiArchiviati extends Fragment{
     private static RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private static RecyclerView recyclerView;
@@ -39,8 +40,8 @@ public class BachecaInterventiInCorso extends Fragment {
     Map<String, Object> ticketInterventoMap;
     ArrayList<TicketIntervento> interventi;
 
-    public static BachecaInterventiInCorso newInstance() {
-        BachecaInterventiInCorso fragment = new BachecaInterventiInCorso();
+    public static BachecaInterventiArchiviati newInstance() {
+        BachecaInterventiArchiviati fragment = new BachecaInterventiArchiviati();
         return fragment;
     }
 
@@ -52,7 +53,7 @@ public class BachecaInterventiInCorso extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.tab_interventi_in_corso, container, false);
-        }
+    }
 
     @Override
     public void onStart() {
@@ -84,7 +85,7 @@ public class BachecaInterventiInCorso extends Fragment {
         //il listener lavora sui figli della query, ovvero su titti gli interventi recuperati
         query.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onChildAdded(com.firebase.client.DataSnapshot dataSnapshot, String s) {
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
                 //HashMap temporaneo per immagazzinare i dati di un ticket
                 ticketInterventoMap = new HashMap<String,Object>();
@@ -94,7 +95,7 @@ public class BachecaInterventiInCorso extends Fragment {
                 // recuperiamo i dati per inserirli nel MAP
                 for ( DataSnapshot child : dataSnapshot.getChildren() ) {
                     ticketInterventoMap.put(child.getKey(), child.getValue());
-                    }
+                }
 
                 // Avvaloriamo una variabile TicketIntervento appositamente creata in modo da inserire poi questo
                 // oggetto all'interno di un Array di interventi che utilizzeremo per popolare la lista Recycle
@@ -117,30 +118,30 @@ public class BachecaInterventiInCorso extends Fragment {
                             //ticketInterventoMap.get("foto").toString()
                     );
 
-                    if(ticketIntervento.getStato().equals("in corso"))
-                        {
+                    if(ticketIntervento.getStato().equals("archiviato"))
+                    {
                         // inserisce l'oggetto ticket nell'array interventi
                         interventi.add(ticketIntervento);
-                        }
+                    }
                 }
                 catch (NullPointerException e)
-                    {
+                {
                     Toast.makeText(getActivity().getApplicationContext(), "Non riesco ad aprire l'oggetto "+ e.toString(), Toast.LENGTH_LONG).show();
-                    }
+                }
 
                 // Utilizziamo l'adapter per popolare la recycler view
-                adapter = new AdapterInterventiInCorso(interventi);
+                adapter = new AdapterInterventiArchiviati(interventi);
                 recyclerView.setAdapter(adapter);
             }
 
             @Override
-            public void onChildChanged(com.firebase.client.DataSnapshot dataSnapshot, String s) { }
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) { }
 
             @Override
-            public void onChildRemoved(com.firebase.client.DataSnapshot dataSnapshot) { }
+            public void onChildRemoved(DataSnapshot dataSnapshot) { }
 
             @Override
-            public void onChildMoved(com.firebase.client.DataSnapshot dataSnapshot, String s) { }
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) { }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) { }
@@ -170,7 +171,7 @@ public class BachecaInterventiInCorso extends Fragment {
             Bundle bundle = new Bundle();
             bundle.putString("idIntervento", selectedName);
 
-            Intent intent = new Intent(context, DettaglioInterventoInCorso.class);
+            Intent intent = new Intent(context, DettaglioInterventoArchiviato.class);
             intent.putExtras(bundle);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);

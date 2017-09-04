@@ -1,4 +1,4 @@
-package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiInCorso;
+package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiCompletati;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,14 +19,18 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
+import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiCompletati.BachecaInterventiCompletati;
+import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiCompletati.AdapterInterventiCompletati;
+import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiCompletati.DettaglioInterventoCompletato;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BachecaInterventiInCorso extends Fragment {
-
+public class BachecaInterventiCompletati extends Fragment{
     private static RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private static RecyclerView recyclerView;
@@ -39,15 +43,15 @@ public class BachecaInterventiInCorso extends Fragment {
     Map<String, Object> ticketInterventoMap;
     ArrayList<TicketIntervento> interventi;
 
-    public static BachecaInterventiInCorso newInstance() {
-        BachecaInterventiInCorso fragment = new BachecaInterventiInCorso();
+    public static BachecaInterventiCompletati newInstance() {
+        BachecaInterventiCompletati fragment = new BachecaInterventiCompletati();
         return fragment;
-    }
+        }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
+        }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,15 +77,12 @@ public class BachecaInterventiInCorso extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        //lettura uid condomino -->  codice fiscale stabile, uid amministratore
         uidFornitore = firebaseAuth.getCurrentUser().getUid().toString();
 
         Query query;
         query = FirebaseDB.getInterventi().orderByChild("fornitore").equalTo(uidFornitore);
 
-
-        // la query seleziona solo gli interventi con un determinato fornitore
-        //il listener lavora sui figli della query, ovvero su titti gli interventi recuperati
+        // la query seleziona solo gli interventi con un determinato fornitore il listener lavora sui figli della query, ovvero su titti gli interventi recuperati
         query.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(com.firebase.client.DataSnapshot dataSnapshot, String s) {
@@ -90,8 +91,7 @@ public class BachecaInterventiInCorso extends Fragment {
                 ticketInterventoMap = new HashMap<String,Object>();
                 ticketInterventoMap.put("id", dataSnapshot.getKey()); //primo campo del MAP
 
-                // per ognuno dei figli presenti nello snapshot, ovvero per tutti i figli di un singolo nodo Interv
-                // recuperiamo i dati per inserirli nel MAP
+                // per ognuno dei figli presenti nello snapshot, ovvero per tutti i figli di un singolo nodo Interv recuperiamo i dati per inserirli nel MAP
                 for ( DataSnapshot child : dataSnapshot.getChildren() ) {
                     ticketInterventoMap.put(child.getKey(), child.getValue());
                     }
@@ -117,7 +117,7 @@ public class BachecaInterventiInCorso extends Fragment {
                             //ticketInterventoMap.get("foto").toString()
                     );
 
-                    if(ticketIntervento.getStato().equals("in corso"))
+                    if(ticketIntervento.getStato().equals("completato"))
                         {
                         // inserisce l'oggetto ticket nell'array interventi
                         interventi.add(ticketIntervento);
@@ -129,7 +129,7 @@ public class BachecaInterventiInCorso extends Fragment {
                     }
 
                 // Utilizziamo l'adapter per popolare la recycler view
-                adapter = new AdapterInterventiInCorso(interventi);
+                adapter = new AdapterInterventiCompletati(interventi);
                 recyclerView.setAdapter(adapter);
             }
 
@@ -170,11 +170,10 @@ public class BachecaInterventiInCorso extends Fragment {
             Bundle bundle = new Bundle();
             bundle.putString("idIntervento", selectedName);
 
-            Intent intent = new Intent(context, DettaglioInterventoInCorso.class);
+            Intent intent = new Intent(context, DettaglioInterventoCompletato.class);
             intent.putExtras(bundle);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
-
         }
     }
 }

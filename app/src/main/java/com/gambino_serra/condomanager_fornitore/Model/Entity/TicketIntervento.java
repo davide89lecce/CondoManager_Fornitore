@@ -15,11 +15,12 @@ public class TicketIntervento {
     private String aggiornamentoCondomini;
     private String descrizioneCondomini;
     private String oggetto;
-    private String rapportiIntervento; //link
+    private String rapportiIntervento;
     private String richiesta;
     private String stabile;
     private String stato;
     private String priorità;
+    //private String foto;
 
     public TicketIntervento(String idTicketIntervento,
                             String uidAmministratore,
@@ -34,7 +35,9 @@ public class TicketIntervento {
                             String richiesta,
                             String stabile,
                             String stato,
-                            String priorità) {
+                            String priorità//,
+                            //String foto
+    ) {
 
         this.idTicketIntervento = idTicketIntervento;
         this.uidAmministratore = uidAmministratore;
@@ -50,6 +53,7 @@ public class TicketIntervento {
         this.stabile = stabile;
         this.stato = stato;
         this.priorità = priorità;
+        //this.foto = foto;
     }
 
     public String getIdTicketIntervento() {
@@ -163,4 +167,12 @@ public class TicketIntervento {
     public void setPriorità(String priorità) {
         this.priorità = priorità;
     }
+
+//    public String getFoto() {
+//        return foto;
+//    }
+//
+//    public void setFoto(String foto) {
+//        this.foto = foto;
+//    }
 }

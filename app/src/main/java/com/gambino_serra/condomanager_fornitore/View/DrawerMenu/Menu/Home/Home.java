@@ -11,8 +11,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiCompletati.InterventiCompletati;
-import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.RichiesteIntervento.RichiesteIntervento;
+
+import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiCompletati.BachecaInterventiCompletati;
+import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiCompletati.DettaglioInterventoCompletato;
+import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.RichiesteIntervento.BachecaRichiesteIntervento;
 import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiInCorso.BachecaInterventiInCorso;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 
@@ -74,15 +76,15 @@ public class Home extends Fragment {
                         Fragment selectedFragment = null;
                         switch (item.getItemId()) {
                             case R.id.action_item1:
-                                selectedFragment = InterventiCompletati.newInstance();
+                                selectedFragment = BachecaRichiesteIntervento.newInstance();
                                 break;
                             case R.id.action_item2:
                                 selectedFragment = BachecaInterventiInCorso.newInstance();
                                 break;
                             case R.id.action_item3:
-                                selectedFragment = RichiesteIntervento.newInstance();
+                                selectedFragment = BachecaInterventiCompletati.newInstance();
                                 break;
-                        }
+                            }
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.frame_layout, selectedFragment);
                         transaction.commit();
@@ -92,7 +94,7 @@ public class Home extends Fragment {
 
         //Manually displaying the first Menu - one time only
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, InterventiCompletati.newInstance());
+        transaction.replace(R.id.frame_layout, BachecaInterventiCompletati.newInstance());
          transaction.commit();
     }
 
