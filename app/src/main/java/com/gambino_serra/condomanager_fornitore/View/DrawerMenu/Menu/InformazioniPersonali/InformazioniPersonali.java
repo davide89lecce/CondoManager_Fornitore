@@ -46,8 +46,8 @@ public class InformazioniPersonali extends Fragment {
     /**
      * Use this factory method to create a new instance of this Menu using the provided parameters.
      */
-    public static com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.ListaFornitori.ListaFornitori newInstance(String param1, String param2) {
-        com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.ListaFornitori.ListaFornitori fragment = new com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.ListaFornitori.ListaFornitori();
+    public static com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.InformazioniPersonali.InformazioniPersonali newInstance(String param1, String param2) {
+        com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.InformazioniPersonali.InformazioniPersonali fragment = new com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.InformazioniPersonali.InformazioniPersonali();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

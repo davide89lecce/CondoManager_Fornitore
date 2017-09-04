@@ -121,7 +121,7 @@
                                     android:layout_marginTop="10dp"
                                     android:layout_width="25dp"
                                     android:layout_height="match_parent"
-                                    app:srcCompat="@mipmap/ic_data" />
+                                    />
 
                                 <TextView
                                     android:text="Data segnalazione"
@@ -181,7 +181,7 @@
                                     android:layout_marginTop="10dp"
                                     android:layout_width="25dp"
                                     android:layout_height="match_parent"
-                                    app:srcCompat="@mipmap/ic_condominio" />
+                                    />
 
                                 <TextView
                                     android:text="Condominio"
@@ -242,7 +242,7 @@
                                     android:layout_marginTop="10dp"
                                     android:layout_width="25dp"
                                     android:layout_height="match_parent"
-                                    app:srcCompat="@drawable/ic_person_white" />
+                                    />
 
                                 <TextView
                                     android:text="Condomino"
@@ -302,7 +302,7 @@
                                     android:layout_marginTop="10dp"
                                     android:layout_width="25dp"
                                     android:layout_height="match_parent"
-                                    app:srcCompat="@mipmap/ic_segnalazione" />
+                                    />
 
                                 <TextView
                                     android:text="Segnalazione"
@@ -362,7 +362,7 @@
                                     android:layout_marginTop="10dp"
                                     android:layout_width="25dp"
                                     android:layout_height="match_parent"
-                                    app:srcCompat="@drawable/ic_build" />
+                                    />
 
                                 <TextView
                                     android:text="Fornitore"
@@ -461,7 +461,7 @@
                                     android:layout_marginTop="10dp"
                                     android:layout_width="25dp"
                                     android:layout_height="match_parent"
-                                    app:srcCompat="@mipmap/ic_data" />
+                                    />
 
                                 <TextView
                                     android:text="Data intervento"
@@ -521,7 +521,7 @@
                                     android:layout_marginTop="10dp"
                                     android:layout_width="25dp"
                                     android:layout_height="match_parent"
-                                    app:srcCompat="@mipmap/ic_segnalazione" />
+                                    />
 
                                 <TextView
                                     android:text="Descrizione"
@@ -568,7 +568,6 @@
         android:layout_height="50dp"
         android:background="@color/primarySegnalazione"
         android:orientation="horizontal"
-        android:divider="@drawable/vertical_divider"
         android:dividerPadding="12dip"
         android:showDividers="middle">
 
@@ -588,7 +587,7 @@
                 android:layout_marginBottom="10dip"
                 android:layout_marginTop="15dip"
                 android:backgroundTint="@color/colorPrimary"
-                android:src="@drawable/ic_call"
+                android:src="@drawable/telefono"
                 android:tint="@color/color_white" />
 
             <android.support.v7.widget.AppCompatTextView
@@ -622,7 +621,6 @@
                 android:layout_marginBottom="10dip"
                 android:layout_marginTop="15dip"
                 android:backgroundTint="@color/colorPrimary"
-                android:src="@drawable/ic_archive"
                 android:tint="@color/color_white" />
 
             <android.support.v7.widget.AppCompatTextView

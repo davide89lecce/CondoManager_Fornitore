@@ -1,7 +1,6 @@
 package com.gambino_serra.condomanager_fornitore.View.Login;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
@@ -10,16 +9,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
+
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
 import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.MainDrawer;
-import com.gambino_serra.condomanager_fornitore.Old_View.Utente.BaseActivity;
-import com.gambino_serra.condomanager_fornitore.Old_View.Utente.RegisterAmministratoreActivity;
+import com.gambino_serra.condomanager_fornitore.View.BaseActivity;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -78,18 +75,18 @@ public class LoginActivity extends BaseActivity  {
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnRegister = (Button) findViewById(R.id.btnRegister);
 
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-
-            /**
-             * Il metodo permette di accedere alla schermata di registrazione di un nuovo utente.
-             */
-            @Override
-            public void onClick(View v) {
-                Intent in = new Intent(getApplicationContext(), RegisterAmministratoreActivity.class);
-                in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(in);
-            }
-        });
+//        btnRegister.setOnClickListener(new View.OnClickListener() {
+//
+//            /**
+//             * Il metodo permette di accedere alla schermata di registrazione di un nuovo utente.
+//             */
+//            @Override
+//            public void onClick(View v) {
+//                Intent in = new Intent(getApplicationContext(), RegisterAmministratoreActivity.class);
+//                in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                startActivity(in);
+//            }
+//        });
 
     }
 

@@ -54,10 +54,9 @@ public class StoricoInterventi extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this Menu
-        return inflater.inflate(R.layout.bacheca_storico_interventi2, container, false);
+        return inflater.inflate(R.layout.bacheca_storico_interventi, container, false);
     }
 
     public void onButtonPressed(Uri uri) {

@@ -32,12 +32,6 @@
 
 
         <activity
-            android:name="com.gambino_serra.condomanager_fornitore.Old_View.Utente.LoginActivity_old"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
-        <activity
             android:name="com.gambino_serra.condomanager_fornitore.View.Login.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
@@ -63,18 +57,6 @@
             android:parentActivityName="com.gambino_serra.condomanager_fornitore.View.DrawerMenu.MainDrawer"
             android:screenOrientation="portrait" />
 
-        <activity
-            android:name="com.gambino_serra.condomanager_fornitore.Old_View.Utente.RegisterActivity"
-            android:label="@string/title_register"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.gambino_serra.condomanager_fornitore.Old_View.Utente.RegisterAmministratoreActivity"
-            android:label="@string/title_register"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.gambino_serra.condomanager_fornitore.Old_View.Utente.RegisterFornitoreActivity"
-            android:label="@string/title_register"
-            android:screenOrientation="portrait" />
         <activity
             android:name="com.gambino_serra.condomanager_fornitore.Old_View.Fornitore.Home.FornitoreHomeActivity"
             android:screenOrientation="portrait"

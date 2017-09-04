@@ -22,7 +22,6 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
-import com.gambino_serra.condomanager_fornitore.Old_Model.Entity.Segnalazione;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -41,11 +40,11 @@ public class BachecaInterventiInCorso extends Fragment {
     private static RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private static RecyclerView recyclerView;
-    private ArrayList<Segnalazione> data;
+    private ArrayList<TicketIntervento> data;
     public static View.OnClickListener myOnClickListener;
     Context context;
     String condominoNome;
-    private ArrayList<Segnalazione> datas;
+    private ArrayList<TicketIntervento> datas;
 
     private Firebase firebaseDB;
     private FirebaseUser firebaseUser;
@@ -70,7 +69,7 @@ public class BachecaInterventiInCorso extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.tab_bacheca_interventi, container, false);
+        return inflater.inflate(R.layout.tab_interventi_in_corso, container, false);
     }
 
     @Override
@@ -79,7 +78,7 @@ public class BachecaInterventiInCorso extends Fragment {
 
         context = getContext();
         firebaseAuth = FirebaseAuth.getInstance();
-        data = new ArrayList<Segnalazione>();
+        data = new ArrayList<TicketIntervento>();
         ticketInterventoMap = new HashMap<String,Object>();
         interventi = new ArrayList<TicketIntervento>();
 
@@ -151,27 +150,17 @@ public class BachecaInterventiInCorso extends Fragment {
             }
 
             @Override
-            public void onChildChanged(com.firebase.client.DataSnapshot dataSnapshot, String s) {
-
-            }
+            public void onChildChanged(com.firebase.client.DataSnapshot dataSnapshot, String s) { }
 
             @Override
-            public void onChildRemoved(com.firebase.client.DataSnapshot dataSnapshot) {
-
-            }
+            public void onChildRemoved(com.firebase.client.DataSnapshot dataSnapshot) { }
 
             @Override
-            public void onChildMoved(com.firebase.client.DataSnapshot dataSnapshot, String s) {
-
-            }
+            public void onChildMoved(com.firebase.client.DataSnapshot dataSnapshot, String s) { }
 
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
+            public void onCancelled(FirebaseError firebaseError) { }
         });
-
-
     }
 
     private static class MyOnClickListener extends AppCompatActivity implements View.OnClickListener {
@@ -191,7 +180,7 @@ public class BachecaInterventiInCorso extends Fragment {
 
             int selectedItemPosition = recyclerView.getChildPosition(v);
             RecyclerView.ViewHolder viewHolder = recyclerView.findViewHolderForPosition(selectedItemPosition);
-            TextView textViewName = (TextView) viewHolder.itemView.findViewById(R.id.textViewIdSegnalazione);
+            TextView textViewName = (TextView) viewHolder.itemView.findViewById(R.id.D_IDIntervento);
             String selectedName = (String) textViewName.getText();
 
             Bundle bundle = new Bundle();

@@ -42,7 +42,6 @@
                 android:layout_marginRight="24dp"
                 android:layout_marginTop="0dp"
                 android:background="@android:color/holo_blue_bright"
-                app:srcCompat="@drawable/cross"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintLeft_toLeftOf="parent"
                 card_view:layout_constraintRight_toRightOf="@+id/Logo_Interv"
