@@ -111,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
-                android:text="QUI CI VA IL MENU'"
+                android:text="DATA"
                 android:textSize="12sp"
                 card_view:layout_constraintRight_toRightOf="parent"
                 card_view:layout_constraintTop_toTopOf="parent" />

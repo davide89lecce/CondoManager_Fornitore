@@ -30,20 +30,11 @@ public class DettaglioInterventoInCorso extends AppCompatActivity {
     String idIntervento = "";
 
     // Oggetti di Layout NUOVI
-    TextView TidTicketIntervento;
-    TextView TuidAmministratore;
     TextView TdataTicket;
-    TextView TdataUltimoAggiornamento;
-    TextView Tfornitore;
-    TextView TmessaggioCondomino;
-    TextView TaggiornamentoCondomini;
-    TextView TdescrizioneCondomini;
+    TextView Tindirizzo;
     TextView Toggetto;
-    TextView TrapportiIntervento;
-    TextView Trichiesta;
     TextView Tstabile;
-    TextView Tstato;
-    TextView Tpriorità;
+    TextView TidTicket;
     ImageView Tfoto;
 
     private Firebase firebaseDB;
@@ -60,7 +51,7 @@ public class DettaglioInterventoInCorso extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dettaglio_intervento);
+        setContentView(R.layout.dettaglio_intervento_in_corso);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -75,20 +66,21 @@ public class DettaglioInterventoInCorso extends AppCompatActivity {
             SharedPreferences.Editor editor = sharedPrefs.edit();
             editor.putString("idIntervento", idIntervento);
             editor.apply();
-        }
-        else {
-            //TODO: perchè
+            }
+        else
+            {
             idIntervento = sharedPrefs.getString("idIntervento", "").toString();
             bundle = new Bundle();
             bundle.putString("idIntervento", idIntervento);
             }
 
         // Avvaloro i nuovi rierimenti al layout
-        TdataTicket = (TextView) findViewById(R.id.D_Oggetto);
-        TuidAmministratore = (TextView) findViewById(R.id.D_Oggetto);
-        Tstabile = (TextView) findViewById(R.id.D_Oggetto);
-        Trichiesta = (TextView) findViewById(R.id.D_Oggetto);
+        TidTicket = (TextView) findViewById(R.id.IDTicket);
+        TdataTicket = (TextView) findViewById(R.id.DataAgg_Interv);
+        Tstabile = (TextView) findViewById(R.id.D_Condominio);
         Toggetto = (TextView) findViewById(R.id.D_Oggetto);
+        Tindirizzo = (TextView) findViewById(R.id.D_Indirizzo);
+        //Tfoto = (ImageView) findViewById(R.id.D_foto);
 
 
         ticketInterventoMap = new HashMap<String, Object>();
@@ -107,6 +99,7 @@ public class DettaglioInterventoInCorso extends AppCompatActivity {
                 for(DataSnapshot child : dataSnapshot.getChildren()){
                     ticketInterventoMap.put(child.getKey(),child.getValue());
                     }
+
                 TicketIntervento ticketIntervento = new TicketIntervento(
                         ticketInterventoMap.get("id").toString(),
                         ticketInterventoMap.get("amministratore").toString(),
@@ -126,11 +119,10 @@ public class DettaglioInterventoInCorso extends AppCompatActivity {
                 );
 
                 TdataTicket.setText(ticketIntervento.getDataTicket());
-                TuidAmministratore.setText(ticketIntervento.getUidAmministratore());
                 Tstabile.setText(ticketIntervento.getStabile());
                 Toggetto.setText(ticketIntervento.getOggetto());
-                Trichiesta.setText(ticketIntervento.getRichiesta());
-                //Tfoto TODO: AGGIUNGERE FOTO
+                //Tindirizzo.setText(ticketIntervento.getIndirizzo());
+                //Tfoto TODO: AGGIUNGERE FOTO e INDIRIZZO
 
             }
 

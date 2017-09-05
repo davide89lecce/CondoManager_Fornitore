@@ -20,24 +20,13 @@ public class AdapterInterventiInCorso extends RecyclerView.Adapter<AdapterInterv
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView TidTicketIntervento;
-        TextView TuidAmministratore;
         TextView TdataTicket;
-        TextView TdataUltimoAggiornamento;
-        TextView Tfornitore;
-        TextView TmessaggioCondomino;
-        TextView TaggiornamentoCondomini;
-        TextView TdescrizioneCondomini;
-        TextView Toggetto;
-        TextView TrapportiIntervento;
-        TextView Trichiesta;
-        TextView Tstabile;
-        TextView Tstato;
-        TextView Tpriorità;
         TextView Tindirizzo;
-
-        ImageView mLogoPriorità;
+        TextView Toggetto;
+        TextView Tstabile;
         TextView IdTicket;
+        ImageView Tfoto;
+        ImageView mLogoPriorità;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -72,12 +61,14 @@ public class AdapterInterventiInCorso extends RecyclerView.Adapter<AdapterInterv
         TextView Tstabile = holder.Tstabile;
         TextView Tindirizzo = holder.Tindirizzo;
         TextView Toggetto = holder.Toggetto;
+        TextView TdataTicket = holder.TdataTicket;
         ImageView mLogoPriorità = holder.mLogoPriorità;
         TextView IdTicket = holder.IdTicket;
 
         Tstabile.setText(dataset.get(listPosition).getStabile());
         Tindirizzo.setText("INDIRIZZO CHE PER ORA NON C'E'");
         Toggetto.setText(dataset.get(listPosition).getOggetto());
+        TdataTicket.setText(dataset.get(listPosition).getDataTicket());
         IdTicket.setText(dataset.get(listPosition).getIdTicketIntervento());
 
 
@@ -108,7 +99,6 @@ public class AdapterInterventiInCorso extends RecyclerView.Adapter<AdapterInterv
 
             default:
         }
-
     }
 
     @Override

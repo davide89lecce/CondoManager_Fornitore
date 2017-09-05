@@ -59,7 +59,7 @@ public class DettaglioRichiestaIntervento extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dettaglio_intervento);
+        setContentView(R.layout.dettaglio_richiesta_intervento);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
