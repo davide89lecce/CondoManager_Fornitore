@@ -20,7 +20,7 @@ public class TicketIntervento {
     private String stabile;
     private String stato;
     private String priorità;
-    //private String foto;
+    private String foto;
 
     public TicketIntervento(String idTicketIntervento,
                             String uidAmministratore,
@@ -35,8 +35,8 @@ public class TicketIntervento {
                             String richiesta,
                             String stabile,
                             String stato,
-                            String priorità//,
-                            //String foto
+                            String priorità,
+                            String foto
     ) {
 
         this.idTicketIntervento = idTicketIntervento;
@@ -53,7 +53,7 @@ public class TicketIntervento {
         this.stabile = stabile;
         this.stato = stato;
         this.priorità = priorità;
-        //this.foto = foto;
+        this.foto = foto;
     }
 
     public String getIdTicketIntervento() {
@@ -168,11 +168,11 @@ public class TicketIntervento {
         this.priorità = priorità;
     }
 
-//    public String getFoto() {
-//        return foto;
-//    }
-//
-//    public void setFoto(String foto) {
-//        this.foto = foto;
-//    }
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
 }

@@ -47,12 +47,12 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textSize="14sp"
                 android:layout_marginTop="7dp"
-                card_view:layout_constraintTop_toBottomOf="@+id/D_OggettoInterv"
+                card_view:layout_constraintTop_toBottomOf="@+id/D_Oggetto"
                 android:layout_marginLeft="0dp"
-                card_view:layout_constraintLeft_toLeftOf="@+id/D_OggettoInterv" />
+                card_view:layout_constraintLeft_toLeftOf="@+id/D_Oggetto" />
 
             <TextView
-                android:id="@+id/D_OggettoInterv"
+                android:id="@+id/D_Oggetto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Oggetto Intervento"
@@ -99,7 +99,7 @@
                 card_view:layout_constraintLeft_toRightOf="@+id/TextViewUltimoRapporto" />
 
             <TextView
-                android:id="@+id/IDTicket"
+                android:id="@+id/D_IDIntervento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="invisible"
@@ -109,7 +109,7 @@
 
 
             <TextView
-                android:id="@+id/DataAgg_Interv"
+                android:id="@+id/D_Data"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"

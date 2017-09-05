@@ -8,21 +8,20 @@
 
 
     <android.support.v7.widget.CardView
-        android:id="@+id/cardView"
+        android:id="@+id/cardViewA"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
+        android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
         android:layout_marginStart="24dp"
         android:isScrollContainer="true"
         app:cardCornerRadius="0.1dp"
         app:cardElevation="2dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginLeft="24dp"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        android:layout_marginTop="8dp">
+        tools:layout_editor_absoluteY="17dp">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -35,9 +34,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="sans-serif"
-                android:text="Intervento"
+                android:text="Dettaglio richiesta d'intervento"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -68,14 +67,12 @@
                         android:id="@+id/imageView3"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:layout_marginBottom="0dp"
                         android:layout_marginLeft="16dp"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="0dp"
                         app:layout_constraintBottom_toBottomOf="@+id/textView8"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/textView8"
-                        app:srcCompat="@drawable/logo_oggetto" />
+                        app:srcCompat="@drawable/calendario" />
 
                     <TextView
                         android:id="@+id/textView8"
@@ -83,18 +80,18 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="16dp"
                         android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
                         android:fontFamily="sans-serif"
-                        android:text="Oggetto"
+                        android:text="Data"
                         android:textAppearance="@android:style/TextAppearance.Material.Medium"
                         android:textColor="@color/colorBlack"
                         android:textSize="16dp"
                         android:textStyle="bold"
                         app:layout_constraintLeft_toRightOf="@+id/imageView3"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:layout_marginTop="8dp" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/D_Oggetto"
+                        android:id="@+id/D_Data"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
@@ -102,7 +99,8 @@
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
                         android:layout_marginStart="8dp"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="8dp"
+                        android:text="qui apparirà la data"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintLeft_toLeftOf="parent"
@@ -114,14 +112,16 @@
                         android:layout_width="300dp"
                         android:layout_height="1dp"
                         android:layout_marginBottom="1dp"
+                        android:layout_marginEnd="8dp"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
                         android:background="@color/colorPrimary"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp" />
+                        android:layout_marginTop="4dp"
+                        app:layout_constraintTop_toBottomOf="@+id/D_Oggetto" />
 
                 </android.support.constraint.ConstraintLayout>
             </android.support.v7.widget.CardView>
@@ -148,14 +148,12 @@
                         android:id="@+id/imageView4"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:layout_marginBottom="0dp"
                         android:layout_marginLeft="16dp"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="0dp"
                         app:layout_constraintBottom_toBottomOf="@+id/textView9"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/textView9"
-                        app:srcCompat="@drawable/logo_descriz" />
+                        app:srcCompat="@drawable/utente" />
 
                     <TextView
                         android:id="@+id/textView9"
@@ -163,18 +161,18 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="16dp"
                         android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
                         android:fontFamily="sans-serif"
-                        android:text="Descrizione"
+                        android:text="Amministratore"
                         android:textAppearance="@android:style/TextAppearance.Material.Medium"
                         android:textColor="@color/colorBlack"
                         android:textSize="16dp"
                         android:textStyle="bold"
                         app:layout_constraintLeft_toRightOf="@+id/imageView4"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:layout_marginTop="8dp" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/D_Descrizione"
+                        android:id="@+id/D_Amministratore"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
@@ -182,9 +180,9 @@
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
                         android:layout_marginStart="8dp"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="8dp"
+                        android:text="qui apparirà l'amministratore"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/imageView4" />
@@ -194,16 +192,16 @@
                         android:layout_width="300dp"
                         android:layout_height="1dp"
                         android:layout_marginBottom="1dp"
+                        android:layout_marginEnd="8dp"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
                         android:background="@color/colorPrimary"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintVertical_bias="0.0"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp" />
+                        app:layout_constraintVertical_bias="0.0" />
 
                 </android.support.constraint.ConstraintLayout>
             </android.support.v7.widget.CardView>
@@ -227,77 +225,64 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/imageView2"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginTop="0dp"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/checked"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_marginBottom="0dp" />
-
-                    <ImageView
                         android:id="@+id/imageView5"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:layout_marginBottom="0dp"
                         android:layout_marginLeft="16dp"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="0dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/textView11"
+                        android:layout_marginTop="8dp"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/textView11"
-                        app:srcCompat="@drawable/logo_stato" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/logo_cond" />
 
                     <TextView
-                        android:id="@+id/textView11"
+                        android:id="@+id/D_Condominio"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="16dp"
                         android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
                         android:fontFamily="sans-serif"
-                        android:text="Stato"
+                        android:text="qui apparirà il condominio"
                         android:textAppearance="@android:style/TextAppearance.Material.Medium"
                         android:textColor="@color/colorBlack"
                         android:textSize="16dp"
-                        android:textStyle="bold"
                         app:layout_constraintLeft_toRightOf="@+id/imageView5"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:layout_marginTop="8dp" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/D_Stato"
+                        android:id="@+id/D_Indirizzo"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="8dp"
                         android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
                         android:layout_marginStart="8dp"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="8dp"
+                        android:text="qui apparirà l'indirizzo del condominio"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/imageView5"
                         app:layout_constraintVertical_bias="0.0"
-                        app:layout_constraintRight_toLeftOf="@+id/imageView2"
-                        android:layout_marginRight="24dp" />
+                        app:layout_constraintHorizontal_bias="0.0"
+                        android:layout_marginEnd="8dp" />
 
                     <View
                         android:id="@+id/Separator3"
                         android:layout_width="300dp"
                         android:layout_height="1dp"
                         android:layout_marginBottom="1dp"
+                        android:layout_marginEnd="8dp"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
                         android:background="@color/colorPrimary"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintVertical_bias="0.0"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp" />
+                        app:layout_constraintVertical_bias="0.0" />
 
                 </android.support.constraint.ConstraintLayout>
             </android.support.v7.widget.CardView>
@@ -316,87 +301,73 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardView3">
 
+
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="0dp">
 
-                    <TextView
-                        android:id="@+id/D_dataAggiorn"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="8dp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView6"
-                        android:layout_marginRight="8dp"
-                        app:layout_constraintRight_toRightOf="parent" />
 
                     <ImageView
-                        android:id="@+id/imageView6"
+                        android:id="@+id/imageView"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:layout_marginBottom="0dp"
-                        android:layout_marginLeft="16dp"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="0dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/textView12"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/textView12"
-                        app:layout_constraintVertical_bias="0.0"
-                        app:srcCompat="@drawable/logo_aggiornamento" />
+                        app:srcCompat="@drawable/logo_stato"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginLeft="16dp"
+                        app:layout_constraintLeft_toLeftOf="parent" />
 
                     <TextView
-                        android:id="@+id/textView12"
+                        android:id="@+id/textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
                         android:layout_marginStart="16dp"
                         android:fontFamily="sans-serif"
-                        android:text="Ultimo Aggiornamento"
+                        android:text="Oggetto"
                         android:textAppearance="@android:style/TextAppearance.Material.Medium"
                         android:textColor="@color/colorBlack"
                         android:textSize="16dp"
                         android:textStyle="bold"
-                        app:layout_constraintLeft_toRightOf="@+id/imageView6"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:layout_marginTop="8dp" />
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintLeft_toRightOf="@+id/imageView"
+                        android:layout_marginLeft="16dp" />
 
                     <TextView
-                        android:id="@+id/D_UltimoAggiornamento"
+                        android:id="@+id/D_Oggetto"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
                         android:layout_marginEnd="8dp"
-                        android:layout_marginLeft="0dp"
+                        android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
                         android:layout_marginStart="8dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintLeft_toLeftOf="@+id/D_dataAggiorn"
+                        android:text="qui apparirà l'oggetto dell'intervento"
+                        app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         android:layout_marginTop="8dp"
-                        app:layout_constraintTop_toBottomOf="@+id/D_dataAggiorn"
-                        app:layout_constraintVertical_bias="0.0" />
+                        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
                     <View
-                        android:id="@+id/Separator4"
+                        android:id="@+id/view"
                         android:layout_width="300dp"
                         android:layout_height="1dp"
                         android:layout_marginBottom="1dp"
+                        android:layout_marginEnd="8dp"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="4dp"
                         android:background="@color/colorPrimary"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintVertical_bias="0.0"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp" />
-
+                        app:layout_constraintTop_toBottomOf="@+id/D_Oggetto" />
                 </android.support.constraint.ConstraintLayout>
             </android.support.v7.widget.CardView>
-
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cardView5"
@@ -409,7 +380,8 @@
                 app:cardCornerRadius="0dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView4">
+                app:layout_constraintTop_toBottomOf="@+id/cardView4"
+                app:layout_constraintHorizontal_bias="0.0">
 
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
@@ -419,14 +391,12 @@
                         android:id="@+id/imageView7"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:layout_marginBottom="0dp"
                         android:layout_marginLeft="16dp"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="0dp"
                         app:layout_constraintBottom_toBottomOf="@+id/textView10"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/textView10"
-                        app:srcCompat="@drawable/logo_fornitore" />
+                        app:srcCompat="@drawable/logo_descriz" />
 
                     <TextView
                         android:id="@+id/textView10"
@@ -434,18 +404,18 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="16dp"
                         android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
                         android:fontFamily="sans-serif"
-                        android:text="Fornitore"
+                        android:text="Richiesta"
                         android:textAppearance="@android:style/TextAppearance.Material.Medium"
                         android:textColor="@color/colorBlack"
                         android:textSize="16dp"
                         android:textStyle="bold"
                         app:layout_constraintLeft_toRightOf="@+id/imageView7"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:layout_marginTop="8dp" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/D_Fornitore"
+                        android:id="@+id/D_Descrizione"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
@@ -453,7 +423,8 @@
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
                         android:layout_marginStart="8dp"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="8dp"
+                        android:text="qui apparirà la descrizione dell'intervento"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintLeft_toLeftOf="parent"
@@ -465,76 +436,85 @@
                         android:layout_width="300dp"
                         android:layout_height="1dp"
                         android:layout_marginBottom="1dp"
+                        android:layout_marginEnd="8dp"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
                         android:background="@color/colorPrimary"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintVertical_bias="0.0"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp" />
+                        app:layout_constraintVertical_bias="0.0" />
 
 
                 </android.support.constraint.ConstraintLayout>
             </android.support.v7.widget.CardView>
 
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardView6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginStart="24dp"
+                app:cardCornerRadius="0dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView5">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/imageView54"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView123"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView123"
+                        app:srcCompat="@drawable/foto" />
+
+                    <ImageView
+                        android:id="@+id/D_Foto"
+                        android:layout_width="66dp"
+                        android:layout_height="49dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView123"
+                        app:srcCompat="@drawable/common_ic_googleplayservices"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp" />
+
+                    <TextView
+                        android:id="@+id/textView123"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="sans-serif"
+                        android:text="Foto"
+                        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toRightOf="@+id/imageView54"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </android.support.constraint.ConstraintLayout>
+            </android.support.v7.widget.CardView>
 
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
-
-
-
-
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:gravity="center"
-        android:background="@color/primarySegnalazione"
-        android:orientation="horizontal"
-        android:id="@+id/btnChiama"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:backgroundTint="@color/colorPrimary"
-            android:src="@drawable/telefono"
-            android:tint="@color/color_white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="8dp"
-            app:layout_constraintRight_toLeftOf="@+id/appCompatTextView"
-            tools:layout_constraintRight_creator="1" />
-
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/appCompatTextView"
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:fontFamily="sans-serif-condensed"
-            android:text="CHIAMA"
-            android:textAlignment="center"
-            android:textColor="@color/color_white"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_constraintRight_creator="1"
-            tools:layout_constraintLeft_creator="1" />
-
-    </android.support.constraint.ConstraintLayout>
 
 
 </android.support.constraint.ConstraintLayout>

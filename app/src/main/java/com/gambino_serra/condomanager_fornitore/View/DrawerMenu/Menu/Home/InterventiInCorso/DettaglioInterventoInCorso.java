@@ -22,7 +22,6 @@ import java.util.Map;
 
 
 public class DettaglioInterventoInCorso extends AppCompatActivity {
-
     private static final String MY_PREFERENCES = "preferences";
     private static final String LOGGED_USER = "username";
 
@@ -31,19 +30,12 @@ public class DettaglioInterventoInCorso extends AppCompatActivity {
 
     // Oggetti di Layout NUOVI
     TextView TidTicketIntervento;
-    TextView TuidAmministratore;
+    TextView TAmministratore;
     TextView TdataTicket;
-    TextView TdataUltimoAggiornamento;
-    TextView Tfornitore;
-    TextView TmessaggioCondomino;
-    TextView TaggiornamentoCondomini;
-    TextView TdescrizioneCondomini;
     TextView Toggetto;
-    TextView TrapportiIntervento;
     TextView Trichiesta;
     TextView Tstabile;
-    TextView Tstato;
-    TextView Tpriorità;
+    TextView Tindirizzo;
     ImageView Tfoto;
 
     private Firebase firebaseDB;
@@ -60,15 +52,15 @@ public class DettaglioInterventoInCorso extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dettaglio_intervento);
+        setContentView(R.layout.dettaglio_intervento_in_corso);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
         final SharedPreferences sharedPrefs = getSharedPreferences(MY_PREFERENCES, MODE_PRIVATE);
         username = sharedPrefs.getString(LOGGED_USER, "").toString();
 
-        if (getIntent().getExtras() != null) {
-
+        if (getIntent().getExtras() != null)
+        {
             bundle = getIntent().getExtras();
             idIntervento = bundle.get("idIntervento").toString();
 
@@ -76,27 +68,30 @@ public class DettaglioInterventoInCorso extends AppCompatActivity {
             editor.putString("idIntervento", idIntervento);
             editor.apply();
         }
-        else {
+        else
+        {
             //TODO: perchè
             idIntervento = sharedPrefs.getString("idIntervento", "").toString();
             bundle = new Bundle();
             bundle.putString("idIntervento", idIntervento);
-            }
+        }
 
         // Avvaloro i nuovi rierimenti al layout
-        TdataTicket = (TextView) findViewById(R.id.D_Oggetto);
-        TuidAmministratore = (TextView) findViewById(R.id.D_Oggetto);
-        Tstabile = (TextView) findViewById(R.id.D_Oggetto);
-        Trichiesta = (TextView) findViewById(R.id.D_Oggetto);
+        TdataTicket = (TextView) findViewById(R.id.D_Data);
+        Tstabile = (TextView) findViewById(R.id.D_Condominio);
+        Tindirizzo = (TextView) findViewById(R.id.D_Indirizzo);
         Toggetto = (TextView) findViewById(R.id.D_Oggetto);
-
+        TAmministratore = (TextView) findViewById(R.id.D_Amministratore);
+        Trichiesta = (TextView) findViewById(R.id.D_Descrizione);
+        Tfoto = (ImageView) findViewById(R.id.D_Foto);
+        TidTicketIntervento = (TextView) findViewById(R.id.D_IDIntervento);
 
         ticketInterventoMap = new HashMap<String, Object>();
         // Avvalora il primo oggetto del map con l'ID dell'intervento recuperato
         ticketInterventoMap.put("idIntervento", idIntervento);
 
         Query intervento;
-        intervento = FirebaseDB.getInterventi().orderByKey().equalTo("idIntervento");
+        intervento = FirebaseDB.getInterventi().orderByKey().equalTo(idIntervento);
 
         intervento.addChildEventListener(new ChildEventListener() {
             @Override
@@ -106,9 +101,10 @@ public class DettaglioInterventoInCorso extends AppCompatActivity {
 
                 for(DataSnapshot child : dataSnapshot.getChildren()){
                     ticketInterventoMap.put(child.getKey(),child.getValue());
-                    }
+                }
+
                 TicketIntervento ticketIntervento = new TicketIntervento(
-                        ticketInterventoMap.get("id").toString(),
+                        ticketInterventoMap.get("idIntervento").toString(),
                         ticketInterventoMap.get("amministratore").toString(),
                         ticketInterventoMap.get("data_ticket").toString(),
                         ticketInterventoMap.get("data_ultimo_aggiornamento").toString(),
@@ -121,17 +117,20 @@ public class DettaglioInterventoInCorso extends AppCompatActivity {
                         ticketInterventoMap.get("richiesta").toString(),
                         ticketInterventoMap.get("stabile").toString(),
                         ticketInterventoMap.get("stato").toString() ,
-                        ticketInterventoMap.get("priorità").toString() //,
-                        //ticketInterventoMap.get("foto").toString()
+                        ticketInterventoMap.get("priorità").toString() ,
+                        ticketInterventoMap.get("foto").toString()
                 );
 
-                TdataTicket.setText(ticketIntervento.getDataTicket());
-                TuidAmministratore.setText(ticketIntervento.getUidAmministratore());
-                Tstabile.setText(ticketIntervento.getStabile());
-                Toggetto.setText(ticketIntervento.getOggetto());
-                Trichiesta.setText(ticketIntervento.getRichiesta());
-                //Tfoto TODO: AGGIUNGERE FOTO
-
+                try {
+                    TdataTicket.setText(ticketIntervento.getDataTicket().toString());
+                    Tstabile.setText(ticketIntervento.getStabile().toString());
+                    Toggetto.setText(ticketIntervento.getOggetto().toString());
+                    TAmministratore.setText(ticketIntervento.getUidAmministratore().toString());
+                    Trichiesta.setText(ticketIntervento.getRichiesta().toString());
+                    Tindirizzo.setText("indirizzo ancora non presente");
+                    //Tfoto.setQUALCOSA TODO: AGGIUNGERE FOTO e INDIRIZZO
+                    TidTicketIntervento.setText(ticketIntervento.getIdTicketIntervento());
+                }catch (NullPointerException e){}
             }
 
             @Override
@@ -145,10 +144,10 @@ public class DettaglioInterventoInCorso extends AppCompatActivity {
 
             @Override
             public void onCancelled(FirebaseError firebaseError) { }
-
         });
-  }
+    }
 }
+
 
 
 
