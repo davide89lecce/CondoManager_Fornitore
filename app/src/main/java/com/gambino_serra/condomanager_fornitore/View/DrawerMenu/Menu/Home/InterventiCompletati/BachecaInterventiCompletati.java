@@ -113,8 +113,8 @@ public class BachecaInterventiCompletati extends Fragment{
                             ticketInterventoMap.get("richiesta").toString(),
                             ticketInterventoMap.get("stabile").toString(),
                             ticketInterventoMap.get("stato").toString() ,
-                            ticketInterventoMap.get("priorità").toString()//,
-                            //ticketInterventoMap.get("foto").toString()
+                            ticketInterventoMap.get("priorità").toString(),
+                            ticketInterventoMap.get("foto").toString()
                     );
 
                     if(ticketIntervento.getStato().equals("completato"))

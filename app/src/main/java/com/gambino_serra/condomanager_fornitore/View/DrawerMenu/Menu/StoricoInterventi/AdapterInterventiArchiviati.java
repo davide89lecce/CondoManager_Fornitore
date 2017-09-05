@@ -39,9 +39,9 @@ public class AdapterInterventiArchiviati extends RecyclerView.Adapter<AdapterInt
 
             this.Tstabile = (TextView) itemView.findViewById(R.id.D_Condominio);
             this.Tindirizzo = (TextView) itemView.findViewById(R.id.D_Indirizzo); //TODO: Aggiungere indirizzo
-            this.Toggetto = (TextView) itemView.findViewById(R.id.D_OggettoInterv);
+            this.Toggetto = (TextView) itemView.findViewById(R.id.D_Oggetto);
             //Campo nascosto per recuperare il riferimento
-            this.IdTicket = (TextView) itemView.findViewById(R.id.IDTicket);
+            this.IdTicket = (TextView) itemView.findViewById(R.id.D_IDIntervento);
         }
     }
 

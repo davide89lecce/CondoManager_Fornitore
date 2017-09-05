@@ -29,19 +29,12 @@ public class DettaglioInterventoArchiviato extends AppCompatActivity {
 
     // Oggetti di Layout NUOVI
     TextView TidTicketIntervento;
-    TextView TuidAmministratore;
+    TextView TAmministratore;
     TextView TdataTicket;
-    TextView TdataUltimoAggiornamento;
-    TextView Tfornitore;
-    TextView TmessaggioCondomino;
-    TextView TaggiornamentoCondomini;
-    TextView TdescrizioneCondomini;
     TextView Toggetto;
-    TextView TrapportiIntervento;
     TextView Trichiesta;
     TextView Tstabile;
-    TextView Tstato;
-    TextView Tpriorità;
+    TextView Tindirizzo;
     ImageView Tfoto;
 
     private Firebase firebaseDB;
@@ -65,8 +58,8 @@ public class DettaglioInterventoArchiviato extends AppCompatActivity {
         final SharedPreferences sharedPrefs = getSharedPreferences(MY_PREFERENCES, MODE_PRIVATE);
         username = sharedPrefs.getString(LOGGED_USER, "").toString();
 
-        if (getIntent().getExtras() != null) {
-
+        if (getIntent().getExtras() != null)
+        {
             bundle = getIntent().getExtras();
             idIntervento = bundle.get("idIntervento").toString();
 
@@ -74,7 +67,8 @@ public class DettaglioInterventoArchiviato extends AppCompatActivity {
             editor.putString("idIntervento", idIntervento);
             editor.apply();
         }
-        else {
+        else
+        {
             //TODO: perchè
             idIntervento = sharedPrefs.getString("idIntervento", "").toString();
             bundle = new Bundle();
@@ -82,19 +76,21 @@ public class DettaglioInterventoArchiviato extends AppCompatActivity {
         }
 
         // Avvaloro i nuovi rierimenti al layout
-        TdataTicket = (TextView) findViewById(R.id.D_Oggetto);
-        TuidAmministratore = (TextView) findViewById(R.id.D_Oggetto);
-        Tstabile = (TextView) findViewById(R.id.D_Oggetto);
-        Trichiesta = (TextView) findViewById(R.id.D_Oggetto);
+        TdataTicket = (TextView) findViewById(R.id.D_Data);
+        Tstabile = (TextView) findViewById(R.id.D_Condominio);
+        Tindirizzo = (TextView) findViewById(R.id.D_Indirizzo);
         Toggetto = (TextView) findViewById(R.id.D_Oggetto);
-
+        TAmministratore = (TextView) findViewById(R.id.D_Amministratore);
+        Trichiesta = (TextView) findViewById(R.id.D_Descrizione);
+        Tfoto = (ImageView) findViewById(R.id.D_Foto);
+        TidTicketIntervento = (TextView) findViewById(R.id.D_IDIntervento);
 
         ticketInterventoMap = new HashMap<String, Object>();
         // Avvalora il primo oggetto del map con l'ID dell'intervento recuperato
         ticketInterventoMap.put("idIntervento", idIntervento);
 
         Query intervento;
-        intervento = FirebaseDB.getInterventi().orderByKey().equalTo("idIntervento");
+        intervento = FirebaseDB.getInterventi().orderByKey().equalTo(idIntervento);
 
         intervento.addChildEventListener(new ChildEventListener() {
             @Override
@@ -105,6 +101,7 @@ public class DettaglioInterventoArchiviato extends AppCompatActivity {
                 for(DataSnapshot child : dataSnapshot.getChildren()){
                     ticketInterventoMap.put(child.getKey(),child.getValue());
                 }
+
                 TicketIntervento ticketIntervento = new TicketIntervento(
                         ticketInterventoMap.get("id").toString(),
                         ticketInterventoMap.get("amministratore").toString(),
@@ -119,17 +116,20 @@ public class DettaglioInterventoArchiviato extends AppCompatActivity {
                         ticketInterventoMap.get("richiesta").toString(),
                         ticketInterventoMap.get("stabile").toString(),
                         ticketInterventoMap.get("stato").toString() ,
-                        ticketInterventoMap.get("priorità").toString() //,
-                        //ticketInterventoMap.get("foto").toString()
+                        ticketInterventoMap.get("priorità").toString() ,
+                        ticketInterventoMap.get("foto").toString()
                 );
 
-                TdataTicket.setText(ticketIntervento.getDataTicket());
-                TuidAmministratore.setText(ticketIntervento.getUidAmministratore());
-                Tstabile.setText(ticketIntervento.getStabile());
-                Toggetto.setText(ticketIntervento.getOggetto());
-                Trichiesta.setText(ticketIntervento.getRichiesta());
-                //Tfoto TODO: AGGIUNGERE FOTO
-
+                try {
+                    TdataTicket.setText(ticketIntervento.getDataTicket().toString());
+                    Tstabile.setText(ticketIntervento.getStabile().toString());
+                    Toggetto.setText(ticketIntervento.getOggetto().toString());
+                    TAmministratore.setText(ticketIntervento.getUidAmministratore().toString());
+                    Trichiesta.setText(ticketIntervento.getRichiesta().toString());
+                    Tindirizzo.setText("indirizzo ancora non presente");
+                    //Tfoto.setQUALCOSA TODO: AGGIUNGERE FOTO e INDIRIZZO
+                    TidTicketIntervento.setText(ticketIntervento.getIdTicketIntervento());
+                }catch (NullPointerException e){}
             }
 
             @Override
@@ -143,7 +143,6 @@ public class DettaglioInterventoArchiviato extends AppCompatActivity {
 
             @Override
             public void onCancelled(FirebaseError firebaseError) { }
-
         });
     }
 }

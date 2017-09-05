@@ -15,32 +15,21 @@ public class AdapterInterventiCompletati extends RecyclerView.Adapter<AdapterInt
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView TidTicketIntervento;
-        TextView TuidAmministratore;
         TextView TdataTicket;
         TextView TdataUltimoAggiornamento;
-        TextView Tfornitore;
-        TextView TmessaggioCondomino;
-        TextView TaggiornamentoCondomini;
-        TextView TdescrizioneCondomini;
         TextView Toggetto;
-        TextView TrapportiIntervento;
-        TextView Trichiesta;
         TextView Tstabile;
-        TextView Tstato;
-        TextView Tpriorità;
-        TextView Tindirizzo;
         TextView IdTicket;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            this.TdataTicket = (TextView) itemView.findViewById(R.id.DataAgg_Interv);
+            this.TdataTicket = (TextView) itemView.findViewById(R.id.D_Data);
             this.TdataUltimoAggiornamento = (TextView) itemView.findViewById(R.id.D_UltimoRapporto);
             this.Tstabile = (TextView) itemView.findViewById(R.id.D_Condominio);
-            this.Toggetto = (TextView) itemView.findViewById(R.id.D_OggettoInterv);
+            this.Toggetto = (TextView) itemView.findViewById(R.id.D_Oggetto);
             //Campo nascosto per recuperare il riferimento
-            this.IdTicket = (TextView) itemView.findViewById(R.id.IDTicket);
+            this.IdTicket = (TextView) itemView.findViewById(R.id.D_IDIntervento);
         }
     }
 
