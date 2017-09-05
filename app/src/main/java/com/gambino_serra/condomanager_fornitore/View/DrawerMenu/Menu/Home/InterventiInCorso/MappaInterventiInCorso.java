@@ -431,68 +431,9 @@ public class MappaInterventiInCorso extends FragmentActivity implements
                    ticketInterventoMap.put(child.getKey(), child.getValue());
                                             }
 
+        speriamoCheFunziona(ticketInterventoMap);
 
-                Query query2;
-                query2 = FirebaseDB.getStabili().orderByKey().equalTo(  ticketInterventoMap.get("stabile").toString() );
-                query2.addChildEventListener(new ChildEventListener() {
-                                                @Override
-                                                public void onChildAdded(com.firebase.client.DataSnapshot dataSnapshot, String s) {
 
-                                                    //HashMap temporaneo per immagazzinare i dati dello stabile
-                                                    // per ognuno dei figli presenti nello snapshot, ovvero per tutti i figli di un singolo nodo Stabile
-                                                    // recuperiamo i dati per inserirli nel MAP
-                                                    for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                                        ticketInterventoMap.put(child.getKey(), child.getValue());
-
-                                                    }
-
-                                                    // Avvaloriamo una variabile TicketIntervento appositamente creata in modo da inserire poi questo
-                                                    // oggetto all'interno di un Array di interventi che utilizzeremo per popolare la lista Recycle
-                                                    try {
-                                                        MarkerIntervento markerIntervento = new MarkerIntervento(
-                                                                ticketInterventoMap.get("id").toString(),
-                                                                ticketInterventoMap.get("data_ticket").toString(),
-                                                                ticketInterventoMap.get("oggetto").toString(),
-                                                                ticketInterventoMap.get("richiesta").toString(),
-                                                                ticketInterventoMap.get("stabile").toString(),
-                                                                ticketInterventoMap.get("stato").toString(),
-                                                                ticketInterventoMap.get("priorità").toString(),
-                                                                ticketInterventoMap.get("latitudine").toString(),
-                                                                ticketInterventoMap.get("longitudine").toString(),
-                                                                ticketInterventoMap.get("nome").toString(),
-                                                                ticketInterventoMap.get("indirizzo").toString()
-                                                        );
-
-                                                        if (markerIntervento.getStato().equals("in corso")) {
-                                                            // inserisce l'oggetto ticket nell'array interventi
-                                                            interventi.add(markerIntervento);
-
-                                                            //codice latitudine longitudine
-                                                            LatLng ltlnHelpers;
-                                                            ltlnHelpers = new LatLng(Double.parseDouble(markerIntervento.getLatitudine()), Double.parseDouble(markerIntervento.getLongitudine()));
-                                                            map.addMarker(new MarkerOptions()
-                                                                    .position(ltlnHelpers)
-                                                                    .title(markerIntervento.getOggetto().toString())
-                                                                    .snippet(markerIntervento.getRichiesta().toString())
-                                                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-                                                        }
-
-                                                    } catch (NullPointerException e) {
-                                                        Toast.makeText(getApplicationContext(), "Non riesco ad aprire l'oggetto " + e.toString(), Toast.LENGTH_LONG).show();
-                                                    }
-                                                }
-                    @Override
-                    public void onChildChanged(com.firebase.client.DataSnapshot dataSnapshot, String s) { }
-
-                    @Override
-                    public void onChildRemoved(com.firebase.client.DataSnapshot dataSnapshot) { }
-
-                    @Override
-                    public void onChildMoved(com.firebase.client.DataSnapshot dataSnapshot, String s) { }
-
-                    @Override
-                    public void onCancelled(FirebaseError firebaseError) { }
-                                            });
 
 
                                         }
@@ -690,4 +631,71 @@ public class MappaInterventiInCorso extends FragmentActivity implements
             return mDialog;
         }
     }
+
+    public void speriamoCheFunziona(final Map<String, Object> ticketInterventoMap){
+
+        final Map<String, Object> ticketInterventoMap2 = new HashMap<String, Object>();
+        Query query2;
+        query2 = FirebaseDB.getStabili().orderByKey().equalTo(  ticketInterventoMap.get("stabile").toString() );
+        query2.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(com.firebase.client.DataSnapshot dataSnapshot, String s) {
+
+                //HashMap temporaneo per immagazzinare i dati dello stabile
+                // per ognuno dei figli presenti nello snapshot, ovvero per tutti i figli di un singolo nodo Stabile
+                // recuperiamo i dati per inserirli nel MAP
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    ticketInterventoMap2.put(child.getKey(), child.getValue());
+
+                }
+
+                // Avvaloriamo una variabile TicketIntervento appositamente creata in modo da inserire poi questo
+                // oggetto all'interno di un Array di interventi che utilizzeremo per popolare la lista Recycle
+                try {
+                    MarkerIntervento markerIntervento = new MarkerIntervento(
+                            ticketInterventoMap.get("id").toString(),
+                            ticketInterventoMap.get("data_ticket").toString(),
+                            ticketInterventoMap.get("oggetto").toString(),
+                            ticketInterventoMap.get("richiesta").toString(),
+                            ticketInterventoMap.get("stabile").toString(),
+                            ticketInterventoMap.get("stato").toString(),
+                            ticketInterventoMap.get("priorità").toString(),
+                            ticketInterventoMap2.get("latitudine").toString(),
+                            ticketInterventoMap2.get("longitudine").toString(),
+                            ticketInterventoMap2.get("nome").toString(),
+                            ticketInterventoMap2.get("indirizzo").toString()
+                    );
+
+                    if (markerIntervento.getStato().equals("in corso")) {
+                        // inserisce l'oggetto ticket nell'array interventi
+                        interventi.add(markerIntervento);
+
+                        //codice latitudine longitudine
+                        LatLng ltlnHelpers;
+                        ltlnHelpers = new LatLng(Double.parseDouble(markerIntervento.getLatitudine()), Double.parseDouble(markerIntervento.getLongitudine()));
+                        map.addMarker(new MarkerOptions()
+                                .position(ltlnHelpers)
+                                .title(markerIntervento.getOggetto().toString())
+                                .snippet(markerIntervento.getRichiesta().toString())
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                    }
+
+                } catch (NullPointerException e) {
+                    Toast.makeText(getApplicationContext(), "Non riesco ad aprire l'oggetto " + e.toString(), Toast.LENGTH_LONG).show();
+                }
+            }
+            @Override
+            public void onChildChanged(com.firebase.client.DataSnapshot dataSnapshot, String s) { }
+
+            @Override
+            public void onChildRemoved(com.firebase.client.DataSnapshot dataSnapshot) { }
+
+            @Override
+            public void onChildMoved(com.firebase.client.DataSnapshot dataSnapshot, String s) { }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) { }
+        });
+    }
+
 }
