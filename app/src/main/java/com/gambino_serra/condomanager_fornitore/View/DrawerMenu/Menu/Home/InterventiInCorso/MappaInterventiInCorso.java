@@ -21,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
@@ -45,14 +44,12 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
@@ -103,9 +100,6 @@ public class MappaInterventiInCorso extends FragmentActivity implements
 
     /**
      * Il metodo formatta l'orario.
-     *
-     * @param c
-     * @return la stringa formattata
      */
     private static String pad(int c) {
         if (c >= 10)
@@ -136,18 +130,17 @@ public class MappaInterventiInCorso extends FragmentActivity implements
 
     /**
      * Il metodo permette di caricare le mappe di Google.
-     * N.B.: KiuerMapsPermissionsDispatcher, la classe viene creata in fase di build dell'applicazione.
-     *
-     * @param googleMap
      */
     protected void loadMap(GoogleMap googleMap) {
         map = googleMap;
         if (map != null) {
             MappaInterventiInCorsoPermissionsDispatcher.getMyLocationWithCheck(this);
             map.setOnMapClickListener(this);
-        } else {
+            }
+        else
+            {
             Toast.makeText(this, "Errore caricamento mappe", Toast.LENGTH_SHORT).show();
-        }
+            }
     }
 
     @SuppressWarnings("all")
@@ -197,10 +190,6 @@ public class MappaInterventiInCorso extends FragmentActivity implements
 
     /**
      * Il metodo gestisce i risultati ritornati dal FragmentActivity dei Google Play services.
-     *
-     * @param requestCode
-     * @param resultCode
-     * @param data
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -218,10 +207,7 @@ public class MappaInterventiInCorso extends FragmentActivity implements
     }
 
     /**
-     * Il metodo verifica che il servizi di Google siano disponibili,
-     * in caso contrario una Dialog viene visualizzata al'utente.
-     *
-     * @return booleano
+     * Il metodo verifica che i servizi di Google siano disponibili, in caso contrario una Dialog viene visualizzata al'utente.
      */
     private boolean isGooglePlayServicesAvailable() {
 
@@ -232,10 +218,10 @@ public class MappaInterventiInCorso extends FragmentActivity implements
         if (ConnectionResult.SUCCESS == resultCode) {
             Log.d("Location Updates", "Google Play services is available.");
             return true;
-        } else {
+            }
+        else {
             // Ricevo la Error Dialog dai servizi Google Play.
-            Dialog errorDialog = GooglePlayServicesUtil.getErrorDialog(resultCode, this,
-                    CONNECTION_FAILURE_RESOLUTION_REQUEST);
+            Dialog errorDialog = GooglePlayServicesUtil.getErrorDialog(resultCode, this, CONNECTION_FAILURE_RESOLUTION_REQUEST);
 
             // Se Google Play services puo' fornire una Error Dialog
             if (errorDialog != null) {
@@ -243,7 +229,7 @@ public class MappaInterventiInCorso extends FragmentActivity implements
                 ErrorDialogFragment errorFragment = new ErrorDialogFragment();
                 errorFragment.setDialog(errorDialog);
                 errorFragment.show(getFragmentManager(), "Location Updates");
-            }
+                }
             return false;
         }
     }
@@ -251,23 +237,24 @@ public class MappaInterventiInCorso extends FragmentActivity implements
     /**
      * Il metodo viene invocato dal Location Services quando la richiesta di connessione al client
      * e' avvenuta con successo. In questo momento si puo' richiedere la posizione corrente.
-     *
-     * @param dataBundle
      */
     @Override
     public void onConnected(Bundle dataBundle) {
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
-        }
+            }
         Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        if (location != null) {
+        if (location != null)
+            {
             LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
             map.animateCamera(cameraUpdate);
-        } else {
+            }
+        else
+            {
             Toast.makeText(this, "Abilita GPS", Toast.LENGTH_SHORT).show();
-        }
+            }
         startLocationUpdates();
     }
 
@@ -281,33 +268,28 @@ public class MappaInterventiInCorso extends FragmentActivity implements
         mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
-        }
-        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
-                mLocationRequest, this);
+            }
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
     }
 
-    public void onLocationChanged(Location location) {
-    }
+    public void onLocationChanged(Location location) { }
 
     /**
-     * Il metodo e' invocato dal Location Services se la connessione con il client
-     * si interrrompe a causa di un errore.
-     *
-     * @param i
+     * Il metodo e' invocato dal Location Services se la connessione con il client si interrrompe a causa di un errore.
      */
     @Override
     public void onConnectionSuspended(int i) {
         if (i == CAUSE_SERVICE_DISCONNECTED) {
             Toast.makeText(this, "Disconesso", Toast.LENGTH_SHORT).show();
-        } else if (i == CAUSE_NETWORK_LOST) {
+            }
+        else if (i == CAUSE_NETWORK_LOST)
+            {
             Toast.makeText(this, "Rete dati assente", Toast.LENGTH_SHORT).show();
-        }
+            }
     }
 
     /**
      * Il metodo viene invocato dal Location Services se lo stesso servizio fallisce
-     *
-     * @param connectionResult
      */
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
@@ -315,38 +297,33 @@ public class MappaInterventiInCorso extends FragmentActivity implements
         // Se il problema di connessione e' risolvibile (da Google) allora viene
         // inviato un Intent all'Activity predisposta a risolvere il problema.
         if (connectionResult.hasResolution()) {
-            try {
-                connectionResult.startResolutionForResult(this,
-                        CONNECTION_FAILURE_RESOLUTION_REQUEST);
-
-                //L'eccezione e' sollevata nel caso in cui l'Intent viene
-                //eliminato.
-            } catch (IntentSender.SendIntentException e) {
-                // Log the error
-                e.printStackTrace();
-            }
-        } else {
-            Toast.makeText(getApplicationContext(),
-                    "Servizio GPS non disponibile", Toast.LENGTH_LONG).show();
+            try
+                {
+                connectionResult.startResolutionForResult(this, CONNECTION_FAILURE_RESOLUTION_REQUEST);
+                }
+            catch (IntentSender.SendIntentException e)//L'eccezione e' sollevata nel caso in cui l'Intent viene eliminato.
+                {
+                e.printStackTrace();  // Log the error
+                }
         }
+        else
+            {
+            Toast.makeText(getApplicationContext(), "Servizio GPS non disponibile", Toast.LENGTH_LONG).show();
+            }
     }
 
     /**
-     * Il metodo permette di caricare e visualizzare la mappa nella UI dell'applicazione
-     * e le sue componenti invocando il metodo loadMap(map).
-     *
-     * @param map
+     * Il metodo permette di caricare e visualizzare la mappa nella UI dell'applicazione e le sue componenti invocando il metodo loadMap(map).
      */
     @Override
     public void onMapReady(GoogleMap map) {
 
         loadMap(map);
-
         closeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent setting = new Intent(MappaInterventiInCorso.this, MainDrawer.class);
                 startActivity(setting);
-            }
+                }
         });
 
         Snackbar snack = Snackbar.make(findViewById(android.R.id.content), "Seleziona il marker sulla mappa", Snackbar.LENGTH_LONG);
@@ -354,14 +331,10 @@ public class MappaInterventiInCorso extends FragmentActivity implements
         TextView tv = (TextView) view1.findViewById(android.support.design.R.id.snackbar_text);
         tv.setTextColor(Color.WHITE);
         snack.show();
-
     }
 
     /**
-     * Il metodo permete di posizionare il marker dell'utente e di visualizzare sulla mappa
-     * gli Helper disponibili.
-     *
-     * @param latLng
+     * Il metodo permete di posizionare il marker dell'utente e di visualizzare sulla mappa gli Helper disponibili.
      */
     @Override
     public void onMapClick(LatLng latLng) {
@@ -380,34 +353,48 @@ public class MappaInterventiInCorso extends FragmentActivity implements
 
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         List<Address> addresses = null;
-        try {
+        try
+            {
             addresses = geocoder.getFromLocation(ltln.latitude, ltln.longitude, 1);
-        } catch (IOException ioException) {
+            }
+        catch (IOException ioException)
+            {
             Log.d("errore", "lettura coordinate");
-        } catch (IllegalArgumentException illegalArgumentException) {
+            }
+        catch (IllegalArgumentException illegalArgumentException)
+            {
             Log.d("errore", "coordinate non valide");
-        }
+            }
 
         //Gestione del caso che non sia trovato un indirizzo valido
-        if ((addresses != null) && (addresses.size() > 3)) {
+        if ((addresses != null) && (addresses.size() > 3))
+            {
             Address addr = addresses.get(0);
             address = addr.getAddressLine(0).toString() + " " + addr.getAddressLine(1).toString() + " " + addr.getAddressLine(2).toString();
             address = address.replace("'", "").toString();
-        } else if ((addresses != null) && (addresses.size() == 3)) {
+            }
+        else if ((addresses != null) && (addresses.size() == 3))
+            {
             Address addr = addresses.get(0);
             address = addr.getAddressLine(0).toString() + " " + addr.getAddressLine(1).toString() + " " + addr.getAddressLine(2).toString();
             address = address.replace("'", "").toString();
-        } else if ((addresses != null) && (addresses.size() == 2)) {
+            }
+        else if ((addresses != null) && (addresses.size() == 2))
+            {
             Address addr = addresses.get(0);
             address = addr.getAddressLine(0).toString() + " " + addr.getAddressLine(1).toString();
             address = address.replace("'", "").toString();
-        } else if ((addresses != null) && (addresses.size() == 1)) {
+            }
+        else if ((addresses != null) && (addresses.size() == 1))
+            {
             Address addr = addresses.get(0);
             address = addr.getAddressLine(0).toString();
             address = address.replace("'", "").toString();
-        } else {
+            }
+        else
+            {
             //address = getResources().getString(R.string.address_not_available);
-        }
+            }
 
         //Caricamento interventi su mappa
 
@@ -419,7 +406,7 @@ public class MappaInterventiInCorso extends FragmentActivity implements
         // la query seleziona solo gli interventi con un determinato fornitore
         //il listener lavora sui figli della query, ovvero su titti gli interventi recuperati
         query.addChildEventListener(new ChildEventListener() {
-                                        @Override
+        @Override
         public void onChildAdded(com.firebase.client.DataSnapshot dataSnapshot, String s) {
 
          //HashMap temporaneo per immagazzinare i dati di un ticket
@@ -427,33 +414,26 @@ public class MappaInterventiInCorso extends FragmentActivity implements
          ticketInterventoMap.put("id", dataSnapshot.getKey()); //primo campo del MAP
          // per ognuno dei figli presenti nello snapshot, ovvero per tutti i figli di un singolo nodo Interv
            // recuperiamo i dati per inserirli nel MAP
-             for (DataSnapshot child : dataSnapshot.getChildren()) {
-                   ticketInterventoMap.put(child.getKey(), child.getValue());
-                                            }
+             for (DataSnapshot child : dataSnapshot.getChildren())
+                {
+                ticketInterventoMap.put(child.getKey(), child.getValue());
+                }
 
-        speriamoCheFunziona(ticketInterventoMap);
+        visualizzaMarkers(ticketInterventoMap);
 
+        }
+            @Override
+            public void onChildChanged(com.firebase.client.DataSnapshot dataSnapshot, String s) { }
 
+            @Override
+            public void onChildRemoved(com.firebase.client.DataSnapshot dataSnapshot) { }
 
+            @Override
+            public void onChildMoved(com.firebase.client.DataSnapshot dataSnapshot, String s) { }
 
-                                        }
-
-                                        @Override
-                                        public void onChildChanged(com.firebase.client.DataSnapshot dataSnapshot, String s) {
-                                        }
-
-                                        @Override
-                                        public void onChildRemoved(com.firebase.client.DataSnapshot dataSnapshot) {
-                                        }
-
-                                        @Override
-                                        public void onChildMoved(com.firebase.client.DataSnapshot dataSnapshot, String s) {
-                                        }
-
-                                        @Override
-                                        public void onCancelled(FirebaseError firebaseError) {
-                                        }
-                                    });
+            @Override
+            public void onCancelled(FirebaseError firebaseError) { }
+        });
 
         /*
         LatLng ltlnHelpers;
@@ -557,8 +537,6 @@ public class MappaInterventiInCorso extends FragmentActivity implements
 
     /**
      * Il metodo gestisce la creazione della Dialog TimePicker.
-     * @param id
-     * @return Dialog
      */
     @Override
     protected Dialog onCreateDialog(int id) {
@@ -572,8 +550,7 @@ public class MappaInterventiInCorso extends FragmentActivity implements
     // updates the time we display in the TextView
 
     /**
-     * Il metodo permette di aggiornare il l'orario e visualizzarlo
-     * nella Dialog di richiesta.
+     * Il metodo permette di aggiornare il l'orario e visualizzarlo nella Dialog di richiesta.
      */
     private void updateDisplay() {
         //ora_richiesta = new StringBuilder().append(pad(ora)).append(":").append(pad(minuti));
@@ -581,37 +558,34 @@ public class MappaInterventiInCorso extends FragmentActivity implements
         //bundle.putString("ora_richiesta", ora_richiesta.toString());
         //newFragment.setArguments(bundle);
         //newFragment.show(getFragmentManager(), "KiuerMaps");
-    }
+        }
 
     /**
      * Il metodo visualizza il TimePicker.
      */
     public void showTimePickerRichiesta() {
         showDialog(TIME_DIALOG_ID1);
-    }
+        }
 
 
     /**
      * Il metodo gestisce la visualizzazione della richiesta di coda inviata e lo reindirizza alla home del Kiuer.
      */
     public void richiestaInviata() {
-
         Intent kiuerHomeActivity = new Intent(MappaInterventiInCorso.this, DettaglioInterventoInCorso.class);
         startActivity(kiuerHomeActivity);
         Toast.makeText(getApplicationContext(), "Richiesta inviata", Toast.LENGTH_SHORT).show();
-    }
+        }
 
     /**
      * Il metodo gestisce la visualizzazione della richiesta di coda non inviata.
      */
     public void richiestaNonInviata() {
-
         Toast.makeText(getApplicationContext(), "Richiesta non inviata", Toast.LENGTH_SHORT).show();
-    }
+        }
 
     /**
-     * Il metodo gestisce la comunicazione, tramite Dialog, degli errori
-     * che possono verificarsi.
+     * Il metodo gestisce la comunicazione, tramite Dialog, degli errori che possono verificarsi.
      */
     public static class ErrorDialogFragment extends DialogFragment {
 
@@ -620,19 +594,19 @@ public class MappaInterventiInCorso extends FragmentActivity implements
         public ErrorDialogFragment() {
             super();
             mDialog = null;
-        }
+            }
 
         public void setDialog(Dialog dialog) {
             mDialog = dialog;
-        }
+            }
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             return mDialog;
-        }
+            }
     }
 
-    public void speriamoCheFunziona(final Map<String, Object> ticketInterventoMap){
+    public void visualizzaMarkers(final Map<String, Object> ticketInterventoMap){
 
         final Map<String, Object> ticketInterventoMap2 = new HashMap<String, Object>();
         Query query2;
@@ -697,5 +671,4 @@ public class MappaInterventiInCorso extends FragmentActivity implements
             public void onCancelled(FirebaseError firebaseError) { }
         });
     }
-
 }

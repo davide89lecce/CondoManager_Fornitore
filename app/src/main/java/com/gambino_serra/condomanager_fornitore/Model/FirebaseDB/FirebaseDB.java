@@ -1,7 +1,6 @@
 package com.gambino_serra.condomanager_fornitore.Model.FirebaseDB;
 
 import android.content.Context;
-
 import com.firebase.client.Firebase;
 import com.google.firebase.database.DatabaseReference;
 
