@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.Home;
 import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.InformazioniPersonali.InformazioniPersonali;
+import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.StoricoInterventi.BachecaInterventiArchiviati;
 import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.StoricoInterventi.DettaglioInterventoArchiviato;
 import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.other.CircleTransform;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
@@ -196,8 +197,8 @@ public class MainDrawer extends AppCompatActivity {
                 return infoFragment;
             case 2:
                 // storico inteventi
-                //DettaglioInterventoArchiviato interventiFragment = new DettaglioInterventoArchiviato();
-                //return interventiFragment; TODO: SISTEMARE QUI
+                BachecaInterventiArchiviati interventiFragment = new BachecaInterventiArchiviati();
+                return interventiFragment;
             default:
                 return new Home();
         }

@@ -98,15 +98,6 @@
                 card_view:layout_constraintBottom_toBottomOf="@+id/TextViewUltimoRapporto"
                 card_view:layout_constraintLeft_toRightOf="@+id/TextViewUltimoRapporto" />
 
-            <TextView
-                android:id="@+id/D_IDIntervento"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="invisible"
-                tools:layout_editor_absoluteY="48dp"
-                android:layout_marginRight="8dp"
-                card_view:layout_constraintRight_toRightOf="parent" />
-
 
             <TextView
                 android:id="@+id/D_Data"

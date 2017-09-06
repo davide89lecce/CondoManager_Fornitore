@@ -51,7 +51,7 @@ public class AdapterInterventiArchiviati extends RecyclerView.Adapter<AdapterInt
 
     @Override
     public AdapterInterventiArchiviati.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_intervento_in_corso, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_intervento_archiviato, parent, false);
 
         //Setta l'onclick sulla recycler view presente nella classe Interventi
         view.setOnClickListener(BachecaInterventiArchiviati.myOnClickListener);
@@ -64,12 +64,12 @@ public class AdapterInterventiArchiviati extends RecyclerView.Adapter<AdapterInt
     public void onBindViewHolder(final AdapterInterventiArchiviati.MyViewHolder holder, final int listPosition) {
 
         TextView Tstabile = holder.Tstabile;
-        TextView Tindirizzo = holder.Tindirizzo;
+        //TextView Tindirizzo = holder.Tindirizzo;
         TextView Toggetto = holder.Toggetto;
         TextView IdTicket = holder.IdTicket;
 
         Tstabile.setText(dataset.get(listPosition).getStabile());
-        Tindirizzo.setText("INDIRIZZO CHE PER ORA NON C'E'");
+        //Tindirizzo.setText("INDIRIZZO CHE PER ORA NON C'E'");
         Toggetto.setText(dataset.get(listPosition).getOggetto());
         IdTicket.setText(dataset.get(listPosition).getIdTicketIntervento());
     }
