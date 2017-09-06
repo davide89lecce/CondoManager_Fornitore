@@ -103,7 +103,7 @@ public class DettaglioInterventoArchiviato extends AppCompatActivity {
                 }
 
                 TicketIntervento ticketIntervento = new TicketIntervento(
-                        ticketInterventoMap.get("id").toString(),
+                        ticketInterventoMap.get("idIntervento").toString(),
                         ticketInterventoMap.get("amministratore").toString(),
                         ticketInterventoMap.get("data_ticket").toString(),
                         ticketInterventoMap.get("data_ultimo_aggiornamento").toString(),
