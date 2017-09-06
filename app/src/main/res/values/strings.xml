@@ -1,6 +1,6 @@
 <resources>
 
-    
+
     <!--Navigation Drawer-->
     <string name="app_name">CondoManager Fornitore</string>
     <string name="openDrawer">open_drawer</string>

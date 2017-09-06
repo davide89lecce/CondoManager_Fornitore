@@ -12,7 +12,6 @@
         android:layout_gravity="center"
         android:layout_margin="20dp"
         android:fontFamily="sans-serif"
-        android:text="@string/notification_message"
         android:textSize="20sp" />
 
 
