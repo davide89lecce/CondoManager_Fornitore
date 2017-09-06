@@ -24,8 +24,8 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
         android:background="@color/color_white"
-        android:contentDescription="Ciao"
-        android:src="@drawable/checked" />
+        android:contentDescription="Close"
+        android:src="@mipmap/ic_cancel" />
 
 
 </RelativeLayout>

@@ -3,6 +3,7 @@ package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.Inter
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -11,9 +12,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
@@ -22,6 +23,7 @@ import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +36,7 @@ public class BachecaInterventiInCorso extends Fragment {
     private ArrayList<TicketIntervento> data;
     public static View.OnClickListener myOnClickListener;
     Context context;
-    Button button;
+    FloatingActionButton buttonMaps;
 
     private FirebaseAuth firebaseAuth;
     private String uidFornitore;
@@ -66,8 +68,8 @@ public class BachecaInterventiInCorso extends Fragment {
         ticketInterventoMap = new HashMap<String,Object>();
         interventi = new ArrayList<TicketIntervento>();
 
-        button = (Button) getActivity().findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
+        buttonMaps = (FloatingActionButton) getActivity().findViewById(R.id.button);
+        buttonMaps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent mappa = new Intent(getActivity(), MappaInterventiInCorso.class);

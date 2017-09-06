@@ -8,8 +8,6 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -19,8 +17,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
+
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
@@ -42,14 +40,14 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import java.util.Map;
+
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
@@ -88,25 +86,6 @@ public class MappaInterventiInCorso extends FragmentActivity implements
     ArrayList<MarkerIntervento> interventi;
     private ArrayList<TicketIntervento> data;
 
-    // mTimeSetListener viene avvalorato nel momento in cui l'utente imposta un orario nella Dialog.
-    private android.app.TimePickerDialog.OnTimeSetListener mTimeSetListener = new android.app.TimePickerDialog.OnTimeSetListener() {
-
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            ora = hourOfDay;
-            minuti = minute;
-            updateDisplay();
-        }
-    };
-
-    /**
-     * Il metodo formatta l'orario.
-     */
-    private static String pad(int c) {
-        if (c >= 10)
-            return String.valueOf(c);
-        else
-            return "0" + String.valueOf(c);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -326,75 +305,7 @@ public class MappaInterventiInCorso extends FragmentActivity implements
                 }
         });
 
-        Snackbar snack = Snackbar.make(findViewById(android.R.id.content), "Seleziona il marker sulla mappa", Snackbar.LENGTH_LONG);
-        View view1 = snack.getView();
-        TextView tv = (TextView) view1.findViewById(android.support.design.R.id.snackbar_text);
-        tv.setTextColor(Color.WHITE);
-        snack.show();
-    }
-
-    /**
-     * Il metodo permete di posizionare il marker dell'utente e di visualizzare sulla mappa gli Helper disponibili.
-     */
-    @Override
-    public void onMapClick(LatLng latLng) {
-
         map.clear();
-        ltln = latLng;
-        map.addMarker(new MarkerOptions()
-                .position(ltln)
-                .title("Io"));
-
-        Snackbar snack = Snackbar.make(findViewById(android.R.id.content), "Seleziona un intervento sulla mappa", Snackbar.LENGTH_LONG);
-        View view1 = snack.getView();
-        TextView tv = (TextView) view1.findViewById(android.support.design.R.id.snackbar_text);
-        tv.setTextColor(Color.WHITE);
-        snack.show();
-
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-        List<Address> addresses = null;
-        try
-            {
-            addresses = geocoder.getFromLocation(ltln.latitude, ltln.longitude, 1);
-            }
-        catch (IOException ioException)
-            {
-            Log.d("errore", "lettura coordinate");
-            }
-        catch (IllegalArgumentException illegalArgumentException)
-            {
-            Log.d("errore", "coordinate non valide");
-            }
-
-        //Gestione del caso che non sia trovato un indirizzo valido
-        if ((addresses != null) && (addresses.size() > 3))
-            {
-            Address addr = addresses.get(0);
-            address = addr.getAddressLine(0).toString() + " " + addr.getAddressLine(1).toString() + " " + addr.getAddressLine(2).toString();
-            address = address.replace("'", "").toString();
-            }
-        else if ((addresses != null) && (addresses.size() == 3))
-            {
-            Address addr = addresses.get(0);
-            address = addr.getAddressLine(0).toString() + " " + addr.getAddressLine(1).toString() + " " + addr.getAddressLine(2).toString();
-            address = address.replace("'", "").toString();
-            }
-        else if ((addresses != null) && (addresses.size() == 2))
-            {
-            Address addr = addresses.get(0);
-            address = addr.getAddressLine(0).toString() + " " + addr.getAddressLine(1).toString();
-            address = address.replace("'", "").toString();
-            }
-        else if ((addresses != null) && (addresses.size() == 1))
-            {
-            Address addr = addresses.get(0);
-            address = addr.getAddressLine(0).toString();
-            address = address.replace("'", "").toString();
-            }
-        else
-            {
-            //address = getResources().getString(R.string.address_not_available);
-            }
 
         //Caricamento interventi su mappa
 
@@ -406,22 +317,22 @@ public class MappaInterventiInCorso extends FragmentActivity implements
         // la query seleziona solo gli interventi con un determinato fornitore
         //il listener lavora sui figli della query, ovvero su titti gli interventi recuperati
         query.addChildEventListener(new ChildEventListener() {
-        @Override
-        public void onChildAdded(com.firebase.client.DataSnapshot dataSnapshot, String s) {
+            @Override
+            public void onChildAdded(com.firebase.client.DataSnapshot dataSnapshot, String s) {
 
-         //HashMap temporaneo per immagazzinare i dati di un ticket
-          ticketInterventoMap = new HashMap<String, Object>();
-         ticketInterventoMap.put("id", dataSnapshot.getKey()); //primo campo del MAP
-         // per ognuno dei figli presenti nello snapshot, ovvero per tutti i figli di un singolo nodo Interv
-           // recuperiamo i dati per inserirli nel MAP
-             for (DataSnapshot child : dataSnapshot.getChildren())
+                //HashMap temporaneo per immagazzinare i dati di un ticket
+                ticketInterventoMap = new HashMap<String, Object>();
+                ticketInterventoMap.put("id", dataSnapshot.getKey()); //primo campo del MAP
+                // per ognuno dei figli presenti nello snapshot, ovvero per tutti i figli di un singolo nodo Interv
+                // recuperiamo i dati per inserirli nel MAP
+                for (DataSnapshot child : dataSnapshot.getChildren())
                 {
-                ticketInterventoMap.put(child.getKey(), child.getValue());
+                    ticketInterventoMap.put(child.getKey(), child.getValue());
                 }
 
-        visualizzaMarkers(ticketInterventoMap);
+                visualizzaMarkers(ticketInterventoMap);
 
-        }
+            }
             @Override
             public void onChildChanged(com.firebase.client.DataSnapshot dataSnapshot, String s) { }
 
@@ -435,175 +346,20 @@ public class MappaInterventiInCorso extends FragmentActivity implements
             public void onCancelled(FirebaseError firebaseError) { }
         });
 
-        /*
-        LatLng ltlnHelpers;
-        final ArrayList<JsonProfiloHelper> productList = new JsonConverter<JsonProfiloHelper>().toArrayList(response, JsonProfiloHelper.class);
-        for (final JsonProfiloHelper object : productList) {
-            ltlnHelpers = new LatLng(object.coordinate_latitudine, object.coordinate_longitudine);
-            map.addMarker(new MarkerOptions()
-                    .position(ltlnHelpers)
-                    .title(object.cognome.toString() + " " + object.nome.toString())
-                    .snippet(String.valueOf(getResources().getString(R.string.click_here_for_details)))
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-        }
-        map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-                                             @Override
-                                             public void onInfoWindowClick(Marker arg0) {
-                                                 for (final JsonProfiloHelper object : productList) {
-
-                                                    // if ((object.cognome.toString() + " " + object.nome.toString()).equals(arg0.getTitle().toString())) {
-                                                         //Fragment newFragment = new DettaglioInterventoInCorso();
-                                                         /*
-                                                         bundle.putString("email_kiuer", prefs.getString(EMAIL, ""));
-                                                         bundle.putString("email_helper", object.email.toString());
-                                                         bundle.putString("inizio_disp", object.inizio_disp.toString());
-                                                         bundle.putString("fine_disp", object.fine_disp.toString());
-                                                         bundle.putString("tariffa_oraria", object.tariffa_oraria.toString());
-                                                         bundle.putString("coordinate_latitudine", String.valueOf(ltln.latitude));
-                                                         bundle.putString("coordinate_longitudine", String.valueOf(ltln.longitude));
-                                                         bundle.putString("luogo", address.toString());
-                                                         bundle.putString("code_effettuate", object.code_effettuate.toString());
-                                                         bundle.putString("ora_richiesta", getResources().getString(R.string.set_request_time));
-                                                         bundle.putString("nome", object.nome.toString());
-                                                         bundle.putString("cognome", object.cognome.toString());
-                                                         bundle.putFloat("rating", object.rating);
-                                                         bundle.putInt("num_feedback", object.num_feedback);
-                                                         */
-                                                         //newFragment.setArguments(bundle);
-                                                         //newFragment.show(getFragmentManager(), "KiuerMaps");
-                                                     //}
-                                               //  }
-                                            // }
-                                         //});
-
-
-        /*
-        //Lettura degli Helper disponibili
-        final SharedPreferences prefs = getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
-        String url = "http://www.kiu.altervista.org/read_helpers.php";
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                if (!response.equals("null")) {
-                    LatLng ltlnHelpers;
-                    final ArrayList<JsonProfiloHelper> productList = new JsonConverter<JsonProfiloHelper>().toArrayList(response, JsonProfiloHelper.class);
-                    for (final JsonProfiloHelper object : productList) {
-                        ltlnHelpers = new LatLng(object.coordinate_latitudine, object.coordinate_longitudine);
-                        map.addMarker(new MarkerOptions()
-                                .position(ltlnHelpers)
-                                .title(object.cognome.toString() + " " + object.nome.toString())
-                                .snippet(String.valueOf(getResources().getString(R.string.click_here_for_details)))
-                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-                    }
-                    map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-                        @Override
-                        public void onInfoWindowClick(Marker arg0) {
-                            for (final JsonProfiloHelper object : productList) {
-                                if ((object.cognome.toString() + " " + object.nome.toString()).equals(arg0.getTitle().toString())) {
-                                    DialogFragment newFragment = new KiuerMapsDetails();
-                                    bundle.putString("email_kiuer", prefs.getString(EMAIL, ""));
-                                    bundle.putString("email_helper", object.email.toString());
-                                    bundle.putString("inizio_disp", object.inizio_disp.toString());
-                                    bundle.putString("fine_disp", object.fine_disp.toString());
-                                    bundle.putString("tariffa_oraria", object.tariffa_oraria.toString());
-                                    bundle.putString("coordinate_latitudine", String.valueOf(ltln.latitude));
-                                    bundle.putString("coordinate_longitudine", String.valueOf(ltln.longitude));
-                                    bundle.putString("luogo", address.toString());
-                                    bundle.putString("code_effettuate", object.code_effettuate.toString());
-                                    bundle.putString("ora_richiesta", getResources().getString(R.string.set_request_time));
-                                    bundle.putString("nome", object.nome.toString());
-                                    bundle.putString("cognome", object.cognome.toString());
-                                    bundle.putFloat("rating", object.rating);
-                                    bundle.putInt("num_feedback", object.num_feedback);
-                                    newFragment.setArguments(bundle);
-                                    newFragment.show(getFragmentManager(), "KiuerMaps");
-                                }
-                            }
-                        }
-                    });
-
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), R.string.error_update_volley, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        MySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
-        */
+        Snackbar snack = Snackbar.make(findViewById(android.R.id.content), "Seleziona il marker sulla mappa", Snackbar.LENGTH_LONG);
+        View view1 = snack.getView();
+        TextView tv = (TextView) view1.findViewById(android.support.design.R.id.snackbar_text);
+        tv.setTextColor(Color.WHITE);
+        snack.show();
     }
 
     /**
-     * Il metodo gestisce la creazione della Dialog TimePicker.
+     * Il metodo permete di posizionare il marker (non utilizzato)
      */
     @Override
-    protected Dialog onCreateDialog(int id) {
-        switch (id) {
-            case TIME_DIALOG_ID1:
-                return new android.app.TimePickerDialog(this, mTimeSetListener, ora, minuti, false);
-        }
-        return null;
-    }
-
-    // updates the time we display in the TextView
-
-    /**
-     * Il metodo permette di aggiornare il l'orario e visualizzarlo nella Dialog di richiesta.
-     */
-    private void updateDisplay() {
-        //ora_richiesta = new StringBuilder().append(pad(ora)).append(":").append(pad(minuti));
-        //DialogFragment newFragment = new KiuerMapsDetails();
-        //bundle.putString("ora_richiesta", ora_richiesta.toString());
-        //newFragment.setArguments(bundle);
-        //newFragment.show(getFragmentManager(), "KiuerMaps");
-        }
-
-    /**
-     * Il metodo visualizza il TimePicker.
-     */
-    public void showTimePickerRichiesta() {
-        showDialog(TIME_DIALOG_ID1);
-        }
+    public void onMapClick(LatLng latLng) {
 
 
-    /**
-     * Il metodo gestisce la visualizzazione della richiesta di coda inviata e lo reindirizza alla home del Kiuer.
-     */
-    public void richiestaInviata() {
-        Intent kiuerHomeActivity = new Intent(MappaInterventiInCorso.this, DettaglioInterventoInCorso.class);
-        startActivity(kiuerHomeActivity);
-        Toast.makeText(getApplicationContext(), "Richiesta inviata", Toast.LENGTH_SHORT).show();
-        }
-
-    /**
-     * Il metodo gestisce la visualizzazione della richiesta di coda non inviata.
-     */
-    public void richiestaNonInviata() {
-        Toast.makeText(getApplicationContext(), "Richiesta non inviata", Toast.LENGTH_SHORT).show();
-        }
-
-    /**
-     * Il metodo gestisce la comunicazione, tramite Dialog, degli errori che possono verificarsi.
-     */
-    public static class ErrorDialogFragment extends DialogFragment {
-
-        private Dialog mDialog;
-
-        public ErrorDialogFragment() {
-            super();
-            mDialog = null;
-            }
-
-        public void setDialog(Dialog dialog) {
-            mDialog = dialog;
-            }
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            return mDialog;
-            }
     }
 
     public void visualizzaMarkers(final Map<String, Object> ticketInterventoMap){
@@ -626,7 +382,7 @@ public class MappaInterventiInCorso extends FragmentActivity implements
                 // Avvaloriamo una variabile TicketIntervento appositamente creata in modo da inserire poi questo
                 // oggetto all'interno di un Array di interventi che utilizzeremo per popolare la lista Recycle
                 try {
-                    MarkerIntervento markerIntervento = new MarkerIntervento(
+                    final MarkerIntervento markerIntervento = new MarkerIntervento(
                             ticketInterventoMap.get("id").toString(),
                             ticketInterventoMap.get("data_ticket").toString(),
                             ticketInterventoMap.get("oggetto").toString(),
@@ -647,11 +403,42 @@ public class MappaInterventiInCorso extends FragmentActivity implements
                         //codice latitudine longitudine
                         LatLng ltlnHelpers;
                         ltlnHelpers = new LatLng(Double.parseDouble(markerIntervento.getLatitudine()), Double.parseDouble(markerIntervento.getLongitudine()));
-                        map.addMarker(new MarkerOptions()
-                                .position(ltlnHelpers)
-                                .title(markerIntervento.getOggetto().toString())
-                                .snippet(markerIntervento.getRichiesta().toString())
-                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+
+                        //Aggiunge il marker con il colore in base alla priorità
+                        if(markerIntervento.getPriorità().equals("1")) {
+                            map.addMarker(new MarkerOptions()
+                                    .position(ltlnHelpers)
+                                    .title(markerIntervento.getNomeStabile())
+                                    .snippet(markerIntervento.getOggetto().toString())
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                        }else if(markerIntervento.getPriorità().equals("2")){
+                            map.addMarker(new MarkerOptions()
+                                    .position(ltlnHelpers)
+                                    .title(markerIntervento.getNomeStabile())
+                                    .snippet(markerIntervento.getOggetto().toString())
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+                        }else if(markerIntervento.getPriorità().equals("3")){
+                            map.addMarker(new MarkerOptions()
+                                    .position(ltlnHelpers)
+                                    .title(markerIntervento.getNomeStabile())
+                                    .snippet(markerIntervento.getOggetto().toString())
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                        }
+                        //Setta l'onclick sul marker e intent a DettaglioInterventoInCorso
+                        map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                            @Override
+                            public void onInfoWindowClick(Marker arg0) {
+                                for (final MarkerIntervento intervento : interventi) {
+                                    if ((intervento.getNomeStabile()).equals(arg0.getTitle().toString())) {
+                                        Intent intent = new Intent(getApplicationContext(), DettaglioInterventoInCorso.class);
+                                        bundle.putString("idIntervento", intervento.getIdTicketIntervento());
+                                        intent.putExtras(bundle);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        getApplicationContext().startActivity(intent);
+                                    }
+                                }
+                            }
+                        });
                     }
 
                 } catch (NullPointerException e) {
@@ -670,5 +457,27 @@ public class MappaInterventiInCorso extends FragmentActivity implements
             @Override
             public void onCancelled(FirebaseError firebaseError) { }
         });
+    }
+
+    /**
+     * Il metodo gestisce la comunicazione, tramite Dialog, degli errori che possono verificarsi.
+     */
+    public static class ErrorDialogFragment extends DialogFragment {
+
+        private Dialog mDialog;
+
+        public ErrorDialogFragment() {
+            super();
+            mDialog = null;
+        }
+
+        public void setDialog(Dialog dialog) {
+            mDialog = dialog;
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            return mDialog;
+        }
     }
 }
