@@ -37,7 +37,14 @@
                 tools:layout_constraintRight_creator="1"
                 tools:layout_constraintTop_creator="1">
 
-        <android.support.constraint.ConstraintLayout
+                <TextView
+                    android:id="@+id/Hidden_ID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:visibility="invisible" />
+
+                <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

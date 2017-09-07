@@ -121,7 +121,8 @@ public class DettaglioInterventoInCorso extends AppCompatActivity {
                         ticketInterventoMap.get("stato").toString() ,
                         ticketInterventoMap.get("priorità").toString() ,
                         ticketInterventoMap.get("foto").toString(),
-                        ticketInterventoMap.get("url").toString()
+                        ticketInterventoMap.get("url").toString(),
+                        "ciao","ciao","ciao","ciao","ciao"
                 );
 
                 try {
