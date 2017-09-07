@@ -17,6 +17,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -118,7 +120,8 @@ public class DettaglioInterventoInCorso extends AppCompatActivity {
                         ticketInterventoMap.get("stabile").toString(),
                         ticketInterventoMap.get("stato").toString() ,
                         ticketInterventoMap.get("priorità").toString() ,
-                        ticketInterventoMap.get("foto").toString()
+                        ticketInterventoMap.get("foto").toString(),
+                        ticketInterventoMap.get("url").toString()
                 );
 
                 try {
@@ -129,6 +132,12 @@ public class DettaglioInterventoInCorso extends AppCompatActivity {
                     Trichiesta.setText(ticketIntervento.getRichiesta().toString());
                     Tindirizzo.setText("indirizzo ancora non presente");
                     //Tfoto.setQUALCOSA TODO: AGGIUNGERE FOTO e INDIRIZZO
+
+                    if ( ticketInterventoMap.get("foto").toString() != "-" ) {
+                        Picasso.with(getApplicationContext()).load( ticketIntervento.getUrl() ).fit().centerCrop().into(Tfoto) ;
+                    }
+
+
                     TidTicketIntervento.setText(ticketIntervento.getIdTicketIntervento());
                 }catch (NullPointerException e){}
             }

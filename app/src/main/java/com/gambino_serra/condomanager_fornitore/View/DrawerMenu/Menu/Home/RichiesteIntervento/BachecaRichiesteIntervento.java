@@ -116,7 +116,8 @@ public class BachecaRichiesteIntervento extends Fragment {
                             ticketInterventoMap.get("stabile").toString(),
                             ticketInterventoMap.get("stato").toString() ,
                             ticketInterventoMap.get("priorità").toString() ,
-                            ticketInterventoMap.get("foto").toString()
+                            ticketInterventoMap.get("foto").toString(),
+                            ticketInterventoMap.get("url").toString()
                     );
 
                     if(ticketIntervento.getStato().equals("in attesa"))

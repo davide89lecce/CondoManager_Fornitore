@@ -17,6 +17,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,6 +46,7 @@ public class DettaglioRichiestaIntervento extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
     private FirebaseDatabase firebaseDatabase;
+    private StorageReference mStorage;
 
     Map<String, Object> ticketInterventoMap;
 
@@ -54,6 +59,7 @@ public class DettaglioRichiestaIntervento extends AppCompatActivity {
         setContentView(R.layout.dettaglio_richiesta_intervento);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        mStorage = FirebaseStorage.getInstance().getReference();
 
         final SharedPreferences sharedPrefs = getSharedPreferences(MY_PREFERENCES, MODE_PRIVATE);
         username = sharedPrefs.getString(LOGGED_USER, "").toString();
@@ -117,7 +123,8 @@ public class DettaglioRichiestaIntervento extends AppCompatActivity {
                         ticketInterventoMap.get("stabile").toString(),
                         ticketInterventoMap.get("stato").toString() ,
                         ticketInterventoMap.get("priorità").toString() ,
-                        ticketInterventoMap.get("foto").toString()
+                        ticketInterventoMap.get("foto").toString(),
+                        ticketInterventoMap.get("url").toString()
                 );
 
                 try {
@@ -127,8 +134,17 @@ public class DettaglioRichiestaIntervento extends AppCompatActivity {
                     TAmministratore.setText(ticketIntervento.getUidAmministratore().toString());
                     Trichiesta.setText(ticketIntervento.getRichiesta().toString());
                     Tindirizzo.setText("indirizzo ancora non presente");
-                    //Tfoto.setQUALCOSA TODO: AGGIUNGERE FOTO e INDIRIZZO
+
+
+                    if ( ticketInterventoMap.get("foto").toString() != "-" ) {
+
+                        Picasso.with(getApplicationContext()).load( ticketIntervento.getUrl() ).fit().centerCrop().into(Tfoto) ;
+                    }
+
+                    //Toast.makeText(getApplicationContext(), "Non riesco ad aprire l'oggetto " + e.toString(), Toast.LENGTH_LONG).show();
+
                     TidTicketIntervento.setText(ticketIntervento.getIdTicketIntervento());
+
                 }catch (NullPointerException e){}
             }
 
