@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +38,8 @@ public class BachecaInterventiInCorso extends Fragment {
     private ArrayList<TicketIntervento> data;
     public static View.OnClickListener myOnClickListener;
     Context context;
-    FloatingActionButton buttonMaps;
+    ImageButton imageButtonMappa;
+
 
     private FirebaseAuth firebaseAuth;
     private String uidFornitore;
@@ -69,8 +71,8 @@ public class BachecaInterventiInCorso extends Fragment {
         ticketInterventoMap = new HashMap<String,Object>();
         interventi = new ArrayList<CardTicketIntervento>();
 
-        buttonMaps = (FloatingActionButton) getActivity().findViewById(R.id.button);
-        buttonMaps.setOnClickListener(new View.OnClickListener() {
+        imageButtonMappa = (ImageButton) getActivity().findViewById(R.id.imageButtonMappa);
+        imageButtonMappa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent mappa = new Intent(getActivity(), MappaInterventiInCorso.class);
