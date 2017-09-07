@@ -19,6 +19,11 @@ public class TicketIntervento {
     private String priorità;
     private String foto;
     private String url;
+    private String nomeAmministratore;
+    private String nomeStabile;
+    private String indirizzoStabile;
+    private String latitudine;
+    private String longitudine;
 
     public TicketIntervento(String idTicketIntervento,
                             String uidAmministratore,
@@ -35,7 +40,12 @@ public class TicketIntervento {
                             String stato,
                             String priorità,
                             String foto,
-                            String url
+                            String url,
+                            String nomeAmministratore,
+                            String nomeStabile,
+                            String indirizzoStabile,
+                            String latitudine,
+                            String longitudine
     ) {
 
         this.idTicketIntervento = idTicketIntervento;
@@ -54,6 +64,11 @@ public class TicketIntervento {
         this.priorità = priorità;
         this.foto = foto;
         this.url = url;
+        this.nomeAmministratore = nomeAmministratore;
+        this.nomeStabile = nomeStabile;
+        this.indirizzoStabile = indirizzoStabile;
+        this.latitudine = latitudine;
+        this.longitudine = longitudine;
     }
 
 
@@ -185,5 +200,46 @@ public class TicketIntervento {
     public void setUrl(String url) {
         this.url = url;
     }
+
+    public String getNomeAmministratore() {
+        return nomeAmministratore;
+    }
+
+    public void setNomeAmministratore(String nomeAmministratore) {
+        this.nomeAmministratore = nomeAmministratore;
+    }
+
+    public String getNomeStabile() {
+        return nomeStabile;
+    }
+
+    public void setNomeStabile(String nomeStabile) {
+        this.nomeStabile = nomeStabile;
+    }
+
+    public String getIndirizzoStabile() {
+        return indirizzoStabile;
+    }
+
+    public void setIndirizzoStabile(String indirizzoStabile) {
+        this.indirizzoStabile = indirizzoStabile;
+    }
+
+    public String getLatitudine() {
+        return latitudine;
+    }
+
+    public void setLatitudine(String latitudine) {
+        this.latitudine = latitudine;
+    }
+
+    public String getLongitudine() {
+        return longitudine;
+    }
+
+    public void setLongitudine(String longitudine) {
+        this.longitudine = longitudine;
+    }
+
 
 }

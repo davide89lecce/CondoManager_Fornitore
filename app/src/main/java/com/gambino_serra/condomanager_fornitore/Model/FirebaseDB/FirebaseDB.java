@@ -35,6 +35,11 @@ public class FirebaseDB {
         return firebase;
     }
 
+    public static synchronized Firebase getAmministratori(){
+        firebase = new Firebase(DB + "Amministratori");
+        return firebase;
+    }
+
     public static synchronized Firebase getInterventi(){
         firebase = new Firebase(DB + "Ticket_intervento");
         return firebase;
