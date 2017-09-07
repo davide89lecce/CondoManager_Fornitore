@@ -22,10 +22,10 @@ public class AdapterInterventiArchiviati extends RecyclerView.Adapter<AdapterInt
         TextView TuidAmministratore;
         TextView Toggetto;
         TextView TrapportiIntervento;
-        TextView Trichiesta;
+        TextView Tdata;
         TextView Tstabile;
         TextView Tstato;
-        TextView Tpriorità;
+        TextView TdataUltimoAgg;
         TextView Tindirizzo;
         TextView IdTicket;
 
@@ -33,7 +33,8 @@ public class AdapterInterventiArchiviati extends RecyclerView.Adapter<AdapterInt
             super(itemView);
 
             this.Tstabile = (TextView) itemView.findViewById(R.id.D_Condominio);
-            this.Tindirizzo = (TextView) itemView.findViewById(R.id.D_Indirizzo); //TODO: Aggiungere indirizzo
+            this.Tdata = (TextView) itemView.findViewById(R.id.D_Data);
+            this.TdataUltimoAgg = (TextView) itemView.findViewById(R.id.D_UltimoRapporto);
             this.Toggetto = (TextView) itemView.findViewById(R.id.D_Oggetto);
             //Campo nascosto per recuperare il riferimento
             this.IdTicket = (TextView) itemView.findViewById(R.id.D_IDIntervento);
@@ -59,12 +60,14 @@ public class AdapterInterventiArchiviati extends RecyclerView.Adapter<AdapterInt
     public void onBindViewHolder(final AdapterInterventiArchiviati.MyViewHolder holder, final int listPosition) {
 
         TextView Tstabile = holder.Tstabile;
-        TextView Tindirizzo = holder.Tindirizzo;
+        TextView Tdata = holder.Tdata;
+        TextView TdataUltimoAgg = holder.TdataUltimoAgg;
         TextView Toggetto = holder.Toggetto;
         TextView IdTicket = holder.IdTicket;
 
         Tstabile.setText(dataset.get(listPosition).getNomeStabile());
-        Tindirizzo.setText(dataset.get(listPosition).getIndirizzoStabile());
+        Tdata.setText(dataset.get(listPosition).getDataTicket());
+        TdataUltimoAgg.setText(dataset.get(listPosition).getDataUltimoAggiornamento());
         Toggetto.setText(dataset.get(listPosition).getOggetto());
         IdTicket.setText(dataset.get(listPosition).getIdTicketIntervento());
     }
