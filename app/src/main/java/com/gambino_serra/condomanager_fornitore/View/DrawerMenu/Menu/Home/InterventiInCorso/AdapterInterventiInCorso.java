@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gambino_serra.condomanager_fornitore.Model.Entity.CardTicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import static com.gambino_serra.condomanager_fornitore.tesi.R.id.D_Priorità;
 
 public class AdapterInterventiInCorso extends RecyclerView.Adapter<AdapterInterventiInCorso.MyViewHolder> {
 
-    private ArrayList<TicketIntervento> dataset;
+    private ArrayList<CardTicketIntervento> dataset;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -44,7 +45,7 @@ public class AdapterInterventiInCorso extends RecyclerView.Adapter<AdapterInterv
         }
     }
 
-    public AdapterInterventiInCorso(ArrayList<TicketIntervento> dataset) {
+    public AdapterInterventiInCorso(ArrayList<CardTicketIntervento> dataset) {
         this.dataset = dataset;
     }
 
@@ -70,8 +71,8 @@ public class AdapterInterventiInCorso extends RecyclerView.Adapter<AdapterInterv
         TextView IdTicket = holder.IdTicket;
 
         try {
-            Tstabile.setText(dataset.get(listPosition).getStabile());
-            Tindirizzo.setText("INDIRIZZO CHE PER ORA NON C'E'");
+            Tstabile.setText(dataset.get(listPosition).getNomeStabile());
+            Tindirizzo.setText(dataset.get(listPosition).getIndirizzoStabile());
             Toggetto.setText(dataset.get(listPosition).getOggetto());
             TdataTicket.setText(dataset.get(listPosition).getDataTicket());
             IdTicket.setText(dataset.get(listPosition).getIdTicketIntervento());

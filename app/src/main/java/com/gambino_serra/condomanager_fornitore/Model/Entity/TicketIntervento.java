@@ -56,6 +56,8 @@ public class TicketIntervento {
         this.url = url;
     }
 
+
+
     public String getIdTicketIntervento() {
         return idTicketIntervento;
     }

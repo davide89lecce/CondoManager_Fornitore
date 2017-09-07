@@ -93,7 +93,7 @@ public class Home extends Fragment {
 
         //Manually displaying the first Menu - one time only
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, BachecaInterventiCompletati.newInstance());
+        transaction.replace(R.id.frame_layout, BachecaInterventiInCorso.newInstance());
          transaction.commit();
     }
 
