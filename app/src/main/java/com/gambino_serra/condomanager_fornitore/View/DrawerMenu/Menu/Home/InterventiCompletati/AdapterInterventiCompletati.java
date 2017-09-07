@@ -5,13 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.gambino_serra.condomanager_fornitore.Model.Entity.CardTicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 import java.util.ArrayList;
 
 public class AdapterInterventiCompletati extends RecyclerView.Adapter<AdapterInterventiCompletati.MyViewHolder> {
 
-    private ArrayList<TicketIntervento> dataset;
+    private ArrayList<CardTicketIntervento> dataset;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -33,7 +35,7 @@ public class AdapterInterventiCompletati extends RecyclerView.Adapter<AdapterInt
         }
     }
 
-    public AdapterInterventiCompletati(ArrayList<TicketIntervento> dataset) {
+    public AdapterInterventiCompletati(ArrayList<CardTicketIntervento> dataset) {
         this.dataset = dataset;
     }
 
@@ -59,7 +61,7 @@ public class AdapterInterventiCompletati extends RecyclerView.Adapter<AdapterInt
 
         TdataTicket.setText(dataset.get(listPosition).getDataTicket());
         TdataUltimoAggiornamento.setText(dataset.get(listPosition).getDataUltimoAggiornamento());
-        Tstabile.setText(dataset.get(listPosition).getStabile());
+        Tstabile.setText(dataset.get(listPosition).getNomeStabile());
         Toggetto.setText(dataset.get(listPosition).getOggetto());
         IdTicket.setText(dataset.get(listPosition).getIdTicketIntervento());
     }

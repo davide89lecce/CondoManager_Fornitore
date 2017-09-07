@@ -5,30 +5,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.gambino_serra.condomanager_fornitore.Model.Entity.CardTicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 import java.util.ArrayList;
 
 public class AdapterRichiesteIntervento extends RecyclerView.Adapter<AdapterRichiesteIntervento.MyViewHolder> {
 
-    private ArrayList<TicketIntervento> dataset;
+    private ArrayList<CardTicketIntervento> dataset;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView TidTicketIntervento;
         TextView TuidAmministratore;
         TextView TdataTicket;
-        TextView TdataUltimoAggiornamento;
-        TextView Tfornitore;
-        TextView TmessaggioCondomino;
-        TextView TaggiornamentoCondomini;
-        TextView TdescrizioneCondomini;
         TextView Toggetto;
-        TextView TrapportiIntervento;
-        TextView Trichiesta;
         TextView Tstabile;
-        TextView Tstato;
-        TextView Tpriorità;
         TextView Tindirizzo;
         TextView IdTicket;
 
@@ -36,7 +29,7 @@ public class AdapterRichiesteIntervento extends RecyclerView.Adapter<AdapterRich
             super(itemView);
 
             this.Tstabile = (TextView) itemView.findViewById(R.id.D_Condominio);
-            this.Tindirizzo = (TextView) itemView.findViewById(R.id.D_Indirizzo); //TODO: Aggiungere indirizzo
+            this.Tindirizzo = (TextView) itemView.findViewById(R.id.D_Indirizzo);
             this.Toggetto = (TextView) itemView.findViewById(R.id.D_Oggetto);
             this.TdataTicket = (TextView) itemView.findViewById(R.id.D_Data);
             //Campo nascosto per recuperare il riferimento
@@ -44,7 +37,7 @@ public class AdapterRichiesteIntervento extends RecyclerView.Adapter<AdapterRich
         }
     }
 
-    public AdapterRichiesteIntervento(ArrayList<TicketIntervento> dataset) {
+    public AdapterRichiesteIntervento(ArrayList<CardTicketIntervento> dataset) {
         this.dataset = dataset;
         }
 
@@ -68,8 +61,8 @@ public class AdapterRichiesteIntervento extends RecyclerView.Adapter<AdapterRich
         TextView TdataTicket = holder.TdataTicket;
         TextView IdTicket = holder.IdTicket;
 
-        Tstabile.setText(dataset.get(listPosition).getStabile());
-        Tindirizzo.setText("INDIRIZZO CHE PER ORA NON C'E'");
+        Tstabile.setText(dataset.get(listPosition).getNomeStabile());
+        Tindirizzo.setText(dataset.get(listPosition).getIndirizzoStabile());
         Toggetto.setText(dataset.get(listPosition).getOggetto());
         TdataTicket.setText(dataset.get(listPosition).getDataTicket());
         IdTicket.setText(dataset.get(listPosition).getIdTicketIntervento());

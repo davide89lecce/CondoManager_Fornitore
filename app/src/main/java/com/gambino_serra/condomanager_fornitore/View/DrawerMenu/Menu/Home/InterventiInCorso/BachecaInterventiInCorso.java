@@ -112,8 +112,6 @@ public class BachecaInterventiInCorso extends Fragment {
 
                 recuperaDatiStabile (ticketInterventoMap);
 
-
-
             }
 
             @Override

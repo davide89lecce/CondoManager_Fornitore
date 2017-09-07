@@ -17,8 +17,10 @@ import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
+import com.gambino_serra.condomanager_fornitore.Model.Entity.CardTicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
+import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiInCorso.AdapterInterventiInCorso;
 import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.RichiesteIntervento.DettaglioRichiestaIntervento;
 import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.RichiesteIntervento.BachecaRichiesteIntervento;
 import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.RichiesteIntervento.AdapterRichiesteIntervento;
@@ -39,7 +41,7 @@ public class BachecaRichiesteIntervento extends Fragment {
     private FirebaseAuth firebaseAuth;
     private String uidFornitore;
     Map<String, Object> ticketInterventoMap;
-    ArrayList<TicketIntervento> interventi;
+    ArrayList<CardTicketIntervento> interventi;
 
     public static BachecaRichiesteIntervento newInstance() {
         BachecaRichiesteIntervento fragment = new BachecaRichiesteIntervento();
@@ -64,7 +66,7 @@ public class BachecaRichiesteIntervento extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         data = new ArrayList<TicketIntervento>();
         ticketInterventoMap = new HashMap<String,Object>();
-        interventi = new ArrayList<TicketIntervento>();
+        interventi = new ArrayList<CardTicketIntervento>();
 
         myOnClickListener = new MyOnClickListener(context);
 
@@ -98,42 +100,7 @@ public class BachecaRichiesteIntervento extends Fragment {
                     ticketInterventoMap.put(child.getKey(), child.getValue());
                 }
 
-                // Avvaloriamo una variabile TicketIntervento appositamente creata in modo da inserire poi questo
-                // oggetto all'interno di un Array di interventi che utilizzeremo per popolare la lista Recycle
-                try{
-                    TicketIntervento ticketIntervento = new TicketIntervento(
-                            ticketInterventoMap.get("id").toString(),
-                            ticketInterventoMap.get("amministratore").toString(),
-                            ticketInterventoMap.get("data_ticket").toString(),
-                            ticketInterventoMap.get("data_ultimo_aggiornamento").toString(),
-                            ticketInterventoMap.get("fornitore").toString(),
-                            ticketInterventoMap.get("messaggio_condomino").toString(),
-                            ticketInterventoMap.get("aggiornamento_condomini").toString(),
-                            ticketInterventoMap.get("descrizione_condomini").toString(),
-                            ticketInterventoMap.get("oggetto").toString(),
-                            ticketInterventoMap.get("rapporti_intervento").toString(),
-                            ticketInterventoMap.get("richiesta").toString(),
-                            ticketInterventoMap.get("stabile").toString(),
-                            ticketInterventoMap.get("stato").toString() ,
-                            ticketInterventoMap.get("priorità").toString() ,
-                            ticketInterventoMap.get("foto").toString(),
-                            ticketInterventoMap.get("url").toString()
-                    );
-
-                    if(ticketIntervento.getStato().equals("in attesa"))
-                    {
-                        // inserisce l'oggetto ticket nell'array interventi
-                        interventi.add(ticketIntervento);
-                    }
-                }
-                catch (NullPointerException e)
-                {
-                    Toast.makeText(getActivity().getApplicationContext(), "Non riesco ad aprire l'oggetto "+ e.toString(), Toast.LENGTH_LONG).show();
-                }
-
-                // Utilizziamo l'adapter per popolare la recycler view
-                adapter = new AdapterRichiesteIntervento(interventi);
-                recyclerView.setAdapter(adapter);
+                recuperaDatiStabile (ticketInterventoMap);
             }
 
             @Override
@@ -180,4 +147,81 @@ public class BachecaRichiesteIntervento extends Fragment {
 
         }
     }
+
+
+    public void recuperaDatiStabile(final Map<String, Object> ticketInterventoMap) {
+
+        final Map<String, Object> ticketInterventoMap2 = new HashMap<String, Object>();
+        Query query2;
+        query2 = FirebaseDB.getStabili().orderByKey().equalTo(ticketInterventoMap.get("stabile").toString());
+
+        query2.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                //HashMap temporaneo per immagazzinare i dati dello stabile
+                // per ognuno dei figli presenti nello snapshot, ovvero per tutti i figli di un singolo nodo Stabile
+                // recuperiamo i dati per inserirli nel MAP
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    ticketInterventoMap2.put(child.getKey(), child.getValue());
+                }
+
+
+                // Avvaloro tutti i dati della card che mi interessano inserendone i relativi dati
+                // anche quelli provenienti dallo stabile sovrascrivendo i codici passati in ticketIntervento
+                // Avvaloriamo una variabile TicketIntervento appositamente creata in modo da inserire poi questo
+                // oggetto all'interno di un Array di interventi che utilizzeremo per popolare la lista Recycle
+                try {
+                    CardTicketIntervento ticketIntervento = new CardTicketIntervento(
+                            ticketInterventoMap.get("id").toString(),
+                            ticketInterventoMap.get("stabile").toString(),
+                            ticketInterventoMap2.get("nome").toString(),
+                            ticketInterventoMap2.get("indirizzo").toString(),
+                            ticketInterventoMap.get("oggetto").toString(),
+                            ticketInterventoMap.get("priorità").toString(),
+                            ticketInterventoMap.get("stato").toString(),
+                            ticketInterventoMap.get("data_ticket").toString(),
+                            ticketInterventoMap.get("data_ultimo_aggiornamento").toString()
+                    );
+
+                    if (ticketIntervento.getStato().equals("in attesa")) {
+                        // inserisce l'oggetto ticket nell'array interventi
+                        interventi.add(ticketIntervento);
+
+                    }
+
+                    // Utilizziamo l'adapter per popolare la recycler view
+                    adapter = new AdapterRichiesteIntervento(interventi);
+                    recyclerView.setAdapter(adapter);
+
+
+                } catch (NullPointerException e) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Non riesco ad aprire l'oggetto " + e.toString(), Toast.LENGTH_LONG).show();
+                }
+
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+    }
+
+
 }

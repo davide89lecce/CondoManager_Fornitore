@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.gambino_serra.condomanager_fornitore.Model.Entity.CardTicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 
@@ -13,18 +14,12 @@ import java.util.ArrayList;
 
 public class AdapterInterventiArchiviati extends RecyclerView.Adapter<AdapterInterventiArchiviati.MyViewHolder> {
 
-    private ArrayList<TicketIntervento> dataset;
+    private ArrayList<CardTicketIntervento> dataset;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView TidTicketIntervento;
         TextView TuidAmministratore;
-        TextView TdataTicket;
-        TextView TdataUltimoAggiornamento;
-        TextView Tfornitore;
-        TextView TmessaggioCondomino;
-        TextView TaggiornamentoCondomini;
-        TextView TdescrizioneCondomini;
         TextView Toggetto;
         TextView TrapportiIntervento;
         TextView Trichiesta;
@@ -45,7 +40,7 @@ public class AdapterInterventiArchiviati extends RecyclerView.Adapter<AdapterInt
         }
     }
 
-    public AdapterInterventiArchiviati(ArrayList<TicketIntervento> dataset) {
+    public AdapterInterventiArchiviati(ArrayList<CardTicketIntervento> dataset) {
         this.dataset = dataset;
     }
 
@@ -64,12 +59,12 @@ public class AdapterInterventiArchiviati extends RecyclerView.Adapter<AdapterInt
     public void onBindViewHolder(final AdapterInterventiArchiviati.MyViewHolder holder, final int listPosition) {
 
         TextView Tstabile = holder.Tstabile;
-        //TextView Tindirizzo = holder.Tindirizzo;
+        TextView Tindirizzo = holder.Tindirizzo;
         TextView Toggetto = holder.Toggetto;
         TextView IdTicket = holder.IdTicket;
 
-        Tstabile.setText(dataset.get(listPosition).getStabile());
-        //Tindirizzo.setText("INDIRIZZO CHE PER ORA NON C'E'");
+        Tstabile.setText(dataset.get(listPosition).getNomeStabile());
+        Tindirizzo.setText(dataset.get(listPosition).getIndirizzoStabile());
         Toggetto.setText(dataset.get(listPosition).getOggetto());
         IdTicket.setText(dataset.get(listPosition).getIdTicketIntervento());
     }
