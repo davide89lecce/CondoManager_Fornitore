@@ -36,7 +36,7 @@ public class AdapterInterventiInCorso extends RecyclerView.Adapter<AdapterInterv
             super(itemView);
 
             this.Tstabile = (TextView) itemView.findViewById(R.id.D_Condominio);
-            this.Tindirizzo = (TextView) itemView.findViewById(R.id.D_Indirizzo); //TODO: Aggiungere indirizzo
+            this.Tindirizzo = (TextView) itemView.findViewById(R.id.D_Indirizzo);
             this.Toggetto = (TextView) itemView.findViewById(R.id.D_Oggetto);
             this.Tdata = (TextView) itemView.findViewById(R.id.D_Data);
             this.mLogoPriorità = (ImageView) itemView.findViewById(D_Priorità);
