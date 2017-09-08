@@ -2,11 +2,12 @@ package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.Richi
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -16,6 +17,9 @@ import com.firebase.client.ValueEventListener;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.CardTicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
+import com.gambino_serra.condomanager_fornitore.View.Dialog.DialogChiamaAmministratore;
+import com.gambino_serra.condomanager_fornitore.View.Dialog.DialogConfermaAccettaIntervento;
+import com.gambino_serra.condomanager_fornitore.View.Dialog.DialogConfermaRifiutaIntervento;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,8 +28,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
-
-import java.io.EOFException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,6 +47,9 @@ public class DettaglioRichiestaIntervento extends AppCompatActivity {
     TextView Tstabile;
     TextView Tindirizzo;
     ImageView Tfoto;
+    ConstraintLayout Accetta;
+    ConstraintLayout Rifiuta;
+    ImageView ChiamaAmministratore;
 
     private Firebase firebaseDB;
     private FirebaseUser firebaseUser;
@@ -95,6 +100,10 @@ public class DettaglioRichiestaIntervento extends AppCompatActivity {
         Trichiesta = (TextView) findViewById(R.id.D_Descrizione);
         Tfoto = (ImageView) findViewById(R.id.D_Foto);
         TidTicketIntervento = (TextView) findViewById(R.id.Hidden_ID);
+        Accetta = (ConstraintLayout) findViewById(R.id.btnAccetta);
+        Rifiuta = (ConstraintLayout) findViewById(R.id.btnRifiuta);
+        ChiamaAmministratore = (ImageView) findViewById(R.id.imageViewChiamaAmministratore);
+
 
         ticketInterventoMap = new HashMap<String, Object>();
         // Avvalora il primo oggetto del map con l'ID dell'intervento recuperato
@@ -200,51 +209,60 @@ public class DettaglioRichiestaIntervento extends AppCompatActivity {
                             Toggetto.setText(ticketIntervento.getOggetto().toString());
                             Trichiesta.setText(ticketIntervento.getRichiesta().toString());
 
-
-
                             if ( ticketInterventoMap.get("foto").toString() != "-" ) {
                                 Picasso.with(getApplicationContext()).load( ticketIntervento.getUrl() ).fit().centerCrop().into(Tfoto) ;
-                            }
-
-                            //Toast.makeText(getApplicationContext(), "Non riesco ad aprire l'oggetto " + e.toString(), Toast.LENGTH_LONG).show();
+                                }
 
                             TidTicketIntervento.setText(ticketIntervento.getIdTicketIntervento().toString());
-
-                        //}catch (EOFException e){
-                            //Toast.makeText(getApplicationContext(), "Non riesco ad aprire l'oggetto " + e.toString(), Toast.LENGTH_LONG).show();
-                       // }
-
                     }
 
                     @Override
-                    public void onCancelled(FirebaseError firebaseError) {
-
-                    }
+                    public void onCancelled(FirebaseError firebaseError) { }
                 });
-
-
-
             }
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) { }
 
             @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
+            public void onChildRemoved(DataSnapshot dataSnapshot) { }
 
             @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) { }
 
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
+            public void onCancelled(FirebaseError firebaseError) { }
         });
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        Accetta.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                DialogConfermaAccettaIntervento newFragment = new DialogConfermaAccettaIntervento();
+                newFragment.show(getFragmentManager(), "DialogAccetta");
+                overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+                }
+            });
+
+        Rifiuta.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                DialogConfermaRifiutaIntervento newFragment = new DialogConfermaRifiutaIntervento();
+                newFragment.show(getFragmentManager(), "DialogRifiuta");
+                overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+                }
+            });
+
+        ChiamaAmministratore.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                DialogChiamaAmministratore newFragment = new DialogChiamaAmministratore();
+                newFragment.show(getFragmentManager(), "DialogChiama");
+                overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+                }
+            });
+
+    }
+
 }

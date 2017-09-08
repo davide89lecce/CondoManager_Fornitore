@@ -1,8 +1,12 @@
 package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiCompletati;
 
+import android.app.DialogFragment;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.firebase.client.ChildEventListener;
@@ -12,15 +16,17 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
+import com.gambino_serra.condomanager_fornitore.View.Dialog.DialogChiamaAmministratore;
+import com.gambino_serra.condomanager_fornitore.View.Dialog.DialogConfermaArchiviaIntervento;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
-
 import java.util.HashMap;
 import java.util.Map;
+import static com.gambino_serra.condomanager_fornitore.tesi.R.layout.dialog_conferma_archiviazione;
 
 public class DettaglioInterventoCompletato extends AppCompatActivity {
     private static final String MY_PREFERENCES = "preferences";
@@ -38,6 +44,9 @@ public class DettaglioInterventoCompletato extends AppCompatActivity {
     TextView Tstabile;
     TextView Tindirizzo;
     ImageView Tfoto;
+    ConstraintLayout Archivia;
+    ImageView ChiamaAmministratore;
+    ImageView Mappa;
 
     private Firebase firebaseDB;
     private FirebaseUser firebaseUser;
@@ -77,7 +86,7 @@ public class DettaglioInterventoCompletato extends AppCompatActivity {
             bundle.putString("idIntervento", idIntervento);
             }
 
-        // Avvaloro i nuovi rierimenti al layout
+        // Avvaloro i nuovi riferimenti al layout
         TdataTicket = (TextView) findViewById(R.id.D_Data);
         Tstabile = (TextView) findViewById(R.id.D_Condominio);
         Tindirizzo = (TextView) findViewById(R.id.D_Indirizzo);
@@ -86,6 +95,10 @@ public class DettaglioInterventoCompletato extends AppCompatActivity {
         Trichiesta = (TextView) findViewById(R.id.D_Descrizione);
         Tfoto = (ImageView) findViewById(R.id.D_Foto);
         TidTicketIntervento = (TextView) findViewById(R.id.D_IDIntervento);
+        Archivia = (ConstraintLayout) findViewById(R.id.btnArchivia);
+        ChiamaAmministratore = (ImageView) findViewById(R.id.imageViewChiamaAmministratore);
+        Mappa = (ImageView) findViewById(R.id.btnMappa);
+
 
         ticketInterventoMap = new HashMap<String, Object>();
         // Avvalora il primo oggetto del map con l'ID dell'intervento recuperato
@@ -134,9 +147,8 @@ public class DettaglioInterventoCompletato extends AppCompatActivity {
                     //Tfoto.setQUALCOSA TODO: AGGIUNGERE FOTO e INDIRIZZO
 
                     if ( ticketInterventoMap.get("foto").toString() != "-" ) {
-
                         Picasso.with(getApplicationContext()).load( ticketIntervento.getUrl() ).fit().centerCrop().into(Tfoto) ;
-                    }
+                        }
 
                     TidTicketIntervento.setText(ticketIntervento.getIdTicketIntervento());
                 }catch (NullPointerException e){}
@@ -155,4 +167,35 @@ public class DettaglioInterventoCompletato extends AppCompatActivity {
             public void onCancelled(FirebaseError firebaseError) { }
         });
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        Archivia.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                DialogConfermaArchiviaIntervento newFragment = new DialogConfermaArchiviaIntervento();
+                newFragment.show(getFragmentManager(), "DialogArchiviazione");
+                overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+                }
+        });
+
+        ChiamaAmministratore.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                DialogChiamaAmministratore newFragment = new DialogChiamaAmministratore();
+                newFragment.show(getFragmentManager(), "DialogChiama");
+                overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+                }
+        });
+
+        Mappa.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+//                DialogChiamaAmministratore newFragment = new DialogChiamaAmministratore();
+//                newFragment.show(getFragmentManager(), "DialogChiama");
+//                overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+            }
+        });
+
+    }
+
 }
