@@ -4,16 +4,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gambino_serra.condomanager_fornitore.Model.Entity.CardTicketIntervento;
-import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiInCorso.BachecaInterventiInCorso.BachecaInterventiInCorso;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 
 import java.util.ArrayList;
-
-import static com.gambino_serra.condomanager_fornitore.tesi.R.id.D_Priorità;
 
 
 public class AdapterRapportiIntervento extends RecyclerView.Adapter<AdapterRapportiIntervento.MyViewHolder> {
@@ -22,24 +18,19 @@ public class AdapterRapportiIntervento extends RecyclerView.Adapter<AdapterRappo
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView TdataTicket;
-        TextView Tindirizzo;
-        TextView Toggetto;
-        TextView Tstabile;
+        TextView TidRapportoIntervento;
         TextView Tdata;
-        TextView IdTicket;
-        ImageView mLogoPriorità;
+        TextView TnotaAmministratore;
+        TextView TnotaFornitore;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            this.Tstabile = (TextView) itemView.findViewById(R.id.D_Condominio);
-            this.Tindirizzo = (TextView) itemView.findViewById(R.id.D_Indirizzo);
-            this.Toggetto = (TextView) itemView.findViewById(R.id.D_Oggetto);
-            this.Tdata = (TextView) itemView.findViewById(R.id.D_Data);
-            this.mLogoPriorità = (ImageView) itemView.findViewById(D_Priorità);
+            this.Tdata = (TextView) itemView.findViewById(R.id.D_Indirizzo);
+            this.TnotaAmministratore = (TextView) itemView.findViewById(R.id.D_Oggetto);
+            this.TnotaFornitore = (TextView) itemView.findViewById(R.id.D_Data);
             //Campo nascosto per recuperare il riferimento
-            this.IdTicket = (TextView) itemView.findViewById(R.id.D_IDIntervento);
+            this.TidRapportoIntervento = (TextView) itemView.findViewById(R.id.D_Condominio);
         }
     }
 
@@ -51,8 +42,8 @@ public class AdapterRapportiIntervento extends RecyclerView.Adapter<AdapterRappo
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_rapporto_intervento, parent, false);
 
-        //Setta l'onclick sulla recycler view presente nella classe Interventi
-        view.setOnClickListener(BachecaInterventiInCorso.myOnClickListener);
+        //Setta l'onclick sulla recycler view presente nella classe RapportiIntervento
+        //view.setOnClickListener(BachecaInterventiInCorso.myOnClickListener);
 
         MyViewHolder myViewHolder = new MyViewHolder(view);
         return myViewHolder;
@@ -61,19 +52,16 @@ public class AdapterRapportiIntervento extends RecyclerView.Adapter<AdapterRappo
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int listPosition) {
 
-        TextView Tstabile = holder.Tstabile;
-        TextView Tindirizzo = holder.Tindirizzo;
-        TextView Toggetto = holder.Toggetto;
-        TextView TdataTicket = holder.Tdata;
-        ImageView mLogoPriorità = holder.mLogoPriorità;
-        TextView IdTicket = holder.IdTicket;
+        TextView Tdata = holder.Tdata;
+        TextView TnotaAmministratore = holder.TnotaAmministratore;
+        TextView TnotaFornitore = holder.TnotaFornitore;
+        TextView TidRapportoIntervento = holder.TidRapportoIntervento;
 
         try {
-            Tstabile.setText(dataset.get(listPosition).getNomeStabile());
-            Tindirizzo.setText(dataset.get(listPosition).getIndirizzoStabile());
-            Toggetto.setText(dataset.get(listPosition).getOggetto());
-            TdataTicket.setText(dataset.get(listPosition).getDataTicket());
-            IdTicket.setText(dataset.get(listPosition).getIdTicketIntervento());
+            Tdata.setText(dataset.get(listPosition).getNomeStabile());
+            TnotaAmministratore.setText(dataset.get(listPosition).getIndirizzoStabile());
+            TnotaFornitore.setText(dataset.get(listPosition).getOggetto());
+            TidRapportoIntervento.setText(dataset.get(listPosition).getIdTicketIntervento());
         }catch (NullPointerException e){
 
         }

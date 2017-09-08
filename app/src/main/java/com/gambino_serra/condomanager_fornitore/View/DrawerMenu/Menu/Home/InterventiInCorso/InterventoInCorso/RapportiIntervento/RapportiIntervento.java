@@ -13,8 +13,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.firebase.client.Query;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.CardTicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
+import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -96,6 +98,8 @@ public class RapportiIntervento extends Fragment {
 
         uidFornitore = firebaseAuth.getCurrentUser().getUid().toString();
 
+        Query query;
+        query = FirebaseDB.getRapportiIntervento().orderByChild("idIntervento").equalTo(idIntervento);
     }
 
 }
