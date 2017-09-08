@@ -553,6 +553,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5"
+            fab:menu_fab_label="Priorità intervento"
             fab:menu_animationDelayPerItem="55"
             fab:menu_backgroundColor="#C0FFFFFF"
             fab:menu_buttonSpacing="0dp"
@@ -587,7 +588,7 @@
                 android:id="@+id/material_design_floating_action_menu_item1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/colorAccent"
+                fab:fab_colorNormal="#FF0000"
                 fab:fab_label="Alta"
                 fab:fab_size="mini" />
 
@@ -595,7 +596,7 @@
                 android:id="@+id/material_design_floating_action_menu_item2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/colorAccent"
+                fab:fab_colorNormal="#FFFF00"
                 fab:fab_label="Media"
                 fab:fab_size="mini" />
 
@@ -603,7 +604,7 @@
                 android:id="@+id/material_design_floating_action_menu_item3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/colorAccent"
+                fab:fab_colorNormal="#00FF00"
                 fab:fab_label="Bassa"
                 fab:fab_size="mini" />
 

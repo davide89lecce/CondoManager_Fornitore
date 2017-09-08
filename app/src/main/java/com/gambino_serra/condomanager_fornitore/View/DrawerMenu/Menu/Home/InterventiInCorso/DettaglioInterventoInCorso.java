@@ -2,6 +2,7 @@ package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.Inter
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -119,32 +120,13 @@ public class DettaglioInterventoInCorso extends Fragment {
         materialDesignFAM.setClosedOnTouchOutside(true);
         materialDesignFAM.showMenu(true);
 
-
-        // materialDesignFAM.setOnTouchListener(new View.OnTouchListener() {
-        //     @Override
-        //     public boolean onTouch(View v, MotionEvent event) {
-        //         //if(event.getAction() == MotionEvent.ACTION_UP){
-        //
-        //             if(materialDesignFAM.isOpened())
-        //             { fl.setBackgroundColor(Color.GRAY);
-        //
-        //             }
-        //             else
-        //             { fl.setBackgroundColor(Color.TRANSPARENT); }
-        //             // Do what you want
-        //             return true;
-        //         }
-        //         return true; // consume the event
-        //     }
-        // });
-
-
         floatingActionButton1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
                // DialogFragment newFragment = new DialogNuovaSegnalazione();
                // newFragment.show(getActivity().getFragmentManager(), "NuovaSegnalazione");
                // getActivity().overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+                materialDesignFAM.setMenuButtonColorNormal(Color.parseColor("#FF0000"));
                 materialDesignFAM.close(true);
             }
         });
@@ -154,11 +136,18 @@ public class DettaglioInterventoInCorso extends Fragment {
                // DialogFragment newFragment = new DialogNuovoMessaggio();
                // newFragment.show(getActivity().getFragmentManager(), "NuovoMessaggio");
                // getActivity().overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+                materialDesignFAM.setMenuButtonColorNormal(Color.parseColor("#FFFF00"));
                 materialDesignFAM.close(true);
             }
         });
         floatingActionButton3.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {  }
+            public void onClick(View v) {
+                // DialogFragment newFragment = new DialogNuovoMessaggio();
+                // newFragment.show(getActivity().getFragmentManager(), "NuovoMessaggio");
+                // getActivity().overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+                materialDesignFAM.setMenuButtonColorNormal(Color.parseColor("#00FF00"));
+                materialDesignFAM.close(true);
+            }
         });
 
         //Firebase retrieve data
@@ -203,6 +192,15 @@ public class DettaglioInterventoInCorso extends Fragment {
                     Trichiesta.setText(ticketIntervento.getRichiesta().toString());
                     Tindirizzo.setText("indirizzo ancora non presente");
                     //Tfoto.setQUALCOSA TODO: AGGIUNGERE FOTO e INDIRIZZO
+
+                    //Setta priorità floating action button
+                    if (ticketInterventoMap.get("priorità").equals("Alta")) {
+                        materialDesignFAM.setMenuButtonColorNormal(Color.parseColor("#FF0000"));
+                    }else if(ticketInterventoMap.get("priorità").equals("Media")){
+                        materialDesignFAM.setMenuButtonColorNormal(Color.parseColor("#FFFF00"));
+                    }else if(ticketInterventoMap.get("priorità").equals("Bassa")){
+                        materialDesignFAM.setMenuButtonColorNormal(Color.parseColor("#00FF00"));
+                    }
 
                     if (ticketInterventoMap.get("foto").toString() != "-") {
                         Picasso.with(context).load(ticketIntervento.getUrl()).fit().centerCrop().into(Tfoto);
