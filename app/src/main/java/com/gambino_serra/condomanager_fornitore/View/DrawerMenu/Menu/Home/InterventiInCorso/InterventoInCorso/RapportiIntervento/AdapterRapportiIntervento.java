@@ -1,8 +1,6 @@
-package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiInCorso;
+package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiInCorso.InterventoInCorso.RapportiIntervento;
 
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gambino_serra.condomanager_fornitore.Model.Entity.CardTicketIntervento;
+import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiInCorso.BachecaInterventiInCorso.BachecaInterventiInCorso;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 
 import java.util.ArrayList;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 import static com.gambino_serra.condomanager_fornitore.tesi.R.id.D_Priorità;
 
 
-public class AdapterInterventiInCorso extends RecyclerView.Adapter<AdapterInterventiInCorso.MyViewHolder> {
+public class AdapterRapportiIntervento extends RecyclerView.Adapter<AdapterRapportiIntervento.MyViewHolder> {
 
     private ArrayList<CardTicketIntervento> dataset;
 
@@ -44,13 +43,13 @@ public class AdapterInterventiInCorso extends RecyclerView.Adapter<AdapterInterv
         }
     }
 
-    public AdapterInterventiInCorso(ArrayList<CardTicketIntervento> dataset) {
+    public AdapterRapportiIntervento(ArrayList<CardTicketIntervento> dataset) {
         this.dataset = dataset;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_intervento_in_corso, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_rapporto_intervento, parent, false);
 
         //Setta l'onclick sulla recycler view presente nella classe Interventi
         view.setOnClickListener(BachecaInterventiInCorso.myOnClickListener);
@@ -76,33 +75,9 @@ public class AdapterInterventiInCorso extends RecyclerView.Adapter<AdapterInterv
             TdataTicket.setText(dataset.get(listPosition).getDataTicket());
             IdTicket.setText(dataset.get(listPosition).getIdTicketIntervento());
         }catch (NullPointerException e){
-            Log.d("HEY", "Mi sono bloccato");
+
         }
 
-        // Stringa usata per tenere traccia della priorità e lavorare sull'immagine rappresentata
-        String priorità = dataset.get(listPosition).getPriorità();
-
-        switch(priorità) {
-            case "Alta" :
-                {
-                mLogoPriorità.setBackgroundColor(Color.RED);
-                break;
-                }
-
-            case "Media":
-                {
-                mLogoPriorità.setBackgroundColor(Color.YELLOW);
-                break;
-                }
-
-            case "Bassa":
-                {
-                mLogoPriorità.setBackgroundColor(Color.GREEN);
-                break;
-                }
-
-            default:
-        }
     }
 
     @Override
