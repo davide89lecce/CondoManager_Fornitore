@@ -20,6 +20,7 @@ import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
+import com.firebase.client.ValueEventListener;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.CardTicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
@@ -54,6 +55,17 @@ public class BachecaInterventiInCorso extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        /*
+        Query query0;
+        query0 = FirebaseDB.getInterventi().orderByChild("Ogetto");
+        query0.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {}
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {}
+        });
+        */
     }
 
     @Override

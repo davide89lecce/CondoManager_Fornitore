@@ -18,7 +18,6 @@ public class TicketIntervento {
     private String stato;
     private String priorità;
     private String foto;
-    private String url;
     private String nomeAmministratore;
     private String nomeStabile;
     private String indirizzoStabile;
@@ -40,7 +39,6 @@ public class TicketIntervento {
                             String stato,
                             String priorità,
                             String foto,
-                            String url,
                             String nomeAmministratore,
                             String nomeStabile,
                             String indirizzoStabile,
@@ -63,7 +61,6 @@ public class TicketIntervento {
         this.stato = stato;
         this.priorità = priorità;
         this.foto = foto;
-        this.url = url;
         this.nomeAmministratore = nomeAmministratore;
         this.nomeStabile = nomeStabile;
         this.indirizzoStabile = indirizzoStabile;
@@ -191,14 +188,6 @@ public class TicketIntervento {
 
     public void setFoto(String foto) {
         this.foto = foto;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public String getNomeAmministratore() {

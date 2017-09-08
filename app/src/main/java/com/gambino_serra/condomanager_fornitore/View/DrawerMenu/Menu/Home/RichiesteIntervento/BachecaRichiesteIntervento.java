@@ -17,6 +17,7 @@ import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
+import com.firebase.client.ValueEventListener;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.CardTicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
@@ -34,7 +35,7 @@ public class BachecaRichiesteIntervento extends Fragment {
     private static RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private static RecyclerView recyclerView;
-    private ArrayList<TicketIntervento> data;
+    private ArrayList<CardTicketIntervento> data;
     public static View.OnClickListener myOnClickListener;
     Context context;
 
@@ -51,6 +52,7 @@ public class BachecaRichiesteIntervento extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -64,7 +66,7 @@ public class BachecaRichiesteIntervento extends Fragment {
 
         context = getContext();
         firebaseAuth = FirebaseAuth.getInstance();
-        data = new ArrayList<TicketIntervento>();
+        data = new ArrayList<CardTicketIntervento>();
         ticketInterventoMap = new HashMap<String,Object>();
         interventi = new ArrayList<CardTicketIntervento>();
 
@@ -79,6 +81,9 @@ public class BachecaRichiesteIntervento extends Fragment {
 
         //lettura uid condomino -->  codice fiscale stabile, uid amministratore
         uidFornitore = firebaseAuth.getCurrentUser().getUid().toString();
+
+
+
 
         Query query;
         query = FirebaseDB.getInterventi().orderByChild("fornitore").equalTo(uidFornitore);

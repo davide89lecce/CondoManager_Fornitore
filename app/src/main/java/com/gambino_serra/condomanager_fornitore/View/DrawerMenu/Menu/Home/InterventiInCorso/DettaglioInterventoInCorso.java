@@ -16,6 +16,7 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
+import com.firebase.client.ValueEventListener;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
@@ -164,52 +165,7 @@ public class DettaglioInterventoInCorso extends Fragment {
                     ticketInterventoMap.put(child.getKey(), child.getValue());
                 }
 
-                TicketIntervento ticketIntervento = new TicketIntervento(
-                        ticketInterventoMap.get("idIntervento").toString(),
-                        ticketInterventoMap.get("amministratore").toString(),
-                        ticketInterventoMap.get("data_ticket").toString(),
-                        ticketInterventoMap.get("data_ultimo_aggiornamento").toString(),
-                        ticketInterventoMap.get("fornitore").toString(),
-                        ticketInterventoMap.get("messaggio_condomino").toString(),
-                        ticketInterventoMap.get("aggiornamento_condomini").toString(),
-                        ticketInterventoMap.get("descrizione_condomini").toString(),
-                        ticketInterventoMap.get("oggetto").toString(),
-                        ticketInterventoMap.get("rapporti_intervento").toString(),
-                        ticketInterventoMap.get("richiesta").toString(),
-                        ticketInterventoMap.get("stabile").toString(),
-                        ticketInterventoMap.get("stato").toString(),
-                        ticketInterventoMap.get("priorità").toString(),
-                        ticketInterventoMap.get("foto").toString(),
-                        ticketInterventoMap.get("url").toString(),
-                        "ciao", "ciao", "ciao", "ciao", "ciao"
-                );
-
-                try {
-                    TdataTicket.setText(ticketIntervento.getDataTicket().toString());
-                    Tstabile.setText(ticketIntervento.getStabile().toString());
-                    Toggetto.setText(ticketIntervento.getOggetto().toString());
-                    TAmministratore.setText(ticketIntervento.getUidAmministratore().toString());
-                    Trichiesta.setText(ticketIntervento.getRichiesta().toString());
-                    Tindirizzo.setText("indirizzo ancora non presente");
-                    //Tfoto.setQUALCOSA TODO: AGGIUNGERE FOTO e INDIRIZZO
-
-                    //Setta priorità floating action button
-                    if (ticketInterventoMap.get("priorità").equals("Alta")) {
-                        materialDesignFAM.setMenuButtonColorNormal(Color.parseColor("#FF0000"));
-                    }else if(ticketInterventoMap.get("priorità").equals("Media")){
-                        materialDesignFAM.setMenuButtonColorNormal(Color.parseColor("#FFFF00"));
-                    }else if(ticketInterventoMap.get("priorità").equals("Bassa")){
-                        materialDesignFAM.setMenuButtonColorNormal(Color.parseColor("#00FF00"));
-                    }
-
-                    if (ticketInterventoMap.get("foto").toString() != "-") {
-                        Picasso.with(context).load(ticketIntervento.getUrl()).fit().centerCrop().into(Tfoto);
-                    }
-
-
-                    TidTicketIntervento.setText(ticketIntervento.getIdTicketIntervento());
-                } catch (NullPointerException e) {
-                }
+                recuperaDettagliTicket(ticketInterventoMap);
             }
 
             @Override
@@ -230,10 +186,128 @@ public class DettaglioInterventoInCorso extends Fragment {
         });
     }
 
+
+
+
+
+    public void recuperaDettagliTicket(final Map<String, Object> ticketInterventoMap) {
+
+        final Map<String, Object> ticketInterventoMap2 = new HashMap<String, Object>();
+
+
+        Query query2;
+        query2 = FirebaseDB.getStabili().orderByKey().equalTo(ticketInterventoMap.get("stabile").toString());
+
+
+        query2.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                //HashMap temporaneo per immagazzinare i dati dello stabile
+                // per ognuno dei figli presenti nello snapshot, ovvero per tutti i figli di un singolo nodo Stabile
+                // recuperiamo i dati per inserirli nel MAP
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    ticketInterventoMap2.put(child.getKey(), child.getValue());
+                }
+
+
+                Firebase nomeAmm = FirebaseDB.getAmministratori()
+                        .child( ticketInterventoMap.get("amministratore").toString() )
+                        .child("nome");
+
+                nomeAmm.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        ticketInterventoMap2.put("nomeAmministratore", dataSnapshot.getValue().toString() );
+
+
+                        // Avvaloro tutti i dati della card che mi interessano inserendone i relativi dati
+                        // anche quelli provenienti dallo stabile sovrascrivendo i codici passati in ticketIntervento
+                        // Avvaloriamo una variabile TicketIntervento appositamente creata in modo da inserire poi questo
+                        // oggetto all'interno di un Array di interventi che utilizzeremo per popolare la lista Recycle
+                        //try {
+                        TicketIntervento ticketIntervento = new TicketIntervento(
+                                ticketInterventoMap.get("idIntervento").toString(),
+                                ticketInterventoMap.get("amministratore").toString(),
+                                ticketInterventoMap.get("data_ticket").toString(),
+                                ticketInterventoMap.get("data_ultimo_aggiornamento").toString(),
+                                ticketInterventoMap.get("fornitore").toString(),
+                                ticketInterventoMap.get("messaggio_condomino").toString(),
+                                ticketInterventoMap.get("aggiornamento_condomini").toString(),
+                                ticketInterventoMap.get("descrizione_condomini").toString(),
+                                ticketInterventoMap.get("oggetto").toString(),
+                                ticketInterventoMap.get("rapporti_intervento").toString(),
+                                ticketInterventoMap.get("richiesta").toString(),
+                                ticketInterventoMap.get("stabile").toString(),
+                                ticketInterventoMap.get("stato").toString(),
+                                ticketInterventoMap.get("priorità").toString(),
+                                ticketInterventoMap.get("foto").toString(),
+                                ticketInterventoMap2.get("nomeAmministratore").toString(),
+                                ticketInterventoMap2.get("nome").toString(),
+                                ticketInterventoMap2.get("indirizzo").toString(),
+                                ticketInterventoMap2.get("latitudine").toString(),
+                                ticketInterventoMap2.get("longitudine").toString()
+                        );
+
+                        try {
+                            TdataTicket.setText(ticketIntervento.getDataTicket().toString());
+                            Tstabile.setText(ticketIntervento.getNomeStabile().toString());
+                            Toggetto.setText(ticketIntervento.getOggetto().toString());
+                            TAmministratore.setText(ticketIntervento.getNomeAmministratore().toString());
+                            Trichiesta.setText(ticketIntervento.getRichiesta().toString());
+                            Tindirizzo.setText(ticketIntervento.getIndirizzoStabile().toString());
+
+
+                            if ( ! "-".equals( ticketIntervento.getFoto() ) ) {
+                                Picasso.with(context).load(ticketIntervento.getFoto()).fit().centerCrop().into(Tfoto);
+                            }
+
+                            TidTicketIntervento.setText(ticketIntervento.getIdTicketIntervento());
+
+
+
+                        //Setta priorità floating action button
+                            if (ticketInterventoMap.get("priorità").equals("Alta")) {
+                                materialDesignFAM.setMenuButtonColorNormal(Color.parseColor("#FF0000"));
+                            }else if(ticketInterventoMap.get("priorità").equals("Media")){
+                                materialDesignFAM.setMenuButtonColorNormal(Color.parseColor("#FFFF00"));
+                            }else if(ticketInterventoMap.get("priorità").equals("Bassa")){
+                                materialDesignFAM.setMenuButtonColorNormal(Color.parseColor("#00FF00"));
+                            }
+
+                        } catch (NullPointerException e) {}
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) { }
+                });
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) { }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) { }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) { }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) { }
+        });
+
+
+
+
+
+
+
+    }
+
+
 }
 
 
-// todo: interessa a totò
+// todo: interessa
 //        intervento.addValueEventListener (new ValueEventListener() {
 //            @Override
 //            public void onDataChange(DataSnapshot dataSnapshot) {

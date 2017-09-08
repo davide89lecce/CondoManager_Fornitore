@@ -134,7 +134,7 @@ public class RapportiIntervento extends Fragment {
                         ticketInterventoMap.get("priorità").toString() ,
                         ticketInterventoMap.get("foto").toString(),
                         ticketInterventoMap.get("url").toString(),
-                        "ciao","ciao","ciao","ciao","ciao"
+                        "ciao","ciao","ciao","ciao"
                 );
 
                 try {
@@ -146,8 +146,8 @@ public class RapportiIntervento extends Fragment {
                     Tindirizzo.setText("indirizzo ancora non presente");
                     //Tfoto.setQUALCOSA TODO: AGGIUNGERE FOTO e INDIRIZZO
 
-                    if ( ticketInterventoMap.get("foto").toString() != "-" ) {
-                        Picasso.with(context).load( ticketIntervento.getUrl() ).fit().centerCrop().into(Tfoto) ;
+                    if ( ! "-".equals( ticketIntervento.getFoto() ) ) {
+                        Picasso.with(context).load( ticketIntervento.getFoto() ).fit().centerCrop().into(Tfoto) ;
                     }
 
 

@@ -123,7 +123,7 @@ public class old_DettaglioInterventoInCorso extends AppCompatActivity {
                         ticketInterventoMap.get("priorità").toString() ,
                         ticketInterventoMap.get("foto").toString(),
                         ticketInterventoMap.get("url").toString(),
-                        "ciao","ciao","ciao","ciao","ciao"
+                        "ciao","ciao","ciao","ciao"
                 );
 
                 try {
@@ -136,7 +136,7 @@ public class old_DettaglioInterventoInCorso extends AppCompatActivity {
                     //Tfoto.setQUALCOSA TODO: AGGIUNGERE FOTO e INDIRIZZO
 
                     if ( ticketInterventoMap.get("foto").toString() != "-" ) {
-                        Picasso.with(getApplicationContext()).load( ticketIntervento.getUrl() ).fit().centerCrop().into(Tfoto) ;
+                        Picasso.with(getApplicationContext()).load( ticketIntervento.getFoto() ).fit().centerCrop().into(Tfoto) ;
                     }
 
 

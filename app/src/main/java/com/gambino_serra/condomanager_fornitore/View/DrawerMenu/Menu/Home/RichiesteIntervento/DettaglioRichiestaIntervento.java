@@ -194,7 +194,6 @@ public class DettaglioRichiestaIntervento extends AppCompatActivity {
                                     ticketInterventoMap.get("stato").toString(),
                                     ticketInterventoMap.get("priorità").toString(),
                                     ticketInterventoMap.get("foto").toString(),
-                                    ticketInterventoMap.get("url").toString(),
                                     ticketInterventoMap2.get("nomeAmministratore").toString(),
                                     ticketInterventoMap2.get("nome").toString(),
                                     ticketInterventoMap2.get("indirizzo").toString(),
@@ -209,8 +208,8 @@ public class DettaglioRichiestaIntervento extends AppCompatActivity {
                             Toggetto.setText(ticketIntervento.getOggetto().toString());
                             Trichiesta.setText(ticketIntervento.getRichiesta().toString());
 
-                            if ( ticketInterventoMap.get("foto").toString() != "-" ) {
-                                Picasso.with(getApplicationContext()).load( ticketIntervento.getUrl() ).fit().centerCrop().into(Tfoto) ;
+                            if ( ! "-".equals( ticketIntervento.getFoto() ) ) {
+                                Picasso.with(getApplicationContext()).load( ticketIntervento.getFoto() ).fit().centerCrop().into(Tfoto) ;
                                 }
 
                             TidTicketIntervento.setText(ticketIntervento.getIdTicketIntervento().toString());
