@@ -1,4 +1,4 @@
-package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiInCorso;
+package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiInCorso.InterventoInCorso.DettaglioIntervento;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -123,10 +123,6 @@ public class DettaglioInterventoInCorso extends Fragment {
 
         floatingActionButton1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
-               // DialogFragment newFragment = new DialogNuovaSegnalazione();
-               // newFragment.show(getActivity().getFragmentManager(), "NuovaSegnalazione");
-               // getActivity().overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
                 materialDesignFAM.setMenuButtonColorNormal(Color.parseColor("#FF0000"));
                 materialDesignFAM.close(true);
             }
@@ -134,18 +130,12 @@ public class DettaglioInterventoInCorso extends Fragment {
         floatingActionButton2.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-               // DialogFragment newFragment = new DialogNuovoMessaggio();
-               // newFragment.show(getActivity().getFragmentManager(), "NuovoMessaggio");
-               // getActivity().overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
                 materialDesignFAM.setMenuButtonColorNormal(Color.parseColor("#FFFF00"));
                 materialDesignFAM.close(true);
             }
         });
         floatingActionButton3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // DialogFragment newFragment = new DialogNuovoMessaggio();
-                // newFragment.show(getActivity().getFragmentManager(), "NuovoMessaggio");
-                // getActivity().overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
                 materialDesignFAM.setMenuButtonColorNormal(Color.parseColor("#00FF00"));
                 materialDesignFAM.close(true);
             }

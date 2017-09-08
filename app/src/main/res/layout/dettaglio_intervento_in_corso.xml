@@ -554,7 +554,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5"
             fab:menu_fab_label="Priorità intervento"
-            fab:menu_animationDelayPerItem="55"
+            fab:menu_animationDelayPerItem="100"
             fab:menu_backgroundColor="#C0FFFFFF"
             fab:menu_buttonSpacing="0dp"
             fab:menu_colorNormal="#dc473f"
