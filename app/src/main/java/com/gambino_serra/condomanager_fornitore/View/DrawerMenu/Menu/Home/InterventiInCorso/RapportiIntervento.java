@@ -18,8 +18,6 @@ import com.firebase.client.Query;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
-import com.github.clans.fab.FloatingActionButton;
-import com.github.clans.fab.FloatingActionMenu;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -31,13 +29,10 @@ import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class DettaglioInterventoInCorso extends Fragment {
+public class RapportiIntervento extends Fragment {
 
     private static final String MY_PREFERENCES = "preferences";
     private static final String LOGGED_USER = "username";
-
-    FloatingActionMenu materialDesignFAM;
-    FloatingActionButton floatingActionButton1, floatingActionButton2, floatingActionButton3;
 
     Context context;
 
@@ -68,7 +63,7 @@ public class DettaglioInterventoInCorso extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.dettaglio_intervento_in_corso, container, false);
+        View view = inflater.inflate(R.layout.rapporti_intervento, container, false);
         return view;
     }
 
@@ -109,70 +104,17 @@ public class DettaglioInterventoInCorso extends Fragment {
         // Avvalora il primo oggetto del map con l'ID dell'intervento recuperato
         ticketInterventoMap.put("idIntervento", idIntervento);
 
-        //Floating button
-        materialDesignFAM = (FloatingActionMenu) getActivity().findViewById(R.id.material_design_android_floating_action_menu);
-        floatingActionButton1 = (FloatingActionButton) getActivity().findViewById(R.id.material_design_floating_action_menu_item1);
-        floatingActionButton2 = (FloatingActionButton) getActivity().findViewById(R.id.material_design_floating_action_menu_item2);
-        floatingActionButton3 = (FloatingActionButton) getActivity().findViewById(R.id.material_design_floating_action_menu_item3);
-
-        materialDesignFAM.hideMenu(true);
-        materialDesignFAM.setClosedOnTouchOutside(true);
-        materialDesignFAM.showMenu(true);
-
-
-        // materialDesignFAM.setOnTouchListener(new View.OnTouchListener() {
-        //     @Override
-        //     public boolean onTouch(View v, MotionEvent event) {
-        //         //if(event.getAction() == MotionEvent.ACTION_UP){
-        //
-        //             if(materialDesignFAM.isOpened())
-        //             { fl.setBackgroundColor(Color.GRAY);
-        //
-        //             }
-        //             else
-        //             { fl.setBackgroundColor(Color.TRANSPARENT); }
-        //             // Do what you want
-        //             return true;
-        //         }
-        //         return true; // consume the event
-        //     }
-        // });
-
-
-        floatingActionButton1.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-               // DialogFragment newFragment = new DialogNuovaSegnalazione();
-               // newFragment.show(getActivity().getFragmentManager(), "NuovaSegnalazione");
-               // getActivity().overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
-                materialDesignFAM.close(true);
-            }
-        });
-        floatingActionButton2.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-               // DialogFragment newFragment = new DialogNuovoMessaggio();
-               // newFragment.show(getActivity().getFragmentManager(), "NuovoMessaggio");
-               // getActivity().overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
-                materialDesignFAM.close(true);
-            }
-        });
-        floatingActionButton3.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {  }
-        });
-
-        //Firebase retrieve data
         Query intervento;
         intervento = FirebaseDB.getInterventi().orderByKey().equalTo(idIntervento);
 
         intervento.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                ticketInterventoMap = new HashMap<String, Object>();
-                ticketInterventoMap.put("idIntervento", idIntervento);
+                ticketInterventoMap = new HashMap<String,Object>();
+                ticketInterventoMap.put("idIntervento",idIntervento);
 
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    ticketInterventoMap.put(child.getKey(), child.getValue());
+                for(DataSnapshot child : dataSnapshot.getChildren()){
+                    ticketInterventoMap.put(child.getKey(),child.getValue());
                 }
 
                 TicketIntervento ticketIntervento = new TicketIntervento(
@@ -188,11 +130,11 @@ public class DettaglioInterventoInCorso extends Fragment {
                         ticketInterventoMap.get("rapporti_intervento").toString(),
                         ticketInterventoMap.get("richiesta").toString(),
                         ticketInterventoMap.get("stabile").toString(),
-                        ticketInterventoMap.get("stato").toString(),
-                        ticketInterventoMap.get("priorità").toString(),
+                        ticketInterventoMap.get("stato").toString() ,
+                        ticketInterventoMap.get("priorità").toString() ,
                         ticketInterventoMap.get("foto").toString(),
                         ticketInterventoMap.get("url").toString(),
-                        "ciao", "ciao", "ciao", "ciao", "ciao"
+                        "ciao","ciao","ciao","ciao","ciao"
                 );
 
                 try {
@@ -204,52 +146,27 @@ public class DettaglioInterventoInCorso extends Fragment {
                     Tindirizzo.setText("indirizzo ancora non presente");
                     //Tfoto.setQUALCOSA TODO: AGGIUNGERE FOTO e INDIRIZZO
 
-                    if (ticketInterventoMap.get("foto").toString() != "-") {
-                        Picasso.with(context).load(ticketIntervento.getUrl()).fit().centerCrop().into(Tfoto);
+                    if ( ticketInterventoMap.get("foto").toString() != "-" ) {
+                        Picasso.with(context).load( ticketIntervento.getUrl() ).fit().centerCrop().into(Tfoto) ;
                     }
 
 
                     TidTicketIntervento.setText(ticketIntervento.getIdTicketIntervento());
-                } catch (NullPointerException e) {
-                }
+                }catch (NullPointerException e){}
             }
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-            }
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) { }
 
             @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-            }
+            public void onChildRemoved(DataSnapshot dataSnapshot) { }
 
             @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-            }
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) { }
 
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
-            }
+            public void onCancelled(FirebaseError firebaseError) { }
         });
     }
 
 }
-
-
-// todo: interessa a totò
-//        intervento.addValueEventListener (new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                for ( DataSnapshot figlio : dataSnapshot.getChildren() )
-//                    try {
-//                        ticketInterventoMap.put(figlio.getKey(), figlio.getValue(String.class));
-//                        }
-//                    catch (NullPointerException e)
-//                        {
-//                        ticketInterventoMap.put(figlio.getKey(), "-");
-//                        }
-//                }
-//
-//            @Override
-//            public void onCancelled(FirebaseError firebaseError) { }
-//        });
-
