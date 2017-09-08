@@ -3,7 +3,6 @@ package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.Inter
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -154,7 +153,7 @@ public class BachecaInterventiInCorso extends Fragment {
             Bundle bundle = new Bundle();
             bundle.putString("idIntervento", selectedName);
 
-            Intent intent = new Intent(context, DettaglioInterventoInCorso.class);
+            Intent intent = new Intent(context, InterventoInCorso.class);
             intent.putExtras(bundle);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);

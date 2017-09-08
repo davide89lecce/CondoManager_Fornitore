@@ -11,10 +11,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiCompletati.BachecaInterventiCompletati;
-import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiCompletati.DettaglioInterventoCompletato;
-import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.RichiesteIntervento.BachecaRichiesteIntervento;
 import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiInCorso.BachecaInterventiInCorso;
+import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.RichiesteIntervento.BachecaRichiesteIntervento;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 
 public class Home extends Fragment {
@@ -95,6 +95,7 @@ public class Home extends Fragment {
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, BachecaInterventiInCorso.newInstance());
          transaction.commit();
+        //bottomNavigationView.setSelectedItemId(R.id.action_item2);
     }
 
 

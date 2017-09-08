@@ -424,13 +424,13 @@ public class MappaInterventiInCorso extends FragmentActivity implements
                                     .snippet(markerIntervento.getOggetto().toString())
                                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
                         }
-                        //Setta l'onclick sul marker e intent a DettaglioInterventoInCorso
+                        //Setta l'onclick sul marker e intent a old_DettaglioInterventoInCorso
                         map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                             @Override
                             public void onInfoWindowClick(Marker arg0) {
                                 for (final MarkerIntervento intervento : interventi) {
                                     if ((intervento.getNomeStabile()).equals(arg0.getTitle().toString())) {
-                                        Intent intent = new Intent(getApplicationContext(), DettaglioInterventoInCorso.class);
+                                        Intent intent = new Intent(getApplicationContext(), InterventoInCorso.class);
                                         bundle.putString("idIntervento", intervento.getIdTicketIntervento());
                                         intent.putExtras(bundle);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

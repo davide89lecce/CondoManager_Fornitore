@@ -8,11 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gambino_serra.condomanager_fornitore.Model.Entity.CardTicketIntervento;
-import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
+
 import java.util.ArrayList;
 
 import static com.gambino_serra.condomanager_fornitore.tesi.R.id.D_Priorità;
@@ -36,7 +35,7 @@ public class AdapterInterventiInCorso extends RecyclerView.Adapter<AdapterInterv
             super(itemView);
 
             this.Tstabile = (TextView) itemView.findViewById(R.id.D_Condominio);
-            this.Tindirizzo = (TextView) itemView.findViewById(R.id.D_Indirizzo); //TODO: Aggiungere indirizzo
+            this.Tindirizzo = (TextView) itemView.findViewById(R.id.D_Indirizzo);
             this.Toggetto = (TextView) itemView.findViewById(R.id.D_Oggetto);
             this.Tdata = (TextView) itemView.findViewById(R.id.D_Data);
             this.mLogoPriorità = (ImageView) itemView.findViewById(D_Priorità);
@@ -80,26 +79,23 @@ public class AdapterInterventiInCorso extends RecyclerView.Adapter<AdapterInterv
             Log.d("HEY", "Mi sono bloccato");
         }
 
-        // Stringa usata per tenere traccia della priorità e lavorare sullimmagine rappresentata
+        // Stringa usata per tenere traccia della priorità e lavorare sull'immagine rappresentata
         String priorità = dataset.get(listPosition).getPriorità();
 
         switch(priorità) {
-            // intervento richiesto o rifiutato (al condomino interressa solo che sia stato processato
-            // dall'amministratore, se un fornitore lo rifiuterà, lui lo vedrà ancora in attesa
-            // di essere preso in carico
-            case "1" :
+            case "Alta" :
                 {
                 mLogoPriorità.setBackgroundColor(Color.RED);
                 break;
                 }
 
-            case "2": // intervento in corso
+            case "Media":
                 {
                 mLogoPriorità.setBackgroundColor(Color.YELLOW);
                 break;
                 }
 
-            case "3":   // intervento concluso
+            case "Bassa":
                 {
                 mLogoPriorità.setBackgroundColor(Color.GREEN);
                 break;
