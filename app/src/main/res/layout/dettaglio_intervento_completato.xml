@@ -250,7 +250,7 @@
                         app:srcCompat="@drawable/logo_cond" />
 
                     <ImageView
-                        android:id="@+id/imageView2"
+                        android:id="@+id/btnMappa"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         app:srcCompat="@drawable/icona_mappa"

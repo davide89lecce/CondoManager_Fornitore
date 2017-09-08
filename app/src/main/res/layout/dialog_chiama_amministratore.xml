@@ -6,21 +6,15 @@
     android:weightSum="1">
 
     <TextView
-        android:id="@+id/textRapportoIntervento"
+        android:id="@+id/textDialogChiama"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="20dp"
         android:fontFamily="sans-serif"
-        android:textSize="20sp" />
+        android:text="CHIAMA AMMINISTRATORE?"
+        android:textSize="20sp"
+        android:textStyle="bold|italic" />
 
-    <EditText
-        android:id="@+id/descrizioneIntervento"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:layout_margin="20dp"
-        android:fontFamily="sans-serif"
-        android:layout_weight="0.15" />
 
 </LinearLayout>

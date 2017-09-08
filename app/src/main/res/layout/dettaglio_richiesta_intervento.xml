@@ -546,39 +546,40 @@
         android:id="@+id/btnAccetta"
         android:layout_width="0dp"
         android:layout_height="50dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="1dp"
         android:background="@color/primarySegnalazione"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"
-        android:layout_marginLeft="0dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/guideline"
-        android:layout_marginRight="2dp">
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1">
 
         <ImageView
+            android:id="@+id/imageView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:layout_marginLeft="24dp"
             android:layout_marginTop="8dp"
             android:backgroundTint="@color/colorPrimary"
             android:src="@drawable/check"
             android:textAlignment="center"
             android:tint="@color/colorPrimaryLight"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:layout_constraintRight_creator="1"
-            android:id="@+id/imageView6"
-            android:layout_marginLeft="24dp"
-            app:layout_constraintLeft_toLeftOf="parent" />
+            tools:layout_constraintRight_creator="1" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/appCompatTextView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
             android:fontFamily="sans-serif-condensed"
@@ -588,18 +589,17 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@+id/imageView6"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.666"
             tools:layout_constraintLeft_creator="1"
-            tools:layout_constraintRight_creator="1"
-            android:layout_marginLeft="8dp"
-            app:layout_constraintLeft_toLeftOf="@+id/imageView6" />
+            tools:layout_constraintRight_creator="1" />
 
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/btnChiudiIntervento"
+        android:id="@+id/btnRifiuta"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:background="@color/primarySegnalazione"
@@ -610,7 +610,7 @@
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        android:layout_marginLeft="2dp"
+        android:layout_marginLeft="1dp"
         app:layout_constraintLeft_toLeftOf="@+id/guideline">
 
         <ImageView
