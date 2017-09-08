@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.gambino_serra.condomanager_fornitore.Model.Entity.CardRapportoIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.CardTicketIntervento;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 
 public class AdapterRapportiIntervento extends RecyclerView.Adapter<AdapterRapportiIntervento.MyViewHolder> {
 
-    private ArrayList<CardTicketIntervento> dataset;
+    private ArrayList<CardRapportoIntervento> dataset;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -26,15 +27,15 @@ public class AdapterRapportiIntervento extends RecyclerView.Adapter<AdapterRappo
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            this.Tdata = (TextView) itemView.findViewById(R.id.D_Indirizzo);
-            this.TnotaAmministratore = (TextView) itemView.findViewById(R.id.D_Oggetto);
-            this.TnotaFornitore = (TextView) itemView.findViewById(R.id.D_Data);
+            this.Tdata = (TextView) itemView.findViewById(R.id.D_Data);
+            this.TnotaAmministratore = (TextView) itemView.findViewById(R.id.D_NotaAmministratore);
+            this.TnotaFornitore = (TextView) itemView.findViewById(R.id.D_NotaPersonale);
             //Campo nascosto per recuperare il riferimento
-            this.TidRapportoIntervento = (TextView) itemView.findViewById(R.id.D_Condominio);
+            this.TidRapportoIntervento = (TextView) itemView.findViewById(R.id.D_IDIntervento);
         }
     }
 
-    public AdapterRapportiIntervento(ArrayList<CardTicketIntervento> dataset) {
+    public AdapterRapportiIntervento(ArrayList<CardRapportoIntervento> dataset) {
         this.dataset = dataset;
     }
 
@@ -58,10 +59,10 @@ public class AdapterRapportiIntervento extends RecyclerView.Adapter<AdapterRappo
         TextView TidRapportoIntervento = holder.TidRapportoIntervento;
 
         try {
-            Tdata.setText(dataset.get(listPosition).getNomeStabile());
-            TnotaAmministratore.setText(dataset.get(listPosition).getIndirizzoStabile());
-            TnotaFornitore.setText(dataset.get(listPosition).getOggetto());
-            TidRapportoIntervento.setText(dataset.get(listPosition).getIdTicketIntervento());
+            Tdata.setText(dataset.get(listPosition).getData());
+            TnotaAmministratore.setText(dataset.get(listPosition).getNotaAmministratore());
+            TnotaFornitore.setText(dataset.get(listPosition).getNotaFornitore());
+            TidRapportoIntervento.setText(dataset.get(listPosition).getIdRapportoIntervento());
         }catch (NullPointerException e){
 
         }

@@ -84,6 +84,7 @@ public class RapportiIntervento extends Fragment {
 
         context = getContext();
 
+        rapporti = new ArrayList<CardRapportoIntervento>();
         firebaseAuth = FirebaseAuth.getInstance();
 
         final SharedPreferences sharedPrefs = getActivity().getSharedPreferences(MY_PREFERENCES, MODE_PRIVATE);
@@ -125,22 +126,25 @@ public class RapportiIntervento extends Fragment {
                     rapportoInterventoMap.put(child.getKey(), child.getValue());
                 }
 
-                try {
-                    CardRapportoIntervento ticketIntervento = new CardRapportoIntervento(
+                //try {
+                    CardRapportoIntervento rapportoIntervento = new CardRapportoIntervento(
                             rapportoInterventoMap.get("id").toString(),
                             rapportoInterventoMap.get("data").toString(),
                             rapportoInterventoMap.get("nota_amministratore").toString(),
-                            rapportoInterventoMap.get("nota_fornitore").toString()
+                            rapportoInterventoMap.get("nota_fornitore").toString(),
+                            rapportoInterventoMap.get("ticket_intervento").toString()
                     );
+
+                    rapporti.add(rapportoIntervento);
 
                     // Utilizziamo l'adapter per popolare la recycler view
                     adapter = new AdapterRapportiIntervento(rapporti);
                     recyclerView.setAdapter(adapter);
 
 
-                } catch (NullPointerException e) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Non riesco ad aprire l'oggetto " + e.toString(), Toast.LENGTH_LONG).show();
-                }
+               // } catch (NullPointerException e) {
+                 //   Toast.makeText(getActivity().getApplicationContext(), "Non riesco ad aprire l'oggetto " + e.toString(), Toast.LENGTH_LONG).show();
+                //}
 
             }
 

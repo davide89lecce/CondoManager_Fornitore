@@ -3,25 +3,26 @@ package com.gambino_serra.condomanager_fornitore.Model.Entity;
 
 public class CardRapportoIntervento {
 
-    private String idTicket;
+    private String idRapportoIntervento;
     private String data;
     private String notaAmministratore;
     private String notaFornitore;
+    private String ticketIntervento;
 
-    public CardRapportoIntervento(String idTicket, String data, String notaAmministratore, String notaFornitore) {
-        this.idTicket = idTicket;
+    public CardRapportoIntervento(String idRapportoIntervento, String data, String notaAmministratore, String notaFornitore, String ticketIntervento) {
+        this.idRapportoIntervento = idRapportoIntervento;
         this.data = data;
         this.notaAmministratore = notaAmministratore;
         this.notaFornitore = notaFornitore;
+        this.ticketIntervento = ticketIntervento;
     }
 
-
-    public String getIdTicket() {
-        return idTicket;
+    public String getIdRapportoIntervento() {
+        return idRapportoIntervento;
     }
 
-    public void setIdTicket(String idTicket) {
-        this.idTicket = idTicket;
+    public void setIdRapportoIntervento(String idRapportoIntervento) {
+        this.idRapportoIntervento = idRapportoIntervento;
     }
 
     public String getData() {
@@ -46,5 +47,13 @@ public class CardRapportoIntervento {
 
     public void setNotaFornitore(String notaFornitore) {
         this.notaFornitore = notaFornitore;
+    }
+
+    public String getTicketIntervento() {
+        return ticketIntervento;
+    }
+
+    public void setTicketIntervento(String ticketIntervento) {
+        this.ticketIntervento = ticketIntervento;
     }
 }
