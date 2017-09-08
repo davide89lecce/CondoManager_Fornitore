@@ -12,13 +12,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
+import com.gambino_serra.condomanager_fornitore.Model.Entity.CardRapportoIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.CardTicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
+import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -51,8 +59,8 @@ public class RapportiIntervento extends Fragment {
 
     private FirebaseAuth firebaseAuth;
     private String uidFornitore;
-    Map<String, Object> ticketInterventoMap;
-    ArrayList<CardTicketIntervento> interventi;
+    Map<String, Object> rapportoInterventoMap;
+    ArrayList<CardRapportoIntervento> rapporti;
     Bundle bundle;
 
 
@@ -96,6 +104,59 @@ public class RapportiIntervento extends Fragment {
 
         uidFornitore = firebaseAuth.getCurrentUser().getUid().toString();
 
+
+        Query query;
+        query = FirebaseDB.getRapporti().orderByChild("ticket_intervento").equalTo(idIntervento);
+
+
+        // la query seleziona solo gli interventi con un determinato fornitore
+        //il listener lavora sui figli della query, ovvero su titti gli interventi recuperati
+        query.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(com.firebase.client.DataSnapshot dataSnapshot, String s) {
+
+                //HashMap temporaneo per immagazzinare i dati di un ticket
+                rapportoInterventoMap = new HashMap<String,Object>();
+                rapportoInterventoMap.put("id", dataSnapshot.getKey()); //primo campo del MAP
+
+                // per ognuno dei figli presenti nello snapshot, ovvero per tutti i figli di un singolo nodo Interv
+                // recuperiamo i dati per inserirli nel MAP
+                for ( DataSnapshot child : dataSnapshot.getChildren() ) {
+                    rapportoInterventoMap.put(child.getKey(), child.getValue());
+                }
+
+                try {
+                    CardRapportoIntervento ticketIntervento = new CardRapportoIntervento(
+                            rapportoInterventoMap.get("id").toString(),
+                            rapportoInterventoMap.get("data").toString(),
+                            rapportoInterventoMap.get("nota_amministratore").toString(),
+                            rapportoInterventoMap.get("nota_fornitore").toString()
+                    );
+
+                    // Utilizziamo l'adapter per popolare la recycler view
+                    adapter = new AdapterRapportiIntervento(rapporti);
+                    recyclerView.setAdapter(adapter);
+
+
+                } catch (NullPointerException e) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Non riesco ad aprire l'oggetto " + e.toString(), Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+            @Override
+            public void onChildChanged(com.firebase.client.DataSnapshot dataSnapshot, String s) { }
+
+            @Override
+            public void onChildRemoved(com.firebase.client.DataSnapshot dataSnapshot) { }
+
+            @Override
+            public void onChildMoved(com.firebase.client.DataSnapshot dataSnapshot, String s) { }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) { }
+        });
     }
+
 
 }

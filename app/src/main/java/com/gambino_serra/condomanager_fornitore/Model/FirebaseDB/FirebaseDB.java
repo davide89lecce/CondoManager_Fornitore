@@ -45,6 +45,11 @@ public class FirebaseDB {
         return firebase;
     }
 
+    public static synchronized Firebase getRapporti(){
+        firebase = new Firebase(DB + "Rapporti_intervento");
+        return firebase;
+    }
+
     public static synchronized Firebase getMessaggiCondomino(){
         firebase = new Firebase(DB + "Messaggi_condomino");
         return firebase;

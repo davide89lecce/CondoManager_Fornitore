@@ -1,7 +1,6 @@
 package com.gambino_serra.condomanager_fornitore.Model.Entity;
 
 
-import com.google.gson.annotations.SerializedName;
 
 public class CardTicketIntervento {
     private String idTicketIntervento;
