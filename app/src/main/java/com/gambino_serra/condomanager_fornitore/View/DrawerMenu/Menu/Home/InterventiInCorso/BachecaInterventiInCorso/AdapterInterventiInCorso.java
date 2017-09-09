@@ -83,19 +83,19 @@ public class AdapterInterventiInCorso extends RecyclerView.Adapter<AdapterInterv
         String priorità = dataset.get(listPosition).getPriorità();
 
         switch(priorità) {
-            case "Alta" :
+            case "3" :
                 {
                 mLogoPriorità.setBackgroundColor(Color.RED);
                 break;
                 }
 
-            case "Media":
+            case "2":
                 {
                 mLogoPriorità.setBackgroundColor(Color.YELLOW);
                 break;
                 }
 
-            case "Bassa":
+            case "1":
                 {
                 mLogoPriorità.setBackgroundColor(Color.GREEN);
                 break;

@@ -2,7 +2,8 @@ package com.gambino_serra.condomanager_fornitore.Model.Entity;
 
 
 
-public class CardTicketIntervento {
+public class CardTicketIntervento implements Comparable<CardTicketIntervento> {
+
     private String idTicketIntervento;
     private String idStabile;
     private String nomeStabile;
@@ -106,4 +107,19 @@ public class CardTicketIntervento {
     public void setDataUltimoAggiornamento(String dataUltimoAggiornamento) {
         this.dataUltimoAggiornamento = dataUltimoAggiornamento;
     }
+
+    @Override
+    public int compareTo(CardTicketIntervento cardTicketIntervento) {
+        //write code here for compare name
+
+        if(Integer.parseInt(this.getPriorità()) < Integer.parseInt(cardTicketIntervento.getPriorità())) {
+            return - 1;
+
+        }else if(Integer.parseInt(this.getPriorità()) > Integer.parseInt(cardTicketIntervento.getPriorità())) {
+            return  1;
+
+        }else return 0;
+
+    }
+
 }

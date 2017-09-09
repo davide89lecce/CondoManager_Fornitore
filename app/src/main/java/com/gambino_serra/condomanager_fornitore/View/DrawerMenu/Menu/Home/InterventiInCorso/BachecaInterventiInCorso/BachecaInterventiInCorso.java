@@ -19,7 +19,6 @@ import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
-import com.firebase.client.ValueEventListener;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.CardTicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
@@ -28,6 +27,8 @@ import com.gambino_serra.condomanager_fornitore.tesi.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -212,6 +213,16 @@ public class BachecaInterventiInCorso extends Fragment {
                         interventi.add(ticketIntervento);
 
                     }
+
+                    // Sorting interventi per idIntervento dall'ultimo al primo
+                    Collections.sort(interventi, new Comparator<CardTicketIntervento>() {
+                        @Override
+                        public int compare(CardTicketIntervento intervento, CardTicketIntervento intervento2)
+                        {
+
+                            return  intervento2.compareTo(intervento);
+                        }
+                    });
 
                     // Utilizziamo l'adapter per popolare la recycler view
                     adapter = new AdapterInterventiInCorso(interventi);

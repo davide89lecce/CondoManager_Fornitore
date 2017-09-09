@@ -53,6 +53,13 @@
                 tools:layout_constraintRight_creator="1"
                 tools:layout_constraintTop_creator="1">
 
+                <TextView
+                    android:id="@+id/Hidden_ID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:visibility="invisible" />
+
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -554,7 +561,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5"
             fab:menu_fab_label="Priorità intervento"
-            fab:menu_animationDelayPerItem="100"
+            fab:menu_animationDelayPerItem="50"
             fab:menu_backgroundColor="#C0FFFFFF"
             fab:menu_buttonSpacing="0dp"
             fab:menu_colorNormal="#dc473f"

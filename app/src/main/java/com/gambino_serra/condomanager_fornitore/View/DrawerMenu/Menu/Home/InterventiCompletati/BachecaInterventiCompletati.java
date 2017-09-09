@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
@@ -20,14 +21,12 @@ import com.firebase.client.Query;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.CardTicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
-import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiCompletati.BachecaInterventiCompletati;
-import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiCompletati.AdapterInterventiCompletati;
-import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiCompletati.DettaglioInterventoCompletato;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -200,6 +199,17 @@ public class BachecaInterventiCompletati extends Fragment{
                         interventi.add(ticketIntervento);
 
                     }
+
+                    // Sorting interventi per idIntervento dall'ultimo al primo
+                    Collections.sort(interventi, new Comparator<CardTicketIntervento>() {
+                        @Override
+                        public int compare(CardTicketIntervento intervento, CardTicketIntervento intervento2)
+                        {
+
+                            return  intervento2.getIdTicketIntervento().compareTo(intervento.getIdTicketIntervento());
+                        }
+                    });
+
 
                     // Utilizziamo l'adapter per popolare la recycler view
                     adapter = new AdapterInterventiCompletati(interventi);
