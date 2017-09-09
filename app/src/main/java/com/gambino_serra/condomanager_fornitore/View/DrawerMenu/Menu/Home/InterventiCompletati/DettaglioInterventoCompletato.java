@@ -96,7 +96,7 @@ public class DettaglioInterventoCompletato extends AppCompatActivity {
         TAmministratore = (TextView) findViewById(R.id.D_Amministratore);
         Trichiesta = (TextView) findViewById(R.id.D_Descrizione);
         Tfoto = (ImageView) findViewById(R.id.D_Foto);
-        TidTicketIntervento = (TextView) findViewById(R.id.D_IDIntervento);
+        TidTicketIntervento = (TextView) findViewById(R.id.Hidden_ID);
         Archivia = (ConstraintLayout) findViewById(R.id.btnArchivia);
         ChiamaAmministratore = (ImageView) findViewById(R.id.imageViewChiamaAmministratore);
         Mappa = (ImageView) findViewById(R.id.btnMappa);
@@ -105,6 +105,50 @@ public class DettaglioInterventoCompletato extends AppCompatActivity {
         ticketInterventoMap = new HashMap<String, Object>();
         // Avvalora il primo oggetto del map con l'ID dell'intervento recuperato
         ticketInterventoMap.put("idIntervento", idIntervento);
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        Archivia.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                Bundle bundle = new Bundle();
+                bundle.putString("idTicket", TidTicketIntervento.getText().toString());
+
+                DialogConfermaArchiviaIntervento newFragment = new DialogConfermaArchiviaIntervento();
+                newFragment.show(getFragmentManager(), "DialogArchiviazione");
+                newFragment.setArguments(bundle);
+                overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+                }
+        });
+
+        ChiamaAmministratore.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                DialogChiamaAmministratore newFragment = new DialogChiamaAmministratore();
+                newFragment.show(getFragmentManager(), "DialogChiama");
+                newFragment.setArguments(bundle);
+                overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+                }
+        });
+
+        Mappa.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+//                DialogChiamaAmministratore newFragment = new DialogChiamaAmministratore();
+//                newFragment.show(getFragmentManager(), "DialogChiama");
+//                overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+            }
+        });
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
 
         Query intervento;
         intervento = FirebaseDB.getInterventi().orderByKey().equalTo(idIntervento);
@@ -117,7 +161,7 @@ public class DettaglioInterventoCompletato extends AppCompatActivity {
 
                 for(DataSnapshot child : dataSnapshot.getChildren()){
                     ticketInterventoMap.put(child.getKey(),child.getValue());
-                    }
+                }
 
                 recuperaDettagliTicket(ticketInterventoMap);
 
@@ -136,40 +180,8 @@ public class DettaglioInterventoCompletato extends AppCompatActivity {
             @Override
             public void onCancelled(FirebaseError firebaseError) { }
         });
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        Archivia.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                DialogConfermaArchiviaIntervento newFragment = new DialogConfermaArchiviaIntervento();
-                newFragment.show(getFragmentManager(), "DialogArchiviazione");
-                overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
-                }
-        });
-
-        ChiamaAmministratore.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                DialogChiamaAmministratore newFragment = new DialogChiamaAmministratore();
-                newFragment.show(getFragmentManager(), "DialogChiama");
-                overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
-                }
-        });
-
-        Mappa.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-//                DialogChiamaAmministratore newFragment = new DialogChiamaAmministratore();
-//                newFragment.show(getFragmentManager(), "DialogChiama");
-//                overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
-            }
-        });
 
     }
-
-
-
 
     public void recuperaDettagliTicket(final Map<String, Object> ticketInterventoMap) {
 
@@ -241,7 +253,7 @@ public class DettaglioInterventoCompletato extends AppCompatActivity {
                                 Picasso.with(getApplicationContext()).load(ticketIntervento.getFoto()).fit().centerCrop().into(Tfoto);
                             }
 
-                            TidTicketIntervento.setText(ticketIntervento.getIdTicketIntervento());
+                            TidTicketIntervento.setText(ticketIntervento.getIdTicketIntervento().toString());
 
 
                         } catch (NullPointerException e) {}
@@ -264,16 +276,6 @@ public class DettaglioInterventoCompletato extends AppCompatActivity {
             @Override
             public void onCancelled(FirebaseError firebaseError) { }
         });
-
-
-
-
-
-
-
     }
-
-
-
 
 }

@@ -240,16 +240,26 @@ public class DettaglioRichiestaIntervento extends AppCompatActivity {
 
         Accetta.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
+                Bundle bundle = new Bundle();
+                bundle.putString("idTicket", TidTicketIntervento.getText().toString());
+
                 DialogConfermaAccettaIntervento newFragment = new DialogConfermaAccettaIntervento();
                 newFragment.show(getFragmentManager(), "DialogAccetta");
+                newFragment.setArguments(bundle);
                 overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
                 }
             });
 
         Rifiuta.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
+                Bundle bundle = new Bundle();
+                bundle.putString("idTicket", TidTicketIntervento.getText().toString());
+
                 DialogConfermaRifiutaIntervento newFragment = new DialogConfermaRifiutaIntervento();
                 newFragment.show(getFragmentManager(), "DialogRifiuta");
+                newFragment.setArguments(bundle);
                 overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
                 }
             });

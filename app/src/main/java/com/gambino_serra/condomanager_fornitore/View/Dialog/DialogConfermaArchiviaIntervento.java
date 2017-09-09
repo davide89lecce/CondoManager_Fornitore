@@ -13,10 +13,15 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.widget.TextView;
+
+import com.firebase.client.Firebase;
+import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
 import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.MainDrawer;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 
 public class DialogConfermaArchiviaIntervento extends DialogFragment {
+
+    private Firebase firebase;
 
     public DialogConfermaArchiviaIntervento() { }
 
@@ -26,6 +31,10 @@ public class DialogConfermaArchiviaIntervento extends DialogFragment {
         final Bundle bundle = getArguments();
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        final String idTicket= bundle.getString("idTicket");
+        firebase = FirebaseDB.getInterventi();
+
 
         TextView title =  new TextView(getActivity());
         title.setText("ARCHIVIAZIONE INTERVENTO");
@@ -41,13 +50,15 @@ public class DialogConfermaArchiviaIntervento extends DialogFragment {
                     @TargetApi(Build.VERSION_CODES.M)
                     public void onClick(DialogInterface dialog, int id) {
 
+                        firebase.child(idTicket).child("stato").setValue("achiviata");
+
                         Intent intent = new Intent(getActivity(), MainDrawer.class);
                         intent.putExtras(bundle);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                         getActivity().overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
                         }
-                })//TODO: DIALOG ARCHIVIA
+                })
 
                 .setNeutralButton("ANNULLA", new DialogInterface.OnClickListener() {
                     @TargetApi(Build.VERSION_CODES.M)
