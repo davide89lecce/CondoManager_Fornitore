@@ -25,6 +25,8 @@ public class Home extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private BottomNavigationView bottomNavigationView;
+
     private OnFragmentInteractionListener mListener;
 
     public Home() { }
@@ -66,7 +68,7 @@ public class Home extends Fragment {
         //FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         //transaction.replace(R.id.frame_layout, childFragment).commit();
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) getActivity().findViewById(R.id.navigation);
+        bottomNavigationView = (BottomNavigationView) getActivity().findViewById(R.id.navigation);
 
         bottomNavigationView.setOnNavigationItemSelectedListener
                 (new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -76,12 +78,21 @@ public class Home extends Fragment {
                         switch (item.getItemId()) {
                             case R.id.action_item1:
                                 selectedFragment = BachecaRichiesteIntervento.newInstance();
+                                bottomNavigationView.getMenu().getItem(0).setChecked(true);
+                                bottomNavigationView.getMenu().getItem(1).setChecked(false);
+                                bottomNavigationView.getMenu().getItem(2).setChecked(false);
                                 break;
                             case R.id.action_item2:
                                 selectedFragment = BachecaInterventiInCorso.newInstance();
+                                bottomNavigationView.getMenu().getItem(0).setChecked(false);
+                                bottomNavigationView.getMenu().getItem(0).setChecked(true);
+                                bottomNavigationView.getMenu().getItem(2).setChecked(false);
                                 break;
                             case R.id.action_item3:
                                 selectedFragment = BachecaInterventiCompletati.newInstance();
+                                bottomNavigationView.getMenu().getItem(0).setChecked(false);
+                                bottomNavigationView.getMenu().getItem(1).setChecked(false);
+                                bottomNavigationView.getMenu().getItem(2).setChecked(true);
                                 break;
                             }
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
@@ -91,11 +102,14 @@ public class Home extends Fragment {
                     }
                 });
 
-        //Manually displaying the first Menu - one time only
+        //Manually displaying the first Menu - one time only - Interventi in corso
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, BachecaInterventiInCorso.newInstance());
-         transaction.commit();
-        //bottomNavigationView.setSelectedItemId(R.id.action_item2);
+        transaction.commit();
+        //Seleziona l'item interventi in corso
+        bottomNavigationView.getMenu().getItem(0).setChecked(false);
+        bottomNavigationView.getMenu().getItem(1).setChecked(true);
+        bottomNavigationView.getMenu().getItem(2).setChecked(false);
     }
 
 
