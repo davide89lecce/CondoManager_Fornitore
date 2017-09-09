@@ -1,9 +1,12 @@
 package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiInCorso.InterventoInCorso.DettaglioIntervento;
 
+import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +22,9 @@ import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
+import com.gambino_serra.condomanager_fornitore.View.Dialog.DialogConfermaChiusuraIntervento;
+import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.MainDrawer;
+import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiInCorso.InterventoInCorso.RapportiIntervento.InserimentoRapportoIntervento;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -55,6 +61,9 @@ public class DettaglioInterventoInCorso extends Fragment {
     TextView Tstabile;
     TextView Tindirizzo;
     ImageView Tfoto;
+    ConstraintLayout Chiudi;
+    ImageView ChiamaAmministratore;
+    ImageView Mappa;
 
     private Firebase firebaseDB;
     private FirebaseUser firebaseUser;
@@ -106,6 +115,9 @@ public class DettaglioInterventoInCorso extends Fragment {
         Trichiesta = (TextView) getActivity().findViewById(R.id.D_Descrizione);
         Tfoto = (ImageView) getActivity().findViewById(R.id.D_Foto);
         TidTicketIntervento = (TextView) getActivity().findViewById(R.id.D_IDIntervento);
+        Chiudi = (ConstraintLayout) getActivity().findViewById(R.id.btnArchivia);
+        ChiamaAmministratore = (ImageView) getActivity().findViewById(R.id.imageViewChiamaAmministratore);
+        Mappa = (ImageView) getActivity().findViewById(R.id.btnMappa);
 
         ticketInterventoMap = new HashMap<String, Object>();
         // Avvalora il primo oggetto del map con l'ID dell'intervento recuperato
@@ -141,11 +153,53 @@ public class DettaglioInterventoInCorso extends Fragment {
             }
         });
 
+
+
+
+
+                Chiudi.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+
+                        Intent intent = new Intent(getActivity(), InserimentoRapportoIntervento.class);
+                        intent.putExtras(bundle);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        getActivity().overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+
+//                        Bundle bundle = new Bundle();
+//                        bundle.putString("idTicket", TidTicketIntervento.getText().toString());
+//                        DialogConfermaChiusuraIntervento newFragment = new DialogConfermaChiusuraIntervento();
+//                        newFragment.show(FragmentManager manager, "DialogChiusura");
+//                                //show(getFragmentManager(), "DialogChiusura");
+//                        newFragment.setArguments(bundle);
+//                        overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+                    }
+                });
+
+//        ChiamaAmministratore.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {//TODO: CHIAMA AMMNINISTRATORE
+//                DialogChiamaAmministratore newFragment = new DialogChiamaAmministratore();
+//                newFragment.show(getFragmentManager(), "DialogChiama");
+//                newFragment.setArguments(bundle);
+//                overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+//                }
+//        });
+
+//        Mappa.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) { //TODO: PULSANTE RAGGIUNGI INTERVENTO
+//                DialogChiamaAmministratore newFragment = new DialogChiamaAmministratore();
+//                newFragment.show(getFragmentManager(), "DialogChiama");
+//                overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+//                }
+//        });
+
+
         //Firebase retrieve data
         Query intervento;
         intervento = FirebaseDB.getInterventi().orderByKey().equalTo(idIntervento);
 
         intervento.addChildEventListener(new ChildEventListener() {
+
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 ticketInterventoMap = new HashMap<String, Object>();
@@ -159,20 +213,16 @@ public class DettaglioInterventoInCorso extends Fragment {
             }
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-            }
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) { }
 
             @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-            }
+            public void onChildRemoved(DataSnapshot dataSnapshot) { }
 
             @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-            }
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) { }
 
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
-            }
+            public void onCancelled(FirebaseError firebaseError) { }
         });
     }
 

@@ -16,13 +16,14 @@ import android.widget.TextView;
 import com.firebase.client.Firebase;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
 import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.MainDrawer;
+import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiInCorso.InterventoInCorso.RapportiIntervento.InserimentoRapportoIntervento;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 
-public class DialogConfermaArchiviaIntervento extends DialogFragment {
+public class DialogConfermaChiusuraIntervento extends DialogFragment {
 
     private Firebase firebase;
 
-    public DialogConfermaArchiviaIntervento() { }
+    public DialogConfermaChiusuraIntervento() { }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -35,34 +36,34 @@ public class DialogConfermaArchiviaIntervento extends DialogFragment {
         firebase = FirebaseDB.getInterventi();
 
         TextView title =  new TextView(getActivity());
-        title.setText("ARCHIVIAZIONE INTERVENTO");
+        title.setText("CHIUSURA INTERVENTO");
         title.setGravity(Gravity.CENTER);
         title.setTextSize(30);
         title.setBackgroundResource(R.color.primarySegnalazione);
         title.setTextColor(Color.WHITE);
         builder.setCustomTitle(title);
 
-        builder.setView(inflater.inflate(R.layout.dialog_conferma_archiviazione, null))
+        builder.setView(inflater.inflate(R.layout.dialog_conferma_chiusura_intervento, null))
 
-                .setPositiveButton("ARCHIVIA", new DialogInterface.OnClickListener() {
+                .setPositiveButton("CHIUDI INTERVENTO", new DialogInterface.OnClickListener() {
                     @TargetApi(Build.VERSION_CODES.M)
                     public void onClick(DialogInterface dialog, int id) {
 
-                        firebase.child(idTicket).child("stato").setValue("achiviata");
+                        firebase.child(idTicket).child("stato").setValue("completato");
 
                         Intent intent = new Intent(getActivity(), MainDrawer.class);
                         intent.putExtras(bundle);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                         getActivity().overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
-                        }
+                    }
                 })
 
                 .setNeutralButton("ANNULLA", new DialogInterface.OnClickListener() {
                     @TargetApi(Build.VERSION_CODES.M)
                     public void onClick(DialogInterface dialog, int id) {
                         dismiss();
-                        }
+                    }
                 });
 
         return builder.create();

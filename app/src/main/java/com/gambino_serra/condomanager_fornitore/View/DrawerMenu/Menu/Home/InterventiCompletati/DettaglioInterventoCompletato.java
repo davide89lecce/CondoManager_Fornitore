@@ -101,7 +101,6 @@ public class DettaglioInterventoCompletato extends AppCompatActivity {
         ChiamaAmministratore = (ImageView) findViewById(R.id.imageViewChiamaAmministratore);
         Mappa = (ImageView) findViewById(R.id.btnMappa);
 
-
         ticketInterventoMap = new HashMap<String, Object>();
         // Avvalora il primo oggetto del map con l'ID dell'intervento recuperato
         ticketInterventoMap.put("idIntervento", idIntervento);
@@ -125,23 +124,22 @@ public class DettaglioInterventoCompletato extends AppCompatActivity {
                 }
         });
 
-        ChiamaAmministratore.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                DialogChiamaAmministratore newFragment = new DialogChiamaAmministratore();
-                newFragment.show(getFragmentManager(), "DialogChiama");
-                newFragment.setArguments(bundle);
-                overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
-                }
-        });
+//        ChiamaAmministratore.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {//TODO: CHIAMA AMMNINISTRATORE
+//                DialogChiamaAmministratore newFragment = new DialogChiamaAmministratore();
+//                newFragment.show(getFragmentManager(), "DialogChiama");
+//                newFragment.setArguments(bundle);
+//                overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+//                }
+//        });
 
-        Mappa.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+//        Mappa.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) { //TODO: PULSANTE RAGGIUNGI INTERVENTO
 //                DialogChiamaAmministratore newFragment = new DialogChiamaAmministratore();
 //                newFragment.show(getFragmentManager(), "DialogChiama");
 //                overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
-            }
-        });
-
+//                }
+//        });
     }
 
 
