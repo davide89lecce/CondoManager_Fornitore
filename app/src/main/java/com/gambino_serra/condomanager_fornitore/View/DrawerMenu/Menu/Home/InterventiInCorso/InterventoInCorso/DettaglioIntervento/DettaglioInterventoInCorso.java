@@ -39,7 +39,7 @@ import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class DettaglioInterventoInCorso extends Fragment {
+public class DettaglioInterventoInCorso extends android.support.v4.app.Fragment {
 
     private static final String MY_PREFERENCES = "preferences";
     private static final String LOGGED_USER = "username";
@@ -94,6 +94,8 @@ public class DettaglioInterventoInCorso extends Fragment {
     public void onStart() {
         super.onStart();
 
+        showProgressDialog();
+
         context = getContext();
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -114,7 +116,7 @@ public class DettaglioInterventoInCorso extends Fragment {
         TAmministratore = (TextView) getActivity().findViewById(R.id.D_Amministratore);
         Trichiesta = (TextView) getActivity().findViewById(R.id.D_Descrizione);
         Tfoto = (ImageView) getActivity().findViewById(R.id.D_Foto);
-        TidTicketIntervento = (TextView) getActivity().findViewById(R.id.D_IDIntervento);
+        TidTicketIntervento = (TextView) getActivity().findViewById(R.id.Hidden_ID);
         Chiudi = (ConstraintLayout) getActivity().findViewById(R.id.btnArchivia);
         ChiamaAmministratore = (ImageView) getActivity().findViewById(R.id.imageViewChiamaAmministratore);
         Mappa = (ImageView) getActivity().findViewById(R.id.btnMappa);
@@ -306,15 +308,33 @@ public class DettaglioInterventoInCorso extends Fragment {
 
 
                         //Setta priorità floating action button
-                            if (ticketInterventoMap.get("priorità").equals("Alta")) {
-                                materialDesignFAM.setMenuButtonColorNormal(Color.parseColor("#FF0000"));
-                            }else if(ticketInterventoMap.get("priorità").equals("Media")){
-                                materialDesignFAM.setMenuButtonColorNormal(Color.parseColor("#FFFF00"));
-                            }else if(ticketInterventoMap.get("priorità").equals("Bassa")){
-                                materialDesignFAM.setMenuButtonColorNormal(Color.parseColor("#00FF00"));
-                            }
+                            String priorità = ticketIntervento.getPriorità();
+                            Log.d("ciao","ddd");
+                            switch(priorità) {
+                                case "3" :
+                                {
+                                    materialDesignFAM.setMenuButtonColorNormal(Color.parseColor("#FF0000"));
+                                    break;
+                                }
 
+                                case "2":
+                                {
+                                    materialDesignFAM.setMenuButtonColorNormal(Color.parseColor("#FFFF00"));
+                                    break;
+                                }
+
+                                case "1":
+                                {
+                                    materialDesignFAM.setMenuButtonColorNormal(Color.parseColor("#00FF00"));
+                                    break;
+                                }
+
+                                default:
+                            }
                         } catch (NullPointerException e) {}
+
+                        hideProgressDialog();
+
                     }
 
                     @Override
@@ -336,14 +356,40 @@ public class DettaglioInterventoInCorso extends Fragment {
         });
 
 
-
-
-
-
-
     }
 
+    //Inizio Gestione dialog caricamento dati
+    //
+    public ProgressDialog mProgressDialog;
 
+    public void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(getActivity());
+            setMessage();
+            mProgressDialog.setIndeterminate(true);
+        }
+
+        mProgressDialog.show();
+    }
+
+    public void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
+    }
+
+    protected void setMessage() {
+
+        mProgressDialog.setMessage("Caricamento in corso...");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        hideProgressDialog();
+    }
+    //
+    //Fine gestione dialog caricamento dati
 }
 
 
