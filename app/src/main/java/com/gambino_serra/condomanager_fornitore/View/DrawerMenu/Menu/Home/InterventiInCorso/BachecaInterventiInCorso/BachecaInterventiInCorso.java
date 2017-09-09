@@ -169,8 +169,7 @@ public class BachecaInterventiInCorso extends Fragment {
             intent.putExtras(bundle);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
-
-        }
+            }
     }
 
 

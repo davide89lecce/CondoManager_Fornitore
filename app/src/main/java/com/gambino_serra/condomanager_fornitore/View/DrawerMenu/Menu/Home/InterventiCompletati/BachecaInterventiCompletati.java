@@ -80,6 +80,14 @@ public class BachecaInterventiCompletati extends Fragment{
 
         uidFornitore = firebaseAuth.getCurrentUser().getUid().toString();
 
+
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
         Query query;
         query = FirebaseDB.getInterventi().orderByChild("fornitore").equalTo(uidFornitore);
 
@@ -95,14 +103,20 @@ public class BachecaInterventiCompletati extends Fragment{
                 // per ognuno dei figli presenti nello snapshot, ovvero per tutti i figli di un singolo nodo Interv recuperiamo i dati per inserirli nel MAP
                 for ( DataSnapshot child : dataSnapshot.getChildren() ) {
                     ticketInterventoMap.put(child.getKey(), child.getValue());
-                    }
+                }
 
                 recuperaDatiStabile (ticketInterventoMap);
 
             }
 
             @Override
-            public void onChildChanged(com.firebase.client.DataSnapshot dataSnapshot, String s) { }
+            public void onChildChanged(com.firebase.client.DataSnapshot dataSnapshot, String s) {
+                for( DataSnapshot child : dataSnapshot.getChildren() ) {
+                    if ("stato".equals(child.getKey().toString())) {
+                        BachecaInterventiCompletati.newInstance(); //TODO: come funzione l'aggiornamento del fragment
+                    }
+                }
+            }
 
             @Override
             public void onChildRemoved(com.firebase.client.DataSnapshot dataSnapshot) { }
@@ -113,6 +127,7 @@ public class BachecaInterventiCompletati extends Fragment{
             @Override
             public void onCancelled(FirebaseError firebaseError) { }
         });
+
     }
 
     private static class MyOnClickListener extends AppCompatActivity implements View.OnClickListener {
@@ -199,19 +214,13 @@ public class BachecaInterventiCompletati extends Fragment{
             }
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) { }
 
             @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
+            public void onChildRemoved(DataSnapshot dataSnapshot) { }
 
             @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {  }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {

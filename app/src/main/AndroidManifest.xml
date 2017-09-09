@@ -23,8 +23,7 @@
         android:label="CondoManager Fornitore"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name="com.gambino_serra.condomanager_fornitore.condomanager_fornitore"
-        >
+        android:name="com.gambino_serra.condomanager_fornitore.condomanager_fornitore" >
 
         <activity
             android:name="com.gambino_serra.condomanager_fornitore.View.DrawerMenu.MainDrawer"
