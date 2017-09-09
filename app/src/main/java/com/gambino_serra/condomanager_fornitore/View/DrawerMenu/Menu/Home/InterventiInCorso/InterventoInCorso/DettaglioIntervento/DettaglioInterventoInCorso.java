@@ -1,6 +1,7 @@
 package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiInCorso.InterventoInCorso.DettaglioIntervento;
 
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,6 +9,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -117,7 +119,7 @@ public class DettaglioInterventoInCorso extends android.support.v4.app.Fragment 
         Trichiesta = (TextView) getActivity().findViewById(R.id.D_Descrizione);
         Tfoto = (ImageView) getActivity().findViewById(R.id.D_Foto);
         TidTicketIntervento = (TextView) getActivity().findViewById(R.id.Hidden_ID);
-        Chiudi = (ConstraintLayout) getActivity().findViewById(R.id.btnArchivia);
+        Chiudi = (ConstraintLayout) getActivity().findViewById(R.id.btnChiudiIntervento);
         ChiamaAmministratore = (ImageView) getActivity().findViewById(R.id.imageViewChiamaAmministratore);
         Mappa = (ImageView) getActivity().findViewById(R.id.btnMappa);
 
@@ -156,9 +158,6 @@ public class DettaglioInterventoInCorso extends android.support.v4.app.Fragment 
         });
 
 
-
-
-
                 Chiudi.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
 
@@ -167,16 +166,8 @@ public class DettaglioInterventoInCorso extends android.support.v4.app.Fragment 
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                         getActivity().overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
-
-//                        Bundle bundle = new Bundle();
-//                        bundle.putString("idTicket", TidTicketIntervento.getText().toString());
-//                        DialogConfermaChiusuraIntervento newFragment = new DialogConfermaChiusuraIntervento();
-//                        newFragment.show(FragmentManager manager, "DialogChiusura");
-//                                //show(getFragmentManager(), "DialogChiusura");
-//                        newFragment.setArguments(bundle);
-//                        overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
-                    }
-                });
+                        }
+                    });
 
 //        ChiamaAmministratore.setOnClickListener(new View.OnClickListener() {
 //            public void onClick(View v) {//TODO: CHIAMA AMMNINISTRATORE
@@ -309,7 +300,6 @@ public class DettaglioInterventoInCorso extends android.support.v4.app.Fragment 
 
                         //Setta priorità floating action button
                             String priorità = ticketIntervento.getPriorità();
-                            Log.d("ciao","ddd");
                             switch(priorità) {
                                 case "3" :
                                 {
