@@ -62,21 +62,19 @@ public class DettaglioInterventoArchiviato extends AppCompatActivity {
         username = sharedPrefs.getString(LOGGED_USER, "").toString();
 
         if (getIntent().getExtras() != null)
-        {
+            {
             bundle = getIntent().getExtras();
             idIntervento = bundle.get("idIntervento").toString();
-
             SharedPreferences.Editor editor = sharedPrefs.edit();
             editor.putString("idIntervento", idIntervento);
             editor.apply();
-        }
+            }
         else
-        {
-            //TODO: perchè
+            {
             idIntervento = sharedPrefs.getString("idIntervento", "").toString();
             bundle = new Bundle();
             bundle.putString("idIntervento", idIntervento);
-        }
+            }
 
         // Avvaloro i nuovi rierimenti al layout
         TdataTicket = (TextView) findViewById(R.id.D_Data);
@@ -86,7 +84,7 @@ public class DettaglioInterventoArchiviato extends AppCompatActivity {
         TAmministratore = (TextView) findViewById(R.id.D_Amministratore);
         Trichiesta = (TextView) findViewById(R.id.D_Descrizione);
         Tfoto = (ImageView) findViewById(R.id.D_Foto);
-        TidTicketIntervento = (TextView) findViewById(R.id.D_IDIntervento);
+        TidTicketIntervento = (TextView) findViewById(R.id.HiddenID);
 
         ticketInterventoMap = new HashMap<String, Object>();
         // Avvalora il primo oggetto del map con l'ID dell'intervento recuperato
@@ -103,9 +101,9 @@ public class DettaglioInterventoArchiviato extends AppCompatActivity {
 
                 for(DataSnapshot child : dataSnapshot.getChildren()){
                     ticketInterventoMap.put(child.getKey(),child.getValue());
-                }
+                    }
 
-
+                recuperaDettagliTicket(ticketInterventoMap);
             }
 
             @Override
@@ -159,7 +157,6 @@ public class DettaglioInterventoArchiviato extends AppCompatActivity {
                         // anche quelli provenienti dallo stabile sovrascrivendo i codici passati in ticketIntervento
                         // Avvaloriamo una variabile TicketIntervento appositamente creata in modo da inserire poi questo
                         // oggetto all'interno di un Array di interventi che utilizzeremo per popolare la lista Recycle
-                        //try {
                         TicketIntervento ticketIntervento = new TicketIntervento(
                                 ticketInterventoMap.get("idIntervento").toString(),
                                 ticketInterventoMap.get("amministratore").toString(),

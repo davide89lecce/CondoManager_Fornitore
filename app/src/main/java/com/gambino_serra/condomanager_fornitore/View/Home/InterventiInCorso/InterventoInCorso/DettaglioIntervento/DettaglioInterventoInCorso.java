@@ -1,4 +1,4 @@
-package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiInCorso.InterventoInCorso.DettaglioIntervento;
+package com.gambino_serra.condomanager_fornitore.View.Home.InterventiInCorso.InterventoInCorso.DettaglioIntervento;
 
 import android.app.ProgressDialog;
 import android.content.Context;

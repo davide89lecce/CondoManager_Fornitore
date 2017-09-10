@@ -1,4 +1,4 @@
-package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.RichiesteIntervento;
+package com.gambino_serra.condomanager_fornitore.View.Home.InterventiCompletati;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,21 +15,17 @@ import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
-import com.gambino_serra.condomanager_fornitore.View.Dialog.DialogChiamaAmministratore;
-import com.gambino_serra.condomanager_fornitore.View.Dialog.DialogConfermaAccettaIntervento;
-import com.gambino_serra.condomanager_fornitore.View.Dialog.DialogConfermaRifiutaIntervento;
+import com.gambino_serra.condomanager_fornitore.View.Dialog.DialogConfermaArchiviaIntervento;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DettaglioRichiestaIntervento extends AppCompatActivity {
+public class DettaglioInterventoCompletato extends AppCompatActivity {
     private static final String MY_PREFERENCES = "preferences";
     private static final String LOGGED_USER = "username";
 
@@ -45,16 +41,15 @@ public class DettaglioRichiestaIntervento extends AppCompatActivity {
     TextView Tstabile;
     TextView Tindirizzo;
     ImageView Tfoto;
-    ConstraintLayout Accetta;
-    ConstraintLayout Rifiuta;
+    ConstraintLayout Archivia;
     ImageView ChiamaAmministratore;
+    ImageView Mappa;
 
     private Firebase firebaseDB;
     private FirebaseUser firebaseUser;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
     private FirebaseDatabase firebaseDatabase;
-    private StorageReference mStorage;
 
     Map<String, Object> ticketInterventoMap;
 
@@ -64,10 +59,9 @@ public class DettaglioRichiestaIntervento extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dettaglio_richiesta_intervento);
+        setContentView(R.layout.dettaglio_intervento_completato);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        mStorage = FirebaseStorage.getInstance().getReference();
 
         final SharedPreferences sharedPrefs = getSharedPreferences(MY_PREFERENCES, MODE_PRIVATE);
         username = sharedPrefs.getString(LOGGED_USER, "").toString();
@@ -76,6 +70,7 @@ public class DettaglioRichiestaIntervento extends AppCompatActivity {
             {
             bundle = getIntent().getExtras();
             idIntervento = bundle.get("idIntervento").toString();
+
             SharedPreferences.Editor editor = sharedPrefs.edit();
             editor.putString("idIntervento", idIntervento);
             editor.apply();
@@ -87,7 +82,7 @@ public class DettaglioRichiestaIntervento extends AppCompatActivity {
             bundle.putString("idIntervento", idIntervento);
             }
 
-        // Avvaloro i nuovi rierimenti al layout
+        // Avvaloro i nuovi riferimenti al layout
         TdataTicket = (TextView) findViewById(R.id.D_Data);
         Tstabile = (TextView) findViewById(R.id.D_Condominio);
         Tindirizzo = (TextView) findViewById(R.id.D_Indirizzo);
@@ -96,13 +91,53 @@ public class DettaglioRichiestaIntervento extends AppCompatActivity {
         Trichiesta = (TextView) findViewById(R.id.D_Descrizione);
         Tfoto = (ImageView) findViewById(R.id.D_Foto);
         TidTicketIntervento = (TextView) findViewById(R.id.Hidden_ID);
-        Accetta = (ConstraintLayout) findViewById(R.id.btnAccetta);
-        Rifiuta = (ConstraintLayout) findViewById(R.id.btnRifiuta);
+        Archivia = (ConstraintLayout) findViewById(R.id.btnArchivia);
         ChiamaAmministratore = (ImageView) findViewById(R.id.imageViewChiamaAmministratore);
+        Mappa = (ImageView) findViewById(R.id.btnMappa);
 
         ticketInterventoMap = new HashMap<String, Object>();
         // Avvalora il primo oggetto del map con l'ID dell'intervento recuperato
         ticketInterventoMap.put("idIntervento", idIntervento);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        Archivia.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                Bundle bundle = new Bundle();
+                bundle.putString("idTicket", TidTicketIntervento.getText().toString());
+
+                DialogConfermaArchiviaIntervento newFragment = new DialogConfermaArchiviaIntervento();
+                newFragment.show(getFragmentManager(), "DialogArchiviazione");
+                newFragment.setArguments(bundle);
+                overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+                }
+        });
+
+//        ChiamaAmministratore.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {//TODO: CHIAMA AMMNINISTRATORE
+//                DialogChiamaAmministratore newFragment = new DialogChiamaAmministratore();
+//                newFragment.show(getFragmentManager(), "DialogChiama");
+//                newFragment.setArguments(bundle);
+//                overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+//                }
+//        });
+
+//        Mappa.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) { //TODO: PULSANTE RAGGIUNGI INTERVENTO
+//                DialogChiamaAmministratore newFragment = new DialogChiamaAmministratore();
+//                newFragment.show(getFragmentManager(), "DialogChiama");
+//                overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+//                }
+//        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         Query intervento;
         intervento = FirebaseDB.getInterventi().orderByKey().equalTo(idIntervento);
@@ -132,7 +167,6 @@ public class DettaglioRichiestaIntervento extends AppCompatActivity {
         });
     }
 
-
     public void recuperaDettagliTicket(final Map<String, Object> ticketInterventoMap) {
 
         final Map<String, Object> ticketInterventoMap2 = new HashMap<String, Object>();
@@ -151,54 +185,58 @@ public class DettaglioRichiestaIntervento extends AppCompatActivity {
                     }
 
                 Firebase nomeAmm = FirebaseDB.getAmministratori()
-                                            .child( ticketInterventoMap.get("amministratore").toString() )
-                                            .child("nome");
+                        .child( ticketInterventoMap.get("amministratore").toString() )
+                        .child("nome");
 
                 nomeAmm.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                            ticketInterventoMap2.put("nomeAmministratore", dataSnapshot.getValue().toString() );
+                        ticketInterventoMap2.put("nomeAmministratore", dataSnapshot.getValue().toString() );
 
 
                         // Avvaloro tutti i dati della card che mi interessano inserendone i relativi dati
                         // anche quelli provenienti dallo stabile sovrascrivendo i codici passati in ticketIntervento
                         // Avvaloriamo una variabile TicketIntervento appositamente creata in modo da inserire poi questo
                         // oggetto all'interno di un Array di interventi che utilizzeremo per popolare la lista Recycle
-                            TicketIntervento ticketIntervento = new TicketIntervento(
-                                    ticketInterventoMap.get("idIntervento").toString(),
-                                    ticketInterventoMap.get("amministratore").toString(),
-                                    ticketInterventoMap.get("data_ticket").toString(),
-                                    ticketInterventoMap.get("data_ultimo_aggiornamento").toString(),
-                                    ticketInterventoMap.get("fornitore").toString(),
-                                    ticketInterventoMap.get("messaggio_condomino").toString(),
-                                    ticketInterventoMap.get("aggiornamento_condomini").toString(),
-                                    ticketInterventoMap.get("descrizione_condomini").toString(),
-                                    ticketInterventoMap.get("oggetto").toString(),
-                                    ticketInterventoMap.get("rapporti_intervento").toString(),
-                                    ticketInterventoMap.get("richiesta").toString(),
-                                    ticketInterventoMap.get("stabile").toString(),
-                                    ticketInterventoMap.get("stato").toString(),
-                                    ticketInterventoMap.get("priorità").toString(),
-                                    ticketInterventoMap.get("foto").toString(),
-                                    ticketInterventoMap2.get("nomeAmministratore").toString(),
-                                    ticketInterventoMap2.get("nome").toString(),
-                                    ticketInterventoMap2.get("indirizzo").toString(),
-                                    ticketInterventoMap2.get("latitudine").toString(),
-                                    ticketInterventoMap2.get("longitudine").toString()
-                                    );
+                        TicketIntervento ticketIntervento = new TicketIntervento(
+                                ticketInterventoMap.get("idIntervento").toString(),
+                                ticketInterventoMap.get("amministratore").toString(),
+                                ticketInterventoMap.get("data_ticket").toString(),
+                                ticketInterventoMap.get("data_ultimo_aggiornamento").toString(),
+                                ticketInterventoMap.get("fornitore").toString(),
+                                ticketInterventoMap.get("messaggio_condomino").toString(),
+                                ticketInterventoMap.get("aggiornamento_condomini").toString(),
+                                ticketInterventoMap.get("descrizione_condomini").toString(),
+                                ticketInterventoMap.get("oggetto").toString(),
+                                ticketInterventoMap.get("rapporti_intervento").toString(),
+                                ticketInterventoMap.get("richiesta").toString(),
+                                ticketInterventoMap.get("stabile").toString(),
+                                ticketInterventoMap.get("stato").toString(),
+                                ticketInterventoMap.get("priorità").toString(),
+                                ticketInterventoMap.get("foto").toString(),
+                                ticketInterventoMap2.get("nomeAmministratore").toString(),
+                                ticketInterventoMap2.get("nome").toString(),
+                                ticketInterventoMap2.get("indirizzo").toString(),
+                                ticketInterventoMap2.get("latitudine").toString(),
+                                ticketInterventoMap2.get("longitudine").toString()
+                            );
 
+                        try
+                            {
                             TdataTicket.setText(ticketIntervento.getDataTicket().toString());
-                            TAmministratore.setText(ticketIntervento.getNomeAmministratore().toString());
                             Tstabile.setText(ticketIntervento.getNomeStabile().toString());
-                            Tindirizzo.setText(ticketIntervento.getIndirizzoStabile().toString());
                             Toggetto.setText(ticketIntervento.getOggetto().toString());
+                            TAmministratore.setText(ticketIntervento.getNomeAmministratore().toString());
                             Trichiesta.setText(ticketIntervento.getRichiesta().toString());
+                            Tindirizzo.setText(ticketIntervento.getIndirizzoStabile().toString());
+                            TidTicketIntervento.setText(ticketIntervento.getIdTicketIntervento().toString());
 
                             if ( ! "-".equals( ticketIntervento.getFoto() ) ) {
-                                Picasso.with(getApplicationContext()).load( ticketIntervento.getFoto() ).fit().centerCrop().into(Tfoto) ;
+                                Picasso.with(getApplicationContext()).load(ticketIntervento.getFoto()).fit().centerCrop().into(Tfoto);
                                 }
 
-                            TidTicketIntervento.setText(ticketIntervento.getIdTicketIntervento().toString());
+                            }
+                        catch (NullPointerException e) {}
                     }
 
                     @Override
@@ -220,42 +258,4 @@ public class DettaglioRichiestaIntervento extends AppCompatActivity {
         });
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        Accetta.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                Bundle bundle = new Bundle();
-                bundle.putString("idTicket", TidTicketIntervento.getText().toString());
-
-                DialogConfermaAccettaIntervento newFragment = new DialogConfermaAccettaIntervento();
-                newFragment.show(getFragmentManager(), "DialogAccetta");
-                newFragment.setArguments(bundle);
-                overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
-                }
-            });
-
-        Rifiuta.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                Bundle bundle = new Bundle();
-                bundle.putString("idTicket", TidTicketIntervento.getText().toString());
-
-                DialogConfermaRifiutaIntervento newFragment = new DialogConfermaRifiutaIntervento();
-                newFragment.show(getFragmentManager(), "DialogRifiuta");
-                newFragment.setArguments(bundle);
-                overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
-                }
-            });
-
-        ChiamaAmministratore.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                DialogChiamaAmministratore newFragment = new DialogChiamaAmministratore();
-                newFragment.show(getFragmentManager(), "DialogChiama");
-                overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
-                }
-            });
-    }
 }

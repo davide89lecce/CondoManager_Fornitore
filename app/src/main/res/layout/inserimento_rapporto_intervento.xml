@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundSegnalazione"
-    tools:context="com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiInCorso.InterventoInCorso.RapportiIntervento.InserimentoRapportoIntervento">
+    tools:context="com.gambino_serra.condomanager_fornitore.View.Home.InterventiInCorso.InterventoInCorso.RapportiIntervento.InserimentoRapportoIntervento">
 
     <EditText
         android:id="@+id/textViewNotaAmministratore"

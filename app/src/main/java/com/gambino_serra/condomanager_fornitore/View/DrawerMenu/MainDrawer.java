@@ -22,16 +22,12 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
-import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.Home;
+import com.gambino_serra.condomanager_fornitore.View.Home.Home;
 import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.InformazioniPersonali.InformazioniPersonali;
 import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.StoricoInterventi.BachecaInterventiArchiviati;
-import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.StoricoInterventi.DettaglioInterventoArchiviato;
-import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.other.CircleTransform;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 import com.github.clans.fab.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
 
 public class MainDrawer extends AppCompatActivity {
 
@@ -75,15 +71,12 @@ public class MainDrawer extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         firebaseAuth = FirebaseAuth.getInstance();
-
         String UID  = firebaseAuth.getCurrentUser().getUid();
-
 
         mHandler = new Handler();
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-        //fab = (FloatingActionButton) findViewById(R.id.fab);
 
         // Navigation view header
         navHeader = navigationView.getHeaderView(0);
@@ -95,7 +88,6 @@ public class MainDrawer extends AppCompatActivity {
         // load toolbar titles from string resources
         activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
 
-
         FirebaseDB.getFornitori().child(UID).child("nome").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -104,14 +96,6 @@ public class MainDrawer extends AppCompatActivity {
             @Override
             public void onCancelled(FirebaseError firebaseError) {}
         });
-
-        //fab.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //    public void onClick(View view) {
-        //        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-        //                .setAction("Action", null).show();
-        //    }
-        //});
 
         // load nav menu header data
         loadNavHeader();
@@ -123,7 +107,7 @@ public class MainDrawer extends AppCompatActivity {
             navItemIndex = 0;
             CURRENT_TAG = TAG_HOME;
             loadHomeFragment();
-        }
+            }
     }
 
     /***

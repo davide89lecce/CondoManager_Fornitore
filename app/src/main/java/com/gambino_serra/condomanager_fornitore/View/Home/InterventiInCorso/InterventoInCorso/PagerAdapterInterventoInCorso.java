@@ -1,11 +1,11 @@
-package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiInCorso.InterventoInCorso;
+package com.gambino_serra.condomanager_fornitore.View.Home.InterventiInCorso.InterventoInCorso;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiInCorso.InterventoInCorso.DettaglioIntervento.DettaglioInterventoInCorso;
-import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiInCorso.InterventoInCorso.RapportiIntervento.RapportiIntervento;
+import com.gambino_serra.condomanager_fornitore.View.Home.InterventiInCorso.InterventoInCorso.DettaglioIntervento.DettaglioInterventoInCorso;
+import com.gambino_serra.condomanager_fornitore.View.Home.InterventiInCorso.InterventoInCorso.RapportiIntervento.RapportiIntervento;
 
 public class PagerAdapterInterventoInCorso extends FragmentStatePagerAdapter {
     int mNumOfTabs;

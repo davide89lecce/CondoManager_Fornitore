@@ -1,4 +1,4 @@
-package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.RichiesteIntervento;
+package com.gambino_serra.condomanager_fornitore.View.Home.InterventiInCorso.BachecaInterventiInCorso;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.firebase.client.ChildEventListener;
@@ -18,39 +19,57 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.CardTicketIntervento;
+import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
+import com.gambino_serra.condomanager_fornitore.View.Home.InterventiInCorso.InterventoInCorso.InterventoInCorso;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BachecaRichiesteIntervento extends Fragment {
+public class BachecaInterventiInCorso extends Fragment {
+
     private static RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private static RecyclerView recyclerView;
-    private ArrayList<CardTicketIntervento> data;
+    private ArrayList<TicketIntervento> data;
     public static View.OnClickListener myOnClickListener;
     Context context;
+    ImageView BottoneMappa;
+
 
     private FirebaseAuth firebaseAuth;
     private String uidFornitore;
     Map<String, Object> ticketInterventoMap;
     ArrayList<CardTicketIntervento> interventi;
 
-    public static BachecaRichiesteIntervento newInstance() {
-        BachecaRichiesteIntervento fragment = new BachecaRichiesteIntervento();
+    public static BachecaInterventiInCorso newInstance() {
+        BachecaInterventiInCorso fragment = new BachecaInterventiInCorso();
         return fragment;
-        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        }
+        
+        /*
+        Query query0;
+        query0 = FirebaseDB.getInterventi().orderByChild("Ogetto");
+        query0.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {}
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {}
+        });
+        */
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.tab_richieste_intervento, container, false);
+        return inflater.inflate(R.layout.tab_interventi_in_corso, container, false);
         }
 
     @Override
@@ -59,9 +78,18 @@ public class BachecaRichiesteIntervento extends Fragment {
 
         context = getContext();
         firebaseAuth = FirebaseAuth.getInstance();
-        data = new ArrayList<CardTicketIntervento>();
+        data = new ArrayList<TicketIntervento>();
         ticketInterventoMap = new HashMap<String,Object>();
         interventi = new ArrayList<CardTicketIntervento>();
+
+        BottoneMappa = (ImageView) getActivity().findViewById(R.id.BottoneMappa);
+        BottoneMappa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mappa = new Intent(getActivity(), MappaInterventiInCorso.class);
+                startActivity(mappa);
+            }
+        });
 
         myOnClickListener = new MyOnClickListener(context);
 
@@ -94,8 +122,10 @@ public class BachecaRichiesteIntervento extends Fragment {
                 for ( DataSnapshot child : dataSnapshot.getChildren() ) {
                     ticketInterventoMap.put(child.getKey(), child.getValue());
                     }
+
                 recuperaDatiStabile (ticketInterventoMap);
-                }
+
+            }
 
             @Override
             public void onChildChanged(com.firebase.client.DataSnapshot dataSnapshot, String s) { }
@@ -134,7 +164,7 @@ public class BachecaRichiesteIntervento extends Fragment {
             Bundle bundle = new Bundle();
             bundle.putString("idIntervento", selectedName);
 
-            Intent intent = new Intent(context, DettaglioRichiestaIntervento.class);
+            Intent intent = new Intent(context, InterventoInCorso.class);
             intent.putExtras(bundle);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
@@ -156,7 +186,8 @@ public class BachecaRichiesteIntervento extends Fragment {
                 // recuperiamo i dati per inserirli nel MAP
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     ticketInterventoMap2.put(child.getKey(), child.getValue());
-                    }
+                }
+
 
                 // Avvaloro tutti i dati della card che mi interessano inserendone i relativi dati
                 // anche quelli provenienti dallo stabile sovrascrivendo i codici passati in ticketIntervento
@@ -173,34 +204,56 @@ public class BachecaRichiesteIntervento extends Fragment {
                             ticketInterventoMap.get("stato").toString(),
                             ticketInterventoMap.get("data_ticket").toString(),
                             ticketInterventoMap.get("data_ultimo_aggiornamento").toString()
-                            );
+                    );
 
-                    if (ticketIntervento.getStato().equals("in attesa")) {
+                    if (ticketIntervento.getStato().equals("in corso")) {
                         // inserisce l'oggetto ticket nell'array interventi
                         interventi.add(ticketIntervento);
+
+                    }
+
+                    // Sorting interventi per idIntervento dall'ultimo al primo
+                    Collections.sort(interventi, new Comparator<CardTicketIntervento>() {
+                        @Override
+                        public int compare(CardTicketIntervento intervento, CardTicketIntervento intervento2)
+                        {
+
+                            return  intervento2.compareTo(intervento);
                         }
+                    });
 
                     // Utilizziamo l'adapter per popolare la recycler view
-                    adapter = new AdapterRichiesteIntervento(interventi);
+                    adapter = new AdapterInterventiInCorso(interventi);
                     recyclerView.setAdapter(adapter);
 
-                }
-                catch (NullPointerException e) {
+                } catch (NullPointerException e) {
                     Toast.makeText(getActivity().getApplicationContext(), "Non riesco ad aprire l'oggetto " + e.toString(), Toast.LENGTH_LONG).show();
-                    }
+                }
+
+
             }
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) { }
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
 
             @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) { }
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
 
             @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) { }
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
 
             @Override
-            public void onCancelled(FirebaseError firebaseError) { }
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
         });
     }
+
+
 }

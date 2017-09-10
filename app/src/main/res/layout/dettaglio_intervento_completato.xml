@@ -5,17 +5,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/backgroundSegnalazione">
 
 
     <ScrollView
-        android:layout_width="368dp"
-        android:layout_height="495dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        tools:layout_editor_absoluteY="8dp">
+        app:layout_constraintBottom_toTopOf="@+id/btnArchivia"
+        app:layout_constraintTop_toTopOf="parent">
 
 
 
@@ -52,17 +52,16 @@
                 android:id="@+id/cardView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginRight="24dp"
-                android:layout_marginStart="24dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 app:cardCornerRadius="0dp"
                 app:cardElevation="0dp"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView13"
-                android:layout_marginTop="16dp">
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                tools:layout_editor_absoluteY="81dp">
 
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
@@ -83,7 +82,7 @@
                         android:id="@+id/textView8"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
+                        android:layout_marginLeft="16dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
                         android:fontFamily="sans-serif"
@@ -114,18 +113,18 @@
 
                     <View
                         android:id="@+id/Separator1"
-                        android:layout_width="300dp"
+                        android:layout_width="0dp"
                         android:layout_height="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
                         android:layout_marginStart="8dp"
+                        android:layout_marginTop="4dp"
                         android:background="@color/colorPrimary"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        android:layout_marginTop="4dp"
                         app:layout_constraintTop_toBottomOf="@+id/D_Data" />
 
                 </android.support.constraint.ConstraintLayout>
@@ -136,15 +135,15 @@
                 android:id="@+id/cardView2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginRight="24dp"
-                android:layout_marginStart="24dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 app:cardCornerRadius="0dp"
                 app:cardElevation="0dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView">
+                app:layout_constraintTop_toBottomOf="@+id/cardView"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp">
 
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
@@ -166,7 +165,6 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_marginBottom="4dp"
-                        android:layout_marginRight="0dp"
                         android:layout_marginTop="4dp"
                         android:backgroundTint="@color/colorPrimary"
                         android:src="@drawable/chiama"
@@ -181,7 +179,7 @@
                         android:id="@+id/textView9"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
+                        android:layout_marginLeft="16dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
                         android:fontFamily="sans-serif"
@@ -211,7 +209,7 @@
 
                     <View
                         android:id="@+id/Separator2"
-                        android:layout_width="300dp"
+                        android:layout_width="0dp"
                         android:layout_height="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_marginEnd="8dp"
@@ -233,15 +231,15 @@
                 android:id="@+id/cardView3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginStart="24dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 app:cardCornerRadius="0dp"
                 app:cardElevation="0dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView2">
+                app:layout_constraintTop_toBottomOf="@+id/cardView2"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp">
 
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
@@ -263,7 +261,6 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         app:srcCompat="@drawable/icona_mappa"
-                        android:layout_marginRight="0dp"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_marginBottom="8dp"
@@ -274,7 +271,7 @@
                         android:id="@+id/D_Condominio"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
+                        android:layout_marginLeft="16dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
                         android:fontFamily="sans-serif"
@@ -297,12 +294,11 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/imageView5"
-                        app:layout_constraintVertical_bias="0.0"
-                        android:layout_marginEnd="8dp" />
+                        app:layout_constraintVertical_bias="0.0" />
 
                     <View
                         android:id="@+id/Separator3"
-                        android:layout_width="300dp"
+                        android:layout_width="0dp"
                         android:layout_height="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_marginEnd="8dp"
@@ -324,15 +320,15 @@
                 android:id="@+id/cardView4"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginRight="24dp"
-                android:layout_marginStart="24dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 app:cardCornerRadius="0dp"
                 app:cardElevation="0dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView3">
+                app:layout_constraintTop_toBottomOf="@+id/cardView3"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp">
 
 
                 <android.support.constraint.ConstraintLayout
@@ -367,7 +363,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         android:layout_marginTop="8dp"
                         app:layout_constraintLeft_toRightOf="@+id/imageView"
-                        android:layout_marginLeft="8dp" />
+                        android:layout_marginLeft="16dp" />
 
                     <TextView
                         android:id="@+id/D_Oggetto"
@@ -386,7 +382,7 @@
 
                     <View
                         android:id="@+id/view"
-                        android:layout_width="300dp"
+                        android:layout_width="0dp"
                         android:layout_height="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_marginEnd="8dp"
@@ -407,16 +403,16 @@
                 android:id="@+id/cardView5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginRight="24dp"
-                android:layout_marginStart="24dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 app:cardCornerRadius="0dp"
                 app:cardElevation="0dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardView4"
-                app:layout_constraintHorizontal_bias="0.0">
+                app:layout_constraintHorizontal_bias="0.0"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp">
 
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
@@ -437,7 +433,7 @@
                         android:id="@+id/textView10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
+                        android:layout_marginLeft="16dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
                         android:fontFamily="sans-serif"
@@ -468,7 +464,7 @@
 
                     <View
                         android:id="@+id/Separator5"
-                        android:layout_width="300dp"
+                        android:layout_width="0dp"
                         android:layout_height="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_marginEnd="8dp"
@@ -490,15 +486,15 @@
                 android:id="@+id/cardView6"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginRight="24dp"
-                android:layout_marginStart="24dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 app:cardCornerRadius="0dp"
                 app:cardElevation="0dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView5">
+                app:layout_constraintTop_toBottomOf="@+id/cardView5"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp">
 
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
@@ -517,7 +513,7 @@
 
                     <ImageView
                         android:id="@+id/D_Foto"
-                        android:layout_width="295dp"
+                        android:layout_width="0dp"
                         android:layout_height="419dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginLeft="8dp"
@@ -527,14 +523,13 @@
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView123"
-                        app:srcCompat="@drawable/common_ic_googleplayservices"
-                        tools:layout_editor_absoluteY="116dp" />
+                        app:srcCompat="@drawable/common_ic_googleplayservices" />
 
                     <TextView
                         android:id="@+id/textView123"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
+                        android:layout_marginLeft="16dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
                         android:fontFamily="sans-serif"

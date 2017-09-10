@@ -1,4 +1,4 @@
-package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiInCorso.BachecaInterventiInCorso;
+package com.gambino_serra.condomanager_fornitore.View.Home.InterventiCompletati;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.firebase.client.ChildEventListener;
@@ -21,7 +20,6 @@ import com.firebase.client.Query;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.CardTicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
-import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiInCorso.InterventoInCorso.InterventoInCorso;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
@@ -30,46 +28,32 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BachecaInterventiInCorso extends Fragment {
-
+public class BachecaInterventiCompletati extends Fragment{
     private static RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private static RecyclerView recyclerView;
     private ArrayList<TicketIntervento> data;
     public static View.OnClickListener myOnClickListener;
     Context context;
-    ImageView BottoneMappa;
-
 
     private FirebaseAuth firebaseAuth;
     private String uidFornitore;
     Map<String, Object> ticketInterventoMap;
     ArrayList<CardTicketIntervento> interventi;
 
-    public static BachecaInterventiInCorso newInstance() {
-        BachecaInterventiInCorso fragment = new BachecaInterventiInCorso();
+    public static BachecaInterventiCompletati newInstance() {
+        BachecaInterventiCompletati fragment = new BachecaInterventiCompletati();
         return fragment;
-    }
+        }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        /*
-        Query query0;
-        query0 = FirebaseDB.getInterventi().orderByChild("Ogetto");
-        query0.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {}
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {}
-        });
-        */
-    }
+        }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.tab_interventi_in_corso, container, false);
+        return inflater.inflate(R.layout.tab_interventi_completati, container, false);
         }
 
     @Override
@@ -82,15 +66,6 @@ public class BachecaInterventiInCorso extends Fragment {
         ticketInterventoMap = new HashMap<String,Object>();
         interventi = new ArrayList<CardTicketIntervento>();
 
-        BottoneMappa = (ImageView) getActivity().findViewById(R.id.BottoneMappa);
-        BottoneMappa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent mappa = new Intent(getActivity(), MappaInterventiInCorso.class);
-                startActivity(mappa);
-            }
-        });
-
         myOnClickListener = new MyOnClickListener(context);
 
         recyclerView = (RecyclerView) getActivity().findViewById(R.id.my_recycler_view1);
@@ -100,15 +75,17 @@ public class BachecaInterventiInCorso extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        //lettura uid condomino -->  codice fiscale stabile, uid amministratore
         uidFornitore = firebaseAuth.getCurrentUser().getUid().toString();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
         Query query;
         query = FirebaseDB.getInterventi().orderByChild("fornitore").equalTo(uidFornitore);
 
-
-        // la query seleziona solo gli interventi con un determinato fornitore
-        //il listener lavora sui figli della query, ovvero su titti gli interventi recuperati
+        // la query seleziona solo gli interventi con un determinato fornitore il listener lavora sui figli della query, ovvero su titti gli interventi recuperati
         query.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(com.firebase.client.DataSnapshot dataSnapshot, String s) {
@@ -117,18 +94,22 @@ public class BachecaInterventiInCorso extends Fragment {
                 ticketInterventoMap = new HashMap<String,Object>();
                 ticketInterventoMap.put("id", dataSnapshot.getKey()); //primo campo del MAP
 
-                // per ognuno dei figli presenti nello snapshot, ovvero per tutti i figli di un singolo nodo Interv
-                // recuperiamo i dati per inserirli nel MAP
+                // per ognuno dei figli presenti nello snapshot, ovvero per tutti i figli di un singolo nodo Interv recuperiamo i dati per inserirli nel MAP
                 for ( DataSnapshot child : dataSnapshot.getChildren() ) {
                     ticketInterventoMap.put(child.getKey(), child.getValue());
                     }
 
                 recuperaDatiStabile (ticketInterventoMap);
-
             }
 
             @Override
-            public void onChildChanged(com.firebase.client.DataSnapshot dataSnapshot, String s) { }
+            public void onChildChanged(com.firebase.client.DataSnapshot dataSnapshot, String s) {
+                for( DataSnapshot child : dataSnapshot.getChildren() ) {
+                    if ("stato".equals(child.getKey().toString())) {
+                        BachecaInterventiCompletati.newInstance(); //TODO: come funzione l'aggiornamento del fragment
+                    }
+                }
+            }
 
             @Override
             public void onChildRemoved(com.firebase.client.DataSnapshot dataSnapshot) { }
@@ -152,7 +133,7 @@ public class BachecaInterventiInCorso extends Fragment {
         @Override
         public void onClick(View v) {
             detailsIntervento(v);
-        }
+            }
 
         private void detailsIntervento(View v) {
 
@@ -164,13 +145,12 @@ public class BachecaInterventiInCorso extends Fragment {
             Bundle bundle = new Bundle();
             bundle.putString("idIntervento", selectedName);
 
-            Intent intent = new Intent(context, InterventoInCorso.class);
+            Intent intent = new Intent(context, DettaglioInterventoCompletato.class);
             intent.putExtras(bundle);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
             }
     }
-
 
     public void recuperaDatiStabile(final Map<String, Object> ticketInterventoMap) {
 
@@ -186,8 +166,7 @@ public class BachecaInterventiInCorso extends Fragment {
                 // recuperiamo i dati per inserirli nel MAP
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     ticketInterventoMap2.put(child.getKey(), child.getValue());
-                }
-
+                    }
 
                 // Avvaloro tutti i dati della card che mi interessano inserendone i relativi dati
                 // anche quelli provenienti dallo stabile sovrascrivendo i codici passati in ticketIntervento
@@ -204,56 +183,41 @@ public class BachecaInterventiInCorso extends Fragment {
                             ticketInterventoMap.get("stato").toString(),
                             ticketInterventoMap.get("data_ticket").toString(),
                             ticketInterventoMap.get("data_ultimo_aggiornamento").toString()
-                    );
+                            );
 
-                    if (ticketIntervento.getStato().equals("in corso")) {
+                    if (ticketIntervento.getStato().equals("completato")) {
                         // inserisce l'oggetto ticket nell'array interventi
                         interventi.add(ticketIntervento);
-
-                    }
+                        }
 
                     // Sorting interventi per idIntervento dall'ultimo al primo
                     Collections.sort(interventi, new Comparator<CardTicketIntervento>() {
                         @Override
-                        public int compare(CardTicketIntervento intervento, CardTicketIntervento intervento2)
-                        {
-
-                            return  intervento2.compareTo(intervento);
-                        }
-                    });
+                        public int compare(CardTicketIntervento intervento, CardTicketIntervento intervento2) {
+                            return  intervento2.getIdTicketIntervento().compareTo(intervento.getIdTicketIntervento());
+                            }
+                        });
 
                     // Utilizziamo l'adapter per popolare la recycler view
-                    adapter = new AdapterInterventiInCorso(interventi);
+                    adapter = new AdapterInterventiCompletati(interventi);
                     recyclerView.setAdapter(adapter);
-
-                } catch (NullPointerException e) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Non riesco ad aprire l'oggetto " + e.toString(), Toast.LENGTH_LONG).show();
                 }
-
-
+                catch (NullPointerException e) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Non riesco ad aprire l'oggetto " + e.toString(), Toast.LENGTH_LONG).show();
+                    }
             }
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) { }
 
             @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
+            public void onChildRemoved(DataSnapshot dataSnapshot) { }
 
             @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {  }
 
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
+            public void onCancelled(FirebaseError firebaseError) { }
         });
     }
-
-
 }

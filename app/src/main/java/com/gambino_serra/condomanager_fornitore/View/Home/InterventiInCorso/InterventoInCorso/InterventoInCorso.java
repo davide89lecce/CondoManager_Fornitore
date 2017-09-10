@@ -1,4 +1,4 @@
-package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiInCorso.InterventoInCorso;
+package com.gambino_serra.condomanager_fornitore.View.Home.InterventiInCorso.InterventoInCorso;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;

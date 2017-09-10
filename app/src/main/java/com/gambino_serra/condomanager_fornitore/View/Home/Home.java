@@ -1,4 +1,4 @@
-package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home;
+package com.gambino_serra.condomanager_fornitore.View.Home;
 
 import android.content.Context;
 import android.net.Uri;
@@ -12,9 +12,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiCompletati.BachecaInterventiCompletati;
-import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiInCorso.BachecaInterventiInCorso.BachecaInterventiInCorso;
-import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.RichiesteIntervento.BachecaRichiesteIntervento;
+import com.gambino_serra.condomanager_fornitore.View.Home.InterventiCompletati.BachecaInterventiCompletati;
+import com.gambino_serra.condomanager_fornitore.View.Home.InterventiInCorso.BachecaInterventiInCorso.BachecaInterventiInCorso;
+import com.gambino_serra.condomanager_fornitore.View.Home.RichiesteIntervento.BachecaRichiesteIntervento;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 
 public class Home extends Fragment {
