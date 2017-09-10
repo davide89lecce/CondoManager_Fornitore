@@ -17,6 +17,20 @@
         android:layout_height="match_parent">
 
         <ImageView
+            android:id="@+id/imageView10"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/BottoneMappa"
+            app:layout_constraintLeft_toLeftOf="@+id/BottoneMappa"
+            app:layout_constraintRight_toRightOf="@+id/BottoneMappa"
+            app:layout_constraintTop_toTopOf="@+id/BottoneMappa"
+            app:srcCompat="@drawable/bg_circle" />
+
+        <ImageView
             android:id="@+id/BottoneMappa"
             android:layout_width="70dp"
             android:layout_height="70dp"

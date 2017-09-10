@@ -1,5 +1,6 @@
 package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiInCorso.InterventoInCorso.RapportiIntervento;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.icu.text.SimpleDateFormat;
 import android.support.constraint.ConstraintLayout;
@@ -9,11 +10,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.CardRapportoIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
 import com.gambino_serra.condomanager_fornitore.View.Dialog.DialogConfermaArchiviaIntervento;
+import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.MainDrawer;
+import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiInCorso.InterventoInCorso.InterventoInCorso;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -95,13 +99,20 @@ public class InserimentoRapportoIntervento extends AppCompatActivity {
                                     notaAmministratore.getText().toString(),
                                     notaPersonale.getText().toString(),
                                     idIntervento);
-                // TODO : Intent to home
+
+                Toast.makeText(getApplicationContext(), "Rapporto di intervento inserito", Toast.LENGTH_SHORT).show();
+                Intent in = new Intent(getApplicationContext(), MainDrawer.class);
+                in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(in);
             }
         });
 
         annulla.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
+                Intent back = new Intent(getApplicationContext(), InterventoInCorso.class);
+                back.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(back);
             }
         });
     }
@@ -127,7 +138,7 @@ public class InserimentoRapportoIntervento extends AppCompatActivity {
 
                 //Ricava la data e la formatta nel formato appropriato
                 Date newDate = new Date(new Date().getTime());
-                SimpleDateFormat dt = new SimpleDateFormat("yyyy/MM/dd HH:mm ");
+                SimpleDateFormat dt = new SimpleDateFormat("yyyy/MM/dd HH:mm");
                 String stringdate = dt.format(newDate);
 
                 //Instanziamo un nuovo oggetto MessaggioCondomino contenente tutte le informazioni
@@ -135,7 +146,11 @@ public class InserimentoRapportoIntervento extends AppCompatActivity {
                 CardRapportoIntervento m = new CardRapportoIntervento(counter.toString(),stringdate, notaAmministratore, notaPersonale, idTicket);
 
                 //Setta il nome del nodo del messaggio (key)
-                mutableData.child(counter.toString()).setValue(m);
+                mutableData.child(counter.toString()).child("data").setValue( m.getData() );
+                mutableData.child(counter.toString()).child("nota_amministratore").setValue( m.getNotaAmministratore() );
+                mutableData.child(counter.toString()).child("nota_fornitore").setValue( m.getNotaFornitore() );
+                mutableData.child(counter.toString()).child("ticket_intervento").setValue( m.getTicketIntervento() );
+
                 //Setta il counter del nodo Messaggi_condomino
                 mutableData.child("counter").setValue(counter);
 

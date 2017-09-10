@@ -17,6 +17,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
 import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.Home;
 import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.InformazioniPersonali.InformazioniPersonali;
 import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.StoricoInterventi.BachecaInterventiArchiviati;
@@ -25,6 +30,7 @@ import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.other.CircleTran
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 import com.github.clans.fab.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class MainDrawer extends AppCompatActivity {
@@ -37,10 +43,12 @@ public class MainDrawer extends AppCompatActivity {
     private Toolbar toolbar;
     private FloatingActionButton fab;
     private FirebaseAuth firebaseAuth;
+    private Firebase firebase;
+    private String nome;
 
     // urls to load navigation header background image and profile image TODO: CAMBIARE IMMAGINI
     private static final String urlNavHeaderBg = "http://api.androidhive.info/images/nav-menu-header-bg.jpg";
-    private static final String urlProfileImg = "https://lh3.googleusercontent.com/eCtE_G34M9ygdkmOpYvCag1vBARCmZwnVS6rS5t4JLzJ6QgQSBquM0nuTsCpLhYbKljoyS-txg";
+    private static final String urlProfileImg = "https://firebasestorage.googleapis.com/v0/b/condomanager-a5aa6.appspot.com/o/user-maindrawer.png?alt=media&token=fb589ee1-d8eb-452f-8a46-9a217e15bc0c";
 
     // index to identify current nav menu item
     public static int navItemIndex = 0;
@@ -68,6 +76,7 @@ public class MainDrawer extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+        String UID  = firebaseAuth.getCurrentUser().getUid();
 
 
         mHandler = new Handler();
@@ -87,6 +96,14 @@ public class MainDrawer extends AppCompatActivity {
         activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
 
 
+        FirebaseDB.getFornitori().child(UID).child("nome").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                nome = dataSnapshot.getValue(String.class);
+            }
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {}
+        });
 
         //fab.setOnClickListener(new View.OnClickListener() {
         //    @Override
@@ -114,7 +131,7 @@ public class MainDrawer extends AppCompatActivity {
      */
     private void loadNavHeader() {
         // name, website
-        txtName.setText("NOME DELL'UTENTE"); //TODO: IMPOSTARE NOME DELL'UTENTE LOGGATO
+        txtName.setText(nome);
         //txtWebsite.setText("www.androidhive.info");
 
         // loading header background image
@@ -127,7 +144,7 @@ public class MainDrawer extends AppCompatActivity {
         Glide.with(this).load(urlProfileImg)
                 .crossFade()
                 .thumbnail(0.5f)
-                .bitmapTransform(new CircleTransform(this))
+                //.bitmapTransform(new CircleTransform(this))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imgProfile);
 
