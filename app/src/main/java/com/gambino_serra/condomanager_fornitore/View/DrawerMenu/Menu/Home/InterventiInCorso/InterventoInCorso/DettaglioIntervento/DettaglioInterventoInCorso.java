@@ -1,15 +1,10 @@
 package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiInCorso.InterventoInCorso.DettaglioIntervento;
 
-import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,16 +19,10 @@ import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
-import com.gambino_serra.condomanager_fornitore.View.Dialog.DialogConfermaChiusuraIntervento;
-import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.MainDrawer;
-import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiInCorso.InterventoInCorso.RapportiIntervento.InserimentoRapportoIntervento;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -63,27 +52,21 @@ public class DettaglioInterventoInCorso extends android.support.v4.app.Fragment 
     TextView Tstabile;
     TextView Tindirizzo;
     ImageView Tfoto;
-    ConstraintLayout Chiudi;
     ImageView ChiamaAmministratore;
     ImageView Mappa;
 
-    private Firebase firebaseDB;
-    private FirebaseUser firebaseUser;
+
     private FirebaseAuth firebaseAuth;
-    private DatabaseReference databaseReference;
-    private FirebaseDatabase firebaseDatabase;
 
     Map<String, Object> ticketInterventoMap;
-
     Bundle bundle;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.dettaglio_intervento_in_corso, container, false);
         return view;
-    }
+        }
 
 
     @Override
@@ -119,7 +102,6 @@ public class DettaglioInterventoInCorso extends android.support.v4.app.Fragment 
         Trichiesta = (TextView) getActivity().findViewById(R.id.D_Descrizione);
         Tfoto = (ImageView) getActivity().findViewById(R.id.D_Foto);
         TidTicketIntervento = (TextView) getActivity().findViewById(R.id.Hidden_ID);
-        Chiudi = (ConstraintLayout) getActivity().findViewById(R.id.btnChiudiIntervento);
         ChiamaAmministratore = (ImageView) getActivity().findViewById(R.id.imageViewChiamaAmministratore);
         Mappa = (ImageView) getActivity().findViewById(R.id.btnMappa);
 
@@ -141,33 +123,23 @@ public class DettaglioInterventoInCorso extends android.support.v4.app.Fragment 
             public void onClick(View v) {
                 materialDesignFAM.setMenuButtonColorNormal(Color.parseColor("#FF0000"));
                 materialDesignFAM.close(true);
-            }
-        });
+                }
+            });
         floatingActionButton2.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
                 materialDesignFAM.setMenuButtonColorNormal(Color.parseColor("#FFFF00"));
                 materialDesignFAM.close(true);
-            }
-        });
+                }
+            });
         floatingActionButton3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 materialDesignFAM.setMenuButtonColorNormal(Color.parseColor("#00FF00"));
                 materialDesignFAM.close(true);
-            }
-        });
+                }
+            });
 
 
-                Chiudi.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-
-                        Intent intent = new Intent(getActivity(), InserimentoRapportoIntervento.class);
-                        intent.putExtras(bundle);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                        getActivity().overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
-                        }
-                    });
 
 //        ChiamaAmministratore.setOnClickListener(new View.OnClickListener() {
 //            public void onClick(View v) {//TODO: CHIAMA AMMNINISTRATORE

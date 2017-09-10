@@ -1,8 +1,10 @@
 package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiInCorso.InterventoInCorso.RapportiIntervento;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,23 +14,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.CardRapportoIntervento;
-import com.gambino_serra.condomanager_fornitore.Model.Entity.CardTicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 import com.google.firebase.auth.FirebaseAuth;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 import static android.content.Context.MODE_PRIVATE;
 
 public class RapportiIntervento extends Fragment {
@@ -36,12 +33,10 @@ public class RapportiIntervento extends Fragment {
     private static final String MY_PREFERENCES = "preferences";
     private static final String LOGGED_USER = "username";
 
-
     String username = "";
     String idIntervento = "";
 
     // Oggetti di Layout NUOVI
-    TextView TidTicketIntervento;
     TextView TAmministratore;
     TextView TdataTicket;
     TextView Toggetto;
@@ -49,7 +44,8 @@ public class RapportiIntervento extends Fragment {
     TextView Tstabile;
     TextView Tindirizzo;
     ImageView Tfoto;
-
+    ConstraintLayout Chiudi;
+    TextView TidTicketIntervento;
 
     private static RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -69,7 +65,7 @@ public class RapportiIntervento extends Fragment {
 
         View view = inflater.inflate(R.layout.rapporti_intervento, container, false);
         return view;
-    }
+        }
 
 
     @Override
@@ -94,7 +90,6 @@ public class RapportiIntervento extends Fragment {
         bundle = new Bundle();
         bundle.putString("idIntervento", idIntervento);
 
-
         recyclerView = (RecyclerView) getActivity().findViewById(R.id.my_recycler_view1);
         recyclerView.setHasFixedSize(true);
 
@@ -102,13 +97,23 @@ public class RapportiIntervento extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-
         uidFornitore = firebaseAuth.getCurrentUser().getUid().toString();
 
+        Chiudi = (ConstraintLayout) getActivity().findViewById(R.id.btnChiudiIntervento);
+        TidTicketIntervento = (TextView) getActivity().findViewById(R.id.Hidden_ID);
+
+        Chiudi.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), InserimentoRapportoIntervento.class);
+                intent.putExtras(bundle);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_in_right);
+                }
+        });
 
         Query query;
         query = FirebaseDB.getRapporti().orderByChild("ticket_intervento").equalTo(idIntervento);
-
 
         // la query seleziona solo gli interventi con un determinato fornitore
         //il listener lavora sui figli della query, ovvero su titti gli interventi recuperati
@@ -124,29 +129,22 @@ public class RapportiIntervento extends Fragment {
                 // recuperiamo i dati per inserirli nel MAP
                 for ( DataSnapshot child : dataSnapshot.getChildren() ) {
                     rapportoInterventoMap.put(child.getKey(), child.getValue());
-                }
+                    }
 
-                //try {
                     CardRapportoIntervento rapportoIntervento = new CardRapportoIntervento(
                             rapportoInterventoMap.get("id").toString(),
                             rapportoInterventoMap.get("data").toString(),
                             rapportoInterventoMap.get("nota_amministratore").toString(),
                             rapportoInterventoMap.get("nota_fornitore").toString(),
                             rapportoInterventoMap.get("ticket_intervento").toString()
-                    );
+                            );
 
                     rapporti.add(rapportoIntervento);
 
                     // Utilizziamo l'adapter per popolare la recycler view
                     adapter = new AdapterRapportiIntervento(rapporti);
                     recyclerView.setAdapter(adapter);
-
-
-               // } catch (NullPointerException e) {
-                 //   Toast.makeText(getActivity().getApplicationContext(), "Non riesco ad aprire l'oggetto " + e.toString(), Toast.LENGTH_LONG).show();
-                //}
-
-            }
+                    }
 
             @Override
             public void onChildChanged(com.firebase.client.DataSnapshot dataSnapshot, String s) { }
@@ -161,6 +159,4 @@ public class RapportiIntervento extends Fragment {
             public void onCancelled(FirebaseError firebaseError) { }
         });
     }
-
-
 }

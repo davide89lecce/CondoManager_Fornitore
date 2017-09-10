@@ -5,9 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.gambino_serra.condomanager_fornitore.Model.Entity.CardRapportoIntervento;
-import com.gambino_serra.condomanager_fornitore.Model.Entity.CardTicketIntervento;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 
 import java.util.ArrayList;
@@ -24,6 +22,7 @@ public class AdapterRapportiIntervento extends RecyclerView.Adapter<AdapterRappo
         TextView TnotaAmministratore;
         TextView TnotaFornitore;
 
+
         public MyViewHolder(View itemView) {
             super(itemView);
 
@@ -32,12 +31,12 @@ public class AdapterRapportiIntervento extends RecyclerView.Adapter<AdapterRappo
             this.TnotaFornitore = (TextView) itemView.findViewById(R.id.D_NotaPersonale);
             //Campo nascosto per recuperare il riferimento
             this.TidRapportoIntervento = (TextView) itemView.findViewById(R.id.D_IDIntervento);
-        }
+            }
     }
 
     public AdapterRapportiIntervento(ArrayList<CardRapportoIntervento> dataset) {
         this.dataset = dataset;
-    }
+        }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -48,6 +47,7 @@ public class AdapterRapportiIntervento extends RecyclerView.Adapter<AdapterRappo
 
         MyViewHolder myViewHolder = new MyViewHolder(view);
         return myViewHolder;
+
     }
 
     @Override
@@ -63,9 +63,8 @@ public class AdapterRapportiIntervento extends RecyclerView.Adapter<AdapterRappo
             TnotaAmministratore.setText(dataset.get(listPosition).getNotaAmministratore());
             TnotaFornitore.setText(dataset.get(listPosition).getNotaFornitore());
             TidRapportoIntervento.setText(dataset.get(listPosition).getIdRapportoIntervento());
-        }catch (NullPointerException e){
-
-        }
+            }
+        catch (NullPointerException e){ }
 
     }
 
@@ -73,4 +72,6 @@ public class AdapterRapportiIntervento extends RecyclerView.Adapter<AdapterRappo
     public int getItemCount() {
         return dataset.size();
     }
+
+
 }
