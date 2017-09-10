@@ -31,12 +31,12 @@
             tools:layout_constraintTop_creator="1"
             tools:layout_constraintRight_creator="1"
             tools:layout_constraintBottom_creator="1"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_constraintLeft_creator="1"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="0dp"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintVertical_bias="0.0">
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintBottom_toTopOf="@+id/D_barraPriorità">
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cardViewA"
@@ -546,6 +546,25 @@
 
         </ScrollView>
 
+        <TextView
+            android:id="@+id/D_barraPriorità"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:background="@color/colorPrimary"
+            android:fontFamily="sans-serif"
+            android:text="Priorità"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textAppearance="@android:style/TextAppearance.Material.Large"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
         <com.github.clans.fab.FloatingActionMenu
             android:id="@+id/material_design_android_floating_action_menu"
             android:layout_width="0dp"
@@ -555,18 +574,18 @@
             android:layout_marginRight="0dp"
             android:layout_marginTop="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.5"
-            fab:menu_fab_label="Priorità intervento"
+            app:layout_constraintVertical_bias="1.0"
             fab:menu_animationDelayPerItem="50"
             fab:menu_backgroundColor="#C0FFFFFF"
             fab:menu_buttonSpacing="0dp"
             fab:menu_colorNormal="#dc473f"
             fab:menu_colorPressed="@color/colorAccent"
             fab:menu_colorRipple="#99d4d4d4"
+            fab:menu_fab_label="Priorità intervento"
             fab:menu_fab_size="normal"
             fab:menu_icon="@drawable/fab_add"
             fab:menu_labels_colorNormal="#C0FFFFFF"

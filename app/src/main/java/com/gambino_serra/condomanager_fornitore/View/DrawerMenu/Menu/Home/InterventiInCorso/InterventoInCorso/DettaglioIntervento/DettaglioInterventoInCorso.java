@@ -54,9 +54,11 @@ public class DettaglioInterventoInCorso extends android.support.v4.app.Fragment 
     ImageView Tfoto;
     ImageView ChiamaAmministratore;
     ImageView Mappa;
+    TextView TbarraPritorità;
 
 
     private FirebaseAuth firebaseAuth;
+    private Firebase firebase;
 
     Map<String, Object> ticketInterventoMap;
     Bundle bundle;
@@ -84,6 +86,7 @@ public class DettaglioInterventoInCorso extends android.support.v4.app.Fragment 
         context = getContext();
 
         firebaseAuth = FirebaseAuth.getInstance();
+        firebase = FirebaseDB.getInterventi();
 
         final SharedPreferences sharedPrefs = getActivity().getSharedPreferences(MY_PREFERENCES, MODE_PRIVATE);
 
@@ -104,6 +107,7 @@ public class DettaglioInterventoInCorso extends android.support.v4.app.Fragment 
         TidTicketIntervento = (TextView) getActivity().findViewById(R.id.Hidden_ID);
         ChiamaAmministratore = (ImageView) getActivity().findViewById(R.id.imageViewChiamaAmministratore);
         Mappa = (ImageView) getActivity().findViewById(R.id.btnMappa);
+        TbarraPritorità = (TextView) getActivity().findViewById(R.id.D_barraPriorità);
 
         ticketInterventoMap = new HashMap<String, Object>();
         // Avvalora il primo oggetto del map con l'ID dell'intervento recuperato
@@ -122,21 +126,32 @@ public class DettaglioInterventoInCorso extends android.support.v4.app.Fragment 
         floatingActionButton1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 materialDesignFAM.setMenuButtonColorNormal(Color.parseColor("#FF0000"));
+                TbarraPritorità.setText("Priorità Alta");
+                TbarraPritorità.setBackgroundColor(Color.parseColor("#FF0000"));
+                firebase.child(idIntervento).child("priorità").setValue("3");
                 materialDesignFAM.close(true);
                 }
             });
+
         floatingActionButton2.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
                 materialDesignFAM.setMenuButtonColorNormal(Color.parseColor("#FFFF00"));
+                TbarraPritorità.setText("Priorità Media");
+                TbarraPritorità.setBackgroundColor(Color.parseColor("#FFFF00"));
+                firebase.child(idIntervento).child("priorità").setValue("2");
                 materialDesignFAM.close(true);
-                }
+            }
             });
+
         floatingActionButton3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 materialDesignFAM.setMenuButtonColorNormal(Color.parseColor("#00FF00"));
+                TbarraPritorità.setText("Priorità Bassa");
+                TbarraPritorità.setBackgroundColor(Color.parseColor("#00FF00"));
+                firebase.child(idIntervento).child("priorità").setValue("1");
                 materialDesignFAM.close(true);
-                }
+            }
             });
 
 
@@ -275,18 +290,24 @@ public class DettaglioInterventoInCorso extends android.support.v4.app.Fragment 
                             switch(priorità) {
                                 case "3" :
                                 {
+                                    TbarraPritorità.setText("Priorità Alta");
+                                    TbarraPritorità.setBackgroundColor(Color.parseColor("#FF0000"));
                                     materialDesignFAM.setMenuButtonColorNormal(Color.parseColor("#FF0000"));
                                     break;
                                 }
 
                                 case "2":
                                 {
+                                    TbarraPritorità.setText("Priorità Media");
+                                    TbarraPritorità.setBackgroundColor(Color.parseColor("#FFFF00"));
                                     materialDesignFAM.setMenuButtonColorNormal(Color.parseColor("#FFFF00"));
                                     break;
                                 }
 
                                 case "1":
                                 {
+                                    TbarraPritorità.setText("Priorità Bassa");
+                                    TbarraPritorità.setBackgroundColor(Color.parseColor("#00FF00"));
                                     materialDesignFAM.setMenuButtonColorNormal(Color.parseColor("#00FF00"));
                                     break;
                                 }
