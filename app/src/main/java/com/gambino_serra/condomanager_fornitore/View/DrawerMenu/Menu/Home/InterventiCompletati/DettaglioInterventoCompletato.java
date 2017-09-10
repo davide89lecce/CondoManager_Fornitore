@@ -1,9 +1,6 @@
 package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.Home.InterventiCompletati;
 
-import android.app.DialogFragment;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +15,6 @@ import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
-import com.gambino_serra.condomanager_fornitore.View.Dialog.DialogChiamaAmministratore;
 import com.gambino_serra.condomanager_fornitore.View.Dialog.DialogConfermaArchiviaIntervento;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,7 +24,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 import java.util.Map;
-import static com.gambino_serra.condomanager_fornitore.tesi.R.layout.dialog_conferma_archiviazione;
 
 public class DettaglioInterventoCompletato extends AppCompatActivity {
     private static final String MY_PREFERENCES = "preferences";
@@ -82,7 +77,6 @@ public class DettaglioInterventoCompletato extends AppCompatActivity {
             }
         else
             {
-            //TODO: perchè
             idIntervento = sharedPrefs.getString("idIntervento", "").toString();
             bundle = new Bundle();
             bundle.putString("idIntervento", idIntervento);
@@ -104,7 +98,6 @@ public class DettaglioInterventoCompletato extends AppCompatActivity {
         ticketInterventoMap = new HashMap<String, Object>();
         // Avvalora il primo oggetto del map con l'ID dell'intervento recuperato
         ticketInterventoMap.put("idIntervento", idIntervento);
-
     }
 
     @Override
@@ -142,11 +135,9 @@ public class DettaglioInterventoCompletato extends AppCompatActivity {
 //        });
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
-
 
         Query intervento;
         intervento = FirebaseDB.getInterventi().orderByKey().equalTo(idIntervento);
@@ -154,16 +145,12 @@ public class DettaglioInterventoCompletato extends AppCompatActivity {
         intervento.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                //ticketInterventoMap = new HashMap<String,Object>();
-                //ticketInterventoMap.put("idIntervento",idIntervento);
 
                 for(DataSnapshot child : dataSnapshot.getChildren()){
                     ticketInterventoMap.put(child.getKey(),child.getValue());
-                }
+                    }
 
                 recuperaDettagliTicket(ticketInterventoMap);
-
-
             }
 
             @Override
@@ -178,17 +165,14 @@ public class DettaglioInterventoCompletato extends AppCompatActivity {
             @Override
             public void onCancelled(FirebaseError firebaseError) { }
         });
-
     }
 
     public void recuperaDettagliTicket(final Map<String, Object> ticketInterventoMap) {
 
         final Map<String, Object> ticketInterventoMap2 = new HashMap<String, Object>();
 
-
         Query query2;
         query2 = FirebaseDB.getStabili().orderByKey().equalTo(ticketInterventoMap.get("stabile").toString());
-
 
         query2.addChildEventListener(new ChildEventListener() {
             @Override
@@ -198,8 +182,7 @@ public class DettaglioInterventoCompletato extends AppCompatActivity {
                 // recuperiamo i dati per inserirli nel MAP
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     ticketInterventoMap2.put(child.getKey(), child.getValue());
-                }
-
+                    }
 
                 Firebase nomeAmm = FirebaseDB.getAmministratori()
                         .child( ticketInterventoMap.get("amministratore").toString() )
@@ -215,7 +198,6 @@ public class DettaglioInterventoCompletato extends AppCompatActivity {
                         // anche quelli provenienti dallo stabile sovrascrivendo i codici passati in ticketIntervento
                         // Avvaloriamo una variabile TicketIntervento appositamente creata in modo da inserire poi questo
                         // oggetto all'interno di un Array di interventi che utilizzeremo per popolare la lista Recycle
-                        //try {
                         TicketIntervento ticketIntervento = new TicketIntervento(
                                 ticketInterventoMap.get("idIntervento").toString(),
                                 ticketInterventoMap.get("amministratore").toString(),
@@ -237,24 +219,24 @@ public class DettaglioInterventoCompletato extends AppCompatActivity {
                                 ticketInterventoMap2.get("indirizzo").toString(),
                                 ticketInterventoMap2.get("latitudine").toString(),
                                 ticketInterventoMap2.get("longitudine").toString()
-                        );
+                            );
 
-                        try {
+                        try
+                            {
                             TdataTicket.setText(ticketIntervento.getDataTicket().toString());
                             Tstabile.setText(ticketIntervento.getNomeStabile().toString());
                             Toggetto.setText(ticketIntervento.getOggetto().toString());
                             TAmministratore.setText(ticketIntervento.getNomeAmministratore().toString());
                             Trichiesta.setText(ticketIntervento.getRichiesta().toString());
                             Tindirizzo.setText(ticketIntervento.getIndirizzoStabile().toString());
+                            TidTicketIntervento.setText(ticketIntervento.getIdTicketIntervento().toString());
 
                             if ( ! "-".equals( ticketIntervento.getFoto() ) ) {
                                 Picasso.with(getApplicationContext()).load(ticketIntervento.getFoto()).fit().centerCrop().into(Tfoto);
+                                }
+
                             }
-
-                            TidTicketIntervento.setText(ticketIntervento.getIdTicketIntervento().toString());
-
-
-                        } catch (NullPointerException e) {}
+                        catch (NullPointerException e) {}
                     }
 
                     @Override

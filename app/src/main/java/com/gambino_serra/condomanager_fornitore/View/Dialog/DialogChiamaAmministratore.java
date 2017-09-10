@@ -81,6 +81,4 @@ public class DialogChiamaAmministratore extends DialogFragment {
     public void onCancel(DialogInterface dialog) {
         super.onCancel(dialog);
     }
-
 }
-

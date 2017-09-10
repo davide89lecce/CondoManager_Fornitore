@@ -5,9 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.gambino_serra.condomanager_fornitore.Model.Entity.CardTicketIntervento;
-import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 import java.util.ArrayList;
 
@@ -30,14 +28,13 @@ public class AdapterInterventiCompletati extends RecyclerView.Adapter<AdapterInt
             this.TdataUltimoAggiornamento = (TextView) itemView.findViewById(R.id.D_UltimoRapporto);
             this.Tstabile = (TextView) itemView.findViewById(R.id.D_Condominio);
             this.Toggetto = (TextView) itemView.findViewById(R.id.D_Oggetto);
-            //Campo nascosto per recuperare il riferimento
             this.IdTicket = (TextView) itemView.findViewById(R.id.D_IDIntervento);
-        }
+            }
     }
 
     public AdapterInterventiCompletati(ArrayList<CardTicketIntervento> dataset) {
         this.dataset = dataset;
-    }
+        }
 
     @Override
     public AdapterInterventiCompletati.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -48,7 +45,7 @@ public class AdapterInterventiCompletati extends RecyclerView.Adapter<AdapterInt
 
         AdapterInterventiCompletati.MyViewHolder myViewHolder = new AdapterInterventiCompletati.MyViewHolder(view);
         return myViewHolder;
-    }
+        }
 
     @Override
     public void onBindViewHolder(final AdapterInterventiCompletati.MyViewHolder holder, final int listPosition) {
@@ -64,7 +61,7 @@ public class AdapterInterventiCompletati extends RecyclerView.Adapter<AdapterInt
         Tstabile.setText(dataset.get(listPosition).getNomeStabile());
         Toggetto.setText(dataset.get(listPosition).getOggetto());
         IdTicket.setText(dataset.get(listPosition).getIdTicketIntervento());
-    }
+        }
 
     @Override
     public int getItemCount() {

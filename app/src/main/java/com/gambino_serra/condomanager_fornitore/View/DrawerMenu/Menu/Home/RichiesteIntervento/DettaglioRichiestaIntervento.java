@@ -7,14 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
-import com.gambino_serra.condomanager_fornitore.Model.Entity.CardTicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
 import com.gambino_serra.condomanager_fornitore.View.Dialog.DialogChiamaAmministratore;
@@ -75,21 +73,19 @@ public class DettaglioRichiestaIntervento extends AppCompatActivity {
         username = sharedPrefs.getString(LOGGED_USER, "").toString();
 
         if (getIntent().getExtras() != null)
-        {
+            {
             bundle = getIntent().getExtras();
             idIntervento = bundle.get("idIntervento").toString();
-
             SharedPreferences.Editor editor = sharedPrefs.edit();
             editor.putString("idIntervento", idIntervento);
             editor.apply();
-        }
+            }
         else
-        {
-            //TODO: perchè
+            {
             idIntervento = sharedPrefs.getString("idIntervento", "").toString();
             bundle = new Bundle();
             bundle.putString("idIntervento", idIntervento);
-        }
+            }
 
         // Avvaloro i nuovi rierimenti al layout
         TdataTicket = (TextView) findViewById(R.id.D_Data);
@@ -104,7 +100,6 @@ public class DettaglioRichiestaIntervento extends AppCompatActivity {
         Rifiuta = (ConstraintLayout) findViewById(R.id.btnRifiuta);
         ChiamaAmministratore = (ImageView) findViewById(R.id.imageViewChiamaAmministratore);
 
-
         ticketInterventoMap = new HashMap<String, Object>();
         // Avvalora il primo oggetto del map con l'ID dell'intervento recuperato
         ticketInterventoMap.put("idIntervento", idIntervento);
@@ -115,16 +110,12 @@ public class DettaglioRichiestaIntervento extends AppCompatActivity {
         intervento.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-               // ticketInterventoMap = new HashMap<String,Object>();
-                //ticketInterventoMap.put("idIntervento",idIntervento);
 
                 for(DataSnapshot child : dataSnapshot.getChildren()){
                     ticketInterventoMap.put(child.getKey(),child.getValue());
-                }
-
+                    }
 
                 recuperaDettagliTicket(ticketInterventoMap);
-
             }
 
             @Override
@@ -142,12 +133,9 @@ public class DettaglioRichiestaIntervento extends AppCompatActivity {
     }
 
 
-
-
     public void recuperaDettagliTicket(final Map<String, Object> ticketInterventoMap) {
 
         final Map<String, Object> ticketInterventoMap2 = new HashMap<String, Object>();
-
 
         Query query2;
         query2 = FirebaseDB.getStabili().orderByKey().equalTo(ticketInterventoMap.get("stabile").toString());
@@ -160,8 +148,7 @@ public class DettaglioRichiestaIntervento extends AppCompatActivity {
                 // recuperiamo i dati per inserirli nel MAP
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     ticketInterventoMap2.put(child.getKey(), child.getValue());
-                }
-
+                    }
 
                 Firebase nomeAmm = FirebaseDB.getAmministratori()
                                             .child( ticketInterventoMap.get("amministratore").toString() )
@@ -177,7 +164,6 @@ public class DettaglioRichiestaIntervento extends AppCompatActivity {
                         // anche quelli provenienti dallo stabile sovrascrivendo i codici passati in ticketIntervento
                         // Avvaloriamo una variabile TicketIntervento appositamente creata in modo da inserire poi questo
                         // oggetto all'interno di un Array di interventi che utilizzeremo per popolare la lista Recycle
-                        //try {
                             TicketIntervento ticketIntervento = new TicketIntervento(
                                     ticketInterventoMap.get("idIntervento").toString(),
                                     ticketInterventoMap.get("amministratore").toString(),
@@ -199,7 +185,7 @@ public class DettaglioRichiestaIntervento extends AppCompatActivity {
                                     ticketInterventoMap2.get("indirizzo").toString(),
                                     ticketInterventoMap2.get("latitudine").toString(),
                                     ticketInterventoMap2.get("longitudine").toString()
-                            );
+                                    );
 
                             TdataTicket.setText(ticketIntervento.getDataTicket().toString());
                             TAmministratore.setText(ticketIntervento.getNomeAmministratore().toString());
@@ -271,7 +257,5 @@ public class DettaglioRichiestaIntervento extends AppCompatActivity {
                 overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
                 }
             });
-
     }
-
 }

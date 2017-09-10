@@ -49,24 +49,16 @@ public class Home extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+            }
         }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this Menu
         return inflater.inflate(R.layout.activity_main_navigationbar, container, false);
-    }
+        }
 
-    // This event is triggered soon after onCreateView().
-    // onViewCreated() is only called if the view returned from onCreateView() is non-null.
-    // Any view setup should occur here.  E.g., view lookups and attaching view listeners.
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-
-        //Fragment childFragment = new Home();
-        //FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        //transaction.replace(R.id.frame_layout, childFragment).commit();
 
         bottomNavigationView = (BottomNavigationView) getActivity().findViewById(R.id.navigation);
 
@@ -102,11 +94,10 @@ public class Home extends Fragment {
                     }
                 });
 
-        //Manually displaying the first Menu - one time only - Interventi in corso
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, BachecaInterventiInCorso.newInstance());
         transaction.commit();
-        //Seleziona l'item interventi in corso
+
         bottomNavigationView.getMenu().getItem(0).setChecked(false);
         bottomNavigationView.getMenu().getItem(1).setChecked(true);
         bottomNavigationView.getMenu().getItem(2).setChecked(false);
@@ -116,25 +107,19 @@ public class Home extends Fragment {
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
+            }
         }
-    }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
-    }
+        }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
+        }
 
     /**
      * This interface must be implemented by activities that contain this Menu to allow an interaction in this Menu

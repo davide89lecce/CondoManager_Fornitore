@@ -17,9 +17,7 @@ import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
-import com.firebase.client.ValueEventListener;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.CardTicketIntervento;
-import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -43,18 +41,17 @@ public class BachecaRichiesteIntervento extends Fragment {
     public static BachecaRichiesteIntervento newInstance() {
         BachecaRichiesteIntervento fragment = new BachecaRichiesteIntervento();
         return fragment;
-    }
+        }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-    }
+        }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.tab_richieste_intervento, container, false);
-    }
+        }
 
     @Override
     public void onStart() {
@@ -78,9 +75,6 @@ public class BachecaRichiesteIntervento extends Fragment {
         //lettura uid condomino -->  codice fiscale stabile, uid amministratore
         uidFornitore = firebaseAuth.getCurrentUser().getUid().toString();
 
-
-
-
         Query query;
         query = FirebaseDB.getInterventi().orderByChild("fornitore").equalTo(uidFornitore);
 
@@ -99,10 +93,9 @@ public class BachecaRichiesteIntervento extends Fragment {
                 // recuperiamo i dati per inserirli nel MAP
                 for ( DataSnapshot child : dataSnapshot.getChildren() ) {
                     ticketInterventoMap.put(child.getKey(), child.getValue());
-                }
-
+                    }
                 recuperaDatiStabile (ticketInterventoMap);
-            }
+                }
 
             @Override
             public void onChildChanged(com.firebase.client.DataSnapshot dataSnapshot, String s) { }
@@ -145,8 +138,7 @@ public class BachecaRichiesteIntervento extends Fragment {
             intent.putExtras(bundle);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
-
-        }
+            }
     }
 
 
@@ -164,8 +156,7 @@ public class BachecaRichiesteIntervento extends Fragment {
                 // recuperiamo i dati per inserirli nel MAP
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     ticketInterventoMap2.put(child.getKey(), child.getValue());
-                }
-
+                    }
 
                 // Avvaloro tutti i dati della card che mi interessano inserendone i relativi dati
                 // anche quelli provenienti dallo stabile sovrascrivendo i codici passati in ticketIntervento
@@ -182,47 +173,34 @@ public class BachecaRichiesteIntervento extends Fragment {
                             ticketInterventoMap.get("stato").toString(),
                             ticketInterventoMap.get("data_ticket").toString(),
                             ticketInterventoMap.get("data_ultimo_aggiornamento").toString()
-                    );
+                            );
 
                     if (ticketIntervento.getStato().equals("in attesa")) {
                         // inserisce l'oggetto ticket nell'array interventi
                         interventi.add(ticketIntervento);
-
-                    }
+                        }
 
                     // Utilizziamo l'adapter per popolare la recycler view
                     adapter = new AdapterRichiesteIntervento(interventi);
                     recyclerView.setAdapter(adapter);
 
-
-                } catch (NullPointerException e) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Non riesco ad aprire l'oggetto " + e.toString(), Toast.LENGTH_LONG).show();
                 }
-
-
+                catch (NullPointerException e) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Non riesco ad aprire l'oggetto " + e.toString(), Toast.LENGTH_LONG).show();
+                    }
             }
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) { }
 
             @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
+            public void onChildRemoved(DataSnapshot dataSnapshot) { }
 
             @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) { }
 
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
+            public void onCancelled(FirebaseError firebaseError) { }
         });
     }
-
-
 }

@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
@@ -23,7 +22,6 @@ import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 import com.google.firebase.auth.FirebaseAuth;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -78,10 +76,7 @@ public class BachecaInterventiCompletati extends Fragment{
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         uidFornitore = firebaseAuth.getCurrentUser().getUid().toString();
-
-
     }
-
 
     @Override
     public void onResume() {
@@ -102,10 +97,9 @@ public class BachecaInterventiCompletati extends Fragment{
                 // per ognuno dei figli presenti nello snapshot, ovvero per tutti i figli di un singolo nodo Interv recuperiamo i dati per inserirli nel MAP
                 for ( DataSnapshot child : dataSnapshot.getChildren() ) {
                     ticketInterventoMap.put(child.getKey(), child.getValue());
-                }
+                    }
 
                 recuperaDatiStabile (ticketInterventoMap);
-
             }
 
             @Override
@@ -126,7 +120,6 @@ public class BachecaInterventiCompletati extends Fragment{
             @Override
             public void onCancelled(FirebaseError firebaseError) { }
         });
-
     }
 
     private static class MyOnClickListener extends AppCompatActivity implements View.OnClickListener {
@@ -140,7 +133,7 @@ public class BachecaInterventiCompletati extends Fragment{
         @Override
         public void onClick(View v) {
             detailsIntervento(v);
-        }
+            }
 
         private void detailsIntervento(View v) {
 
@@ -156,9 +149,8 @@ public class BachecaInterventiCompletati extends Fragment{
             intent.putExtras(bundle);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
-        }
+            }
     }
-
 
     public void recuperaDatiStabile(final Map<String, Object> ticketInterventoMap) {
 
@@ -174,8 +166,7 @@ public class BachecaInterventiCompletati extends Fragment{
                 // recuperiamo i dati per inserirli nel MAP
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     ticketInterventoMap2.put(child.getKey(), child.getValue());
-                }
-
+                    }
 
                 // Avvaloro tutti i dati della card che mi interessano inserendone i relativi dati
                 // anche quelli provenienti dallo stabile sovrascrivendo i codici passati in ticketIntervento
@@ -192,35 +183,28 @@ public class BachecaInterventiCompletati extends Fragment{
                             ticketInterventoMap.get("stato").toString(),
                             ticketInterventoMap.get("data_ticket").toString(),
                             ticketInterventoMap.get("data_ultimo_aggiornamento").toString()
-                    );
+                            );
 
                     if (ticketIntervento.getStato().equals("completato")) {
                         // inserisce l'oggetto ticket nell'array interventi
                         interventi.add(ticketIntervento);
-
-                    }
+                        }
 
                     // Sorting interventi per idIntervento dall'ultimo al primo
                     Collections.sort(interventi, new Comparator<CardTicketIntervento>() {
                         @Override
-                        public int compare(CardTicketIntervento intervento, CardTicketIntervento intervento2)
-                        {
-
+                        public int compare(CardTicketIntervento intervento, CardTicketIntervento intervento2) {
                             return  intervento2.getIdTicketIntervento().compareTo(intervento.getIdTicketIntervento());
-                        }
-                    });
-
+                            }
+                        });
 
                     // Utilizziamo l'adapter per popolare la recycler view
                     adapter = new AdapterInterventiCompletati(interventi);
                     recyclerView.setAdapter(adapter);
-
-
-                } catch (NullPointerException e) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Non riesco ad aprire l'oggetto " + e.toString(), Toast.LENGTH_LONG).show();
                 }
-
-
+                catch (NullPointerException e) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Non riesco ad aprire l'oggetto " + e.toString(), Toast.LENGTH_LONG).show();
+                    }
             }
 
             @Override
@@ -233,12 +217,7 @@ public class BachecaInterventiCompletati extends Fragment{
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {  }
 
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
+            public void onCancelled(FirebaseError firebaseError) { }
         });
     }
-
-
-
 }

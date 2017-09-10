@@ -5,9 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.gambino_serra.condomanager_fornitore.Model.Entity.CardTicketIntervento;
-import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 import java.util.ArrayList;
 
@@ -17,8 +15,6 @@ public class AdapterRichiesteIntervento extends RecyclerView.Adapter<AdapterRich
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView TidTicketIntervento;
-        TextView TuidAmministratore;
         TextView TdataTicket;
         TextView Toggetto;
         TextView Tstabile;
@@ -32,9 +28,8 @@ public class AdapterRichiesteIntervento extends RecyclerView.Adapter<AdapterRich
             this.Tindirizzo = (TextView) itemView.findViewById(R.id.D_Indirizzo);
             this.Toggetto = (TextView) itemView.findViewById(R.id.D_Oggetto);
             this.TdataTicket = (TextView) itemView.findViewById(R.id.D_Data);
-            //Campo nascosto per recuperare il riferimento
             this.IdTicket = (TextView) itemView.findViewById(R.id.D_IDIntervento);
-        }
+            }
     }
 
     public AdapterRichiesteIntervento(ArrayList<CardTicketIntervento> dataset) {
