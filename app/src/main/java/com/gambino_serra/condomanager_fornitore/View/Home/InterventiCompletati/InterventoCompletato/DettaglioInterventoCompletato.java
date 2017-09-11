@@ -1,4 +1,4 @@
-package com.gambino_serra.condomanager_fornitore.View.Home.InterventiCompletati;
+package com.gambino_serra.condomanager_fornitore.View.Home.InterventiCompletati.InterventoCompletato;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -6,7 +6,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.firebase.client.ChildEventListener;
@@ -28,7 +30,9 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DettaglioInterventoCompletato extends AppCompatActivity {
+import static android.content.Context.MODE_PRIVATE;
+
+public class DettaglioInterventoCompletato extends android.support.v4.app.Fragment {
     private static final String MY_PREFERENCES = "preferences";
     private static final String LOGGED_USER = "username";
 
@@ -61,48 +65,14 @@ public class DettaglioInterventoCompletato extends AppCompatActivity {
     Bundle bundle;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.dettaglio_intervento_completato, container, false);
+        return view;
+    }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dettaglio_intervento_completato);
-
-        firebaseAuth = FirebaseAuth.getInstance();
-
-        final SharedPreferences sharedPrefs = getSharedPreferences(MY_PREFERENCES, MODE_PRIVATE);
-        username = sharedPrefs.getString(LOGGED_USER, "").toString();
-
-        if (getIntent().getExtras() != null)
-            {
-            bundle = getIntent().getExtras();
-            idIntervento = bundle.get("idIntervento").toString();
-
-            SharedPreferences.Editor editor = sharedPrefs.edit();
-            editor.putString("idIntervento", idIntervento);
-            editor.apply();
-            }
-        else
-            {
-            idIntervento = sharedPrefs.getString("idIntervento", "").toString();
-            bundle = new Bundle();
-            bundle.putString("idIntervento", idIntervento);
-            }
-
-        // Avvaloro i nuovi riferimenti al layout
-        TdataTicket = (TextView) findViewById(R.id.D_Data);
-        Tstabile = (TextView) findViewById(R.id.D_Condominio);
-        Tindirizzo = (TextView) findViewById(R.id.D_Indirizzo);
-        Toggetto = (TextView) findViewById(R.id.D_Oggetto);
-        TAmministratore = (TextView) findViewById(R.id.D_Amministratore);
-        Trichiesta = (TextView) findViewById(R.id.D_Descrizione);
-        Tfoto = (ImageView) findViewById(R.id.D_Foto);
-        TidTicketIntervento = (TextView) findViewById(R.id.Hidden_ID);
-        Archivia = (ConstraintLayout) findViewById(R.id.btnArchivia);
-        ChiamaAmministratore = (ImageView) findViewById(R.id.imageViewChiamaAmministratore);
-        Mappa = (ImageView) findViewById(R.id.btnMappa);
-
-        ticketInterventoMap = new HashMap<String, Object>();
-        // Avvalora il primo oggetto del map con l'ID dell'intervento recuperato
-        ticketInterventoMap.put("idIntervento", idIntervento);
     }
 
     @Override
@@ -110,24 +80,72 @@ public class DettaglioInterventoCompletato extends AppCompatActivity {
         super.onStart();
 
 
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        final SharedPreferences sharedPrefs = getActivity().getSharedPreferences(MY_PREFERENCES, MODE_PRIVATE);
+
+
+        idIntervento = sharedPrefs.getString("idIntervento", "").toString();
+
+        bundle = new Bundle();
+        bundle.putString("idIntervento", idIntervento);
+
+        /*
+        username = sharedPrefs.getString(LOGGED_USER, "").toString();
+
+        if (getIntent().getExtras() != null)
+        {
+            bundle = getIntent().getExtras();
+            idIntervento = bundle.get("idIntervento").toString();
+
+            SharedPreferences.Editor editor = sharedPrefs.edit();
+            editor.putString("idIntervento", idIntervento);
+            editor.apply();
+        }
+        else
+        {
+            idIntervento = sharedPrefs.getString("idIntervento", "").toString();
+            bundle = new Bundle();
+            bundle.putString("idIntervento", idIntervento);
+        }*/
+
+
+        // Avvaloro i nuovi riferimenti al layout
+        TdataTicket = (TextView) getActivity().findViewById(R.id.D_Data);
+        Tstabile = (TextView) getActivity().findViewById(R.id.D_Condominio);
+        Tindirizzo = (TextView) getActivity().findViewById(R.id.D_Indirizzo);
+        Toggetto = (TextView) getActivity().findViewById(R.id.D_Oggetto);
+        TAmministratore = (TextView) getActivity().findViewById(R.id.D_Amministratore);
+        Trichiesta = (TextView) getActivity().findViewById(R.id.D_Descrizione);
+        Tfoto = (ImageView) getActivity().findViewById(R.id.D_Foto);
+        TidTicketIntervento = (TextView) getActivity().findViewById(R.id.Hidden_ID);
+        Archivia = (ConstraintLayout) getActivity().findViewById(R.id.btnArchivia);
+        ChiamaAmministratore = (ImageView) getActivity().findViewById(R.id.imageViewChiamaAmministratore);
+        Mappa = (ImageView) getActivity().findViewById(R.id.btnMappa);
+
+        ticketInterventoMap = new HashMap<String, Object>();
+        // Avvalora il primo oggetto del map con l'ID dell'intervento recuperato
+        ticketInterventoMap.put("idIntervento", idIntervento);
+
         Archivia.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
                 Bundle bundle = new Bundle();
                 bundle.putString("idTicket", TidTicketIntervento.getText().toString());
                 DialogConfermaArchiviaIntervento newFragment = new DialogConfermaArchiviaIntervento();
-                newFragment.show(getFragmentManager(), "DialogArchiviazione");
+                newFragment.show(getActivity().getFragmentManager(), "DialogArchiviazione");
                 newFragment.setArguments(bundle);
-                overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+                getActivity().overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
                 }
             });
 
         ChiamaAmministratore.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 DialogChiamaAmministratore newFragment = new DialogChiamaAmministratore();
-                newFragment.show(getFragmentManager(), "DialogChiama");
+                newFragment.show(getActivity().getFragmentManager(), "DialogChiama");
                 newFragment.setArguments(bundle);
-                overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+                getActivity().overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
                 }
             });
 
@@ -140,7 +158,7 @@ public class DettaglioInterventoCompletato extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
 
         Query intervento;
@@ -235,7 +253,7 @@ public class DettaglioInterventoCompletato extends AppCompatActivity {
                             TidTicketIntervento.setText(ticketIntervento.getIdTicketIntervento().toString());
 
                             if ( ! "-".equals( ticketIntervento.getFoto() ) ) {
-                                Picasso.with(getApplicationContext()).load(ticketIntervento.getFoto()).fit().centerCrop().into(Tfoto);
+                                Picasso.with(getActivity().getApplicationContext()).load(ticketIntervento.getFoto()).fit().centerCrop().into(Tfoto);
                                 }else {
                                 Tfoto.setVisibility(View.INVISIBLE);
                             }

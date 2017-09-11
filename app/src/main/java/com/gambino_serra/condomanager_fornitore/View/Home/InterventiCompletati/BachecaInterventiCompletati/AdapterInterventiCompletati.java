@@ -1,4 +1,4 @@
-package com.gambino_serra.condomanager_fornitore.View.Home.InterventiCompletati;
+package com.gambino_serra.condomanager_fornitore.View.Home.InterventiCompletati.BachecaInterventiCompletati;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

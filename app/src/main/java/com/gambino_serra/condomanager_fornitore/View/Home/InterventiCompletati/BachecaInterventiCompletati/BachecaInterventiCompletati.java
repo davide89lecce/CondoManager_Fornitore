@@ -1,4 +1,4 @@
-package com.gambino_serra.condomanager_fornitore.View.Home.InterventiCompletati;
+package com.gambino_serra.condomanager_fornitore.View.Home.InterventiCompletati.BachecaInterventiCompletati;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +20,8 @@ import com.firebase.client.Query;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.CardTicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
+import com.gambino_serra.condomanager_fornitore.View.Home.InterventiCompletati.InterventoCompletato.DettaglioInterventoCompletato;
+import com.gambino_serra.condomanager_fornitore.View.Home.InterventiCompletati.InterventoCompletato.InterventoCompletato;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
@@ -145,7 +147,7 @@ public class BachecaInterventiCompletati extends Fragment{
             Bundle bundle = new Bundle();
             bundle.putString("idIntervento", selectedName);
 
-            Intent intent = new Intent(context, DettaglioInterventoCompletato.class);
+            Intent intent = new Intent(context, InterventoCompletato.class);
             intent.putExtras(bundle);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);

@@ -25,6 +25,7 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name="com.gambino_serra.condomanager_fornitore.View.DrawerMenu.MainDrawer"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -54,7 +55,7 @@
             android:parentActivityName="com.gambino_serra.condomanager_fornitore.View.DrawerMenu.MainDrawer"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.gambino_serra.condomanager_fornitore.View.Home.InterventiCompletati.DettaglioInterventoCompletato"
+            android:name="com.gambino_serra.condomanager_fornitore.View.Home.InterventiCompletati.InterventoCompletato.InterventoCompletato"
             android:label="@string/title_details_intervento"
             android:parentActivityName="com.gambino_serra.condomanager_fornitore.View.DrawerMenu.MainDrawer"
             android:screenOrientation="portrait" />

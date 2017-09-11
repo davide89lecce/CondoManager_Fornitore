@@ -1,10 +1,11 @@
-package com.gambino_serra.condomanager_fornitore.View.Home.InterventiInCorso.InterventoInCorso.RapportiIntervento;
+package com.gambino_serra.condomanager_fornitore.View.Home.InterventiCompletati.InterventoCompletato.RapportiIntervento;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.gambino_serra.condomanager_fornitore.Model.Entity.CardRapportoIntervento;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 
