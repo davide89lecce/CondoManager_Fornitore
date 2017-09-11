@@ -13,10 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -34,17 +30,11 @@ public class MainDrawer extends AppCompatActivity {
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private View navHeader;
-    private ImageView imgNavHeaderBg, imgProfile;
-    private TextView txtName, txtWebsite;
     private Toolbar toolbar;
     private FloatingActionButton fab;
     private FirebaseAuth firebaseAuth;
     private Firebase firebase;
     private String nome;
-
-    // urls to load navigation header background image and profile image TODO: CAMBIARE IMMAGINI
-    private static final String urlNavHeaderBg = "http://api.androidhive.info/images/nav-menu-header-bg.jpg";
-    private static final String urlProfileImg = "https://firebasestorage.googleapis.com/v0/b/condomanager-a5aa6.appspot.com/o/user-maindrawer.png?alt=media&token=fb589ee1-d8eb-452f-8a46-9a217e15bc0c";
 
     // index to identify current nav menu item
     public static int navItemIndex = 0;
@@ -80,10 +70,6 @@ public class MainDrawer extends AppCompatActivity {
 
         // Navigation view header
         navHeader = navigationView.getHeaderView(0);
-        txtName = (TextView) navHeader.findViewById(R.id.name);
-        txtWebsite = (TextView) navHeader.findViewById(R.id.website);
-        imgNavHeaderBg = (ImageView) navHeader.findViewById(R.id.img_header_bg);
-        imgProfile = (ImageView) navHeader.findViewById(R.id.img_profile);
 
         // load toolbar titles from string resources
         activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
@@ -92,13 +78,11 @@ public class MainDrawer extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 nome = dataSnapshot.getValue(String.class);
-            }
+                }
+
             @Override
             public void onCancelled(FirebaseError firebaseError) {}
         });
-
-        // load nav menu header data
-        loadNavHeader();
 
         // initializing navigation menu
         setUpNavigationView();
@@ -108,30 +92,6 @@ public class MainDrawer extends AppCompatActivity {
             CURRENT_TAG = TAG_HOME;
             loadHomeFragment();
             }
-    }
-
-    /***
-     * Load navigation menu header information
-     */
-    private void loadNavHeader() {
-        // name, website
-        txtName.setText(nome);
-        //txtWebsite.setText("www.androidhive.info");
-
-        // loading header background image
-        Glide.with(this).load(urlNavHeaderBg)
-                .crossFade()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(imgNavHeaderBg);
-
-        // Loading profile image
-        Glide.with(this).load(urlProfileImg)
-                .crossFade()
-                .thumbnail(0.5f)
-                //.bitmapTransform(new CircleTransform(this))
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(imgProfile);
-
     }
 
     /***
@@ -149,16 +109,9 @@ public class MainDrawer extends AppCompatActivity {
         // just close the navigation drawer
         if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
             drawer.closeDrawers();
-
-            // show or hide the fab button
-           // toggleFab();
             return;
-        }
+            }
 
-        // Sometimes, when Menu has huge data, screen seems hanging
-        // when switching between navigation menus
-        // So using runnable, the Menu is loaded with cross fade effect
-        // This effect can be seen in GMail app
         Runnable mPendingRunnable = new Runnable() {
             @Override
             public void run() {
@@ -168,22 +121,16 @@ public class MainDrawer extends AppCompatActivity {
                 fragmentTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
                 fragmentTransaction.replace(R.id.frame, fragment, CURRENT_TAG);
                 fragmentTransaction.commitAllowingStateLoss();
-            }
-        };
+                }
+            };
 
         // If mPendingRunnable is not null, then add to the message queue
         if (mPendingRunnable != null) {
             mHandler.post(mPendingRunnable);
-        }
-
-        // show or hide the fab button
-       // toggleFab();
+            }
 
         //Closing drawer on item click
         drawer.closeDrawers();
-
-        // refresh toolbar menu
-       // invalidateOptionsMenu();
     }
 
     private Fragment getHomeFragment() {
@@ -213,12 +160,8 @@ public class MainDrawer extends AppCompatActivity {
         navigationView.getMenu().getItem(0).setChecked(false);
         navigationView.getMenu().getItem(1).setChecked(false);
         navigationView.getMenu().getItem(2).setChecked(false);
-
         navigationView.getMenu().getItem(navItemIndex).setChecked(true);
-
-        //Punto accanto voce menù
-        //navigationView.getMenu().getItem(navItemIndex).setActionView(R.layout.menu_dot);
-    }
+        }
 
     private void setUpNavigationView() {
         //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
@@ -253,14 +196,16 @@ public class MainDrawer extends AppCompatActivity {
                 }
 
                 //Checking if the item is in checked state or not, if not make it in checked state
-                if (menuItem.isChecked()) {
+                if (menuItem.isChecked())
+                    {
                     menuItem.setChecked(false);
-                } else {
+                    }
+                else
+                    {
                     menuItem.setChecked(true);
-                }
+                    }
                 menuItem.setChecked(true);
                 loadHomeFragment();
-
                 return true;
             }
         });
@@ -270,15 +215,13 @@ public class MainDrawer extends AppCompatActivity {
 
             @Override
             public void onDrawerClosed(View drawerView) {
-                // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
                 super.onDrawerClosed(drawerView);
-            }
+                }
 
             @Override
             public void onDrawerOpened(View drawerView) {
-                // Code here will be triggered once the drawer open as we dont want anything to happen so we leave this blank
                 super.onDrawerOpened(drawerView);
-            }
+                }
         };
 
         //Setting the actionbarToggle to drawer layout
@@ -293,30 +236,18 @@ public class MainDrawer extends AppCompatActivity {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawers();
             return;
-        }
+            }
 
-        // This code loads home Menu when back key is pressed
-        // when user is in other Menu than home
+        // This code loads home Menu when back key is pressed when user is in other Menu than home
         if (shouldLoadHomeFragOnBackPress) {
-            // checking if user is on other navigation menu
-            // rather than home
+            // checking if user is on other navigation menu rather than home
             if (navItemIndex != 0) {
                 navItemIndex = 0;
                 CURRENT_TAG = TAG_HOME;
                 loadHomeFragment();
                 return;
-            }
+                }
         }
-
         super.onBackPressed();
     }
-
-
-    // show or hide the fab
-    //private void toggleFab() {
-    //    if (navItemIndex == 0)
-    //        fab.show();
-    //    else
-    //        fab.hide();
-    //}
 }

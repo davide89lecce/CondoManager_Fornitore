@@ -40,11 +40,13 @@ public class InserimentoRapportoIntervento extends AppCompatActivity {
 
     FirebaseAuth firebaseAuth;
     Firebase firebase;
+    Firebase firebaseIntervento;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
 
     Bundle bundle;
     String idIntervento;
+    String chiudi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,7 @@ public class InserimentoRapportoIntervento extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebase = FirebaseDB.getRapporti();
+        firebaseIntervento = FirebaseDB.getInterventi();
 
         final SharedPreferences sharedPrefs = getSharedPreferences(MY_PREFERENCES, MODE_PRIVATE);
         //final SharedPreferences sharedPrefs = getSharedPreferences(MY_PREFERENCES, MODE_PRIVATE);
@@ -62,6 +65,7 @@ public class InserimentoRapportoIntervento extends AppCompatActivity {
         {
             bundle = getIntent().getExtras();
             idIntervento = bundle.get("idIntervento").toString();
+            chiudi = bundle.get("Chiudi").toString();
 
             SharedPreferences.Editor editor = sharedPrefs.edit();
             editor.putString("idIntervento", idIntervento);
@@ -98,6 +102,10 @@ public class InserimentoRapportoIntervento extends AppCompatActivity {
                                     notaPersonale.getText().toString(),
                                     idIntervento);
 
+                if(chiudi.equals("si")){
+                    chiudiIntervento( idIntervento );
+                }
+
                 Toast.makeText(getApplicationContext(), "Rapporto di intervento inserito", Toast.LENGTH_SHORT).show();
                 Intent in = new Intent(getApplicationContext(), MainDrawer.class);
                 in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -118,6 +126,11 @@ public class InserimentoRapportoIntervento extends AppCompatActivity {
 
 
 
+    private void chiudiIntervento( String idIntervento ){
+
+        firebaseIntervento.child(idIntervento).child("stato").setValue("completato");
+
+    }
 
     private void addCardRapporto(DatabaseReference postRef, final String notaAmministratore, final String notaPersonale, final String idTicket) {
         postRef.runTransaction(new Transaction.Handler() {
@@ -164,37 +177,5 @@ public class InserimentoRapportoIntervento extends AppCompatActivity {
             }
         });
     }
-
-
-
-
-
-
-//    Bundle bundle;
-//    String idIntervento = "";
-//    private FirebaseAuth firebaseAuth;
-//    final String idTicket = bundle.getString("idTicket");
-//
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.inserimento_rapporto_intervento);
-//
-//        firebaseAuth = FirebaseAuth.getInstance();
-//        bundle = getIntent().getExtras();
-//        idIntervento = bundle.get("idIntervento").toString();
-//
-//
-//
-//        firebase.child(idTicket).child("stato").setValue("completato");
-//
-//        Intent intent = new Intent(getActivity(), MainDrawer.class);
-//        intent.putExtras(bundle);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        startActivity(intent);
-//        getActivity().overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
-//          }
-
 
 }

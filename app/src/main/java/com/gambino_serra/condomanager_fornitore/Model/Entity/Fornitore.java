@@ -6,7 +6,7 @@ public class Fornitore {
     private String uid;
     private String nome;
     private String nome_azienda;
-    private String categoria;   //todo: impostare più categorie
+    private String categoria;
     private String partita_iva;
     private String telefono;
     private String indirizzo;

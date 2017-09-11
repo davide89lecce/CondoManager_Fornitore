@@ -106,7 +106,7 @@ public class BachecaInterventiCompletati extends Fragment{
             public void onChildChanged(com.firebase.client.DataSnapshot dataSnapshot, String s) {
                 for( DataSnapshot child : dataSnapshot.getChildren() ) {
                     if ("stato".equals(child.getKey().toString())) {
-                        BachecaInterventiCompletati.newInstance(); //TODO: come funzione l'aggiornamento del fragment
+                        BachecaInterventiCompletati.newInstance();
                     }
                 }
             }

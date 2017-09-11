@@ -1,6 +1,8 @@
 package com.gambino_serra.condomanager_fornitore.View.Home.InterventiCompletati;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +17,7 @@ import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
+import com.gambino_serra.condomanager_fornitore.View.Dialog.DialogChiamaAmministratore;
 import com.gambino_serra.condomanager_fornitore.View.Dialog.DialogConfermaArchiviaIntervento;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,6 +34,8 @@ public class DettaglioInterventoCompletato extends AppCompatActivity {
 
     String username = "";
     String idIntervento = "";
+    String lat= "";
+    String lon= "";
 
     // Oggetti di Layout NUOVI
     TextView TidTicketIntervento;
@@ -104,35 +109,34 @@ public class DettaglioInterventoCompletato extends AppCompatActivity {
     public void onStart() {
         super.onStart();
 
+
         Archivia.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
                 Bundle bundle = new Bundle();
                 bundle.putString("idTicket", TidTicketIntervento.getText().toString());
-
                 DialogConfermaArchiviaIntervento newFragment = new DialogConfermaArchiviaIntervento();
                 newFragment.show(getFragmentManager(), "DialogArchiviazione");
                 newFragment.setArguments(bundle);
                 overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
                 }
-        });
+            });
 
-//        ChiamaAmministratore.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {//TODO: CHIAMA AMMNINISTRATORE
-//                DialogChiamaAmministratore newFragment = new DialogChiamaAmministratore();
-//                newFragment.show(getFragmentManager(), "DialogChiama");
-//                newFragment.setArguments(bundle);
-//                overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
-//                }
-//        });
+        ChiamaAmministratore.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                DialogChiamaAmministratore newFragment = new DialogChiamaAmministratore();
+                newFragment.show(getFragmentManager(), "DialogChiama");
+                newFragment.setArguments(bundle);
+                overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+                }
+            });
 
-//        Mappa.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) { //TODO: PULSANTE RAGGIUNGI INTERVENTO
-//                DialogChiamaAmministratore newFragment = new DialogChiamaAmministratore();
-//                newFragment.show(getFragmentManager(), "DialogChiama");
-//                overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
-//                }
-//        });
+        Mappa.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?daddr="+lat+","+lon));
+                startActivity(intent);
+                }
+            });
     }
 
     @Override
@@ -177,9 +181,8 @@ public class DettaglioInterventoCompletato extends AppCompatActivity {
         query2.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                //HashMap temporaneo per immagazzinare i dati dello stabile
-                // per ognuno dei figli presenti nello snapshot, ovvero per tutti i figli di un singolo nodo Stabile
-                // recuperiamo i dati per inserirli nel MAP
+                //HashMap temporaneo per immagazzinare i dati dello stabile per ognuno dei figli presenti nello snapshot,
+                // ovvero per tutti i figli di un singolo nodo Stabile recuperiamo i dati per inserirli nel MAP
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     ticketInterventoMap2.put(child.getKey(), child.getValue());
                     }
@@ -233,7 +236,12 @@ public class DettaglioInterventoCompletato extends AppCompatActivity {
 
                             if ( ! "-".equals( ticketIntervento.getFoto() ) ) {
                                 Picasso.with(getApplicationContext()).load(ticketIntervento.getFoto()).fit().centerCrop().into(Tfoto);
-                                }
+                                }else {
+                                Tfoto.setVisibility(View.INVISIBLE);
+                            }
+
+                                 lat = ticketIntervento.getLatitudine();
+                                 lon = ticketIntervento.getLongitudine();
 
                             }
                         catch (NullPointerException e) {}

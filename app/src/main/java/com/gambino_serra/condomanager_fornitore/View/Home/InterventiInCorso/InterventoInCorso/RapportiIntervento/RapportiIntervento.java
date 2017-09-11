@@ -45,6 +45,7 @@ public class RapportiIntervento extends Fragment {
     TextView Tindirizzo;
     ImageView Tfoto;
     ConstraintLayout Chiudi;
+    ConstraintLayout Aggiungi;
     TextView TidTicketIntervento;
 
     private static RecyclerView.Adapter adapter;
@@ -99,17 +100,34 @@ public class RapportiIntervento extends Fragment {
 
         uidFornitore = firebaseAuth.getCurrentUser().getUid().toString();
 
+        Aggiungi = (ConstraintLayout) getActivity().findViewById(R.id.btnAggiungiRapporto);
         Chiudi = (ConstraintLayout) getActivity().findViewById(R.id.btnChiudiIntervento);
         TidTicketIntervento = (TextView) getActivity().findViewById(R.id.Hidden_ID);
 
         Chiudi.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
+                bundle.putString("Chiudi", "si");
+
                 Intent intent = new Intent(getActivity(), InserimentoRapportoIntervento.class);
                 intent.putExtras(bundle);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_in_right);
                 }
+        });
+
+        Aggiungi.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                bundle.putString("Chiudi", "no");
+
+                Intent intent = new Intent(getActivity(), InserimentoRapportoIntervento.class);
+                intent.putExtras(bundle);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_in_right);
+            }
         });
 
         Query query;

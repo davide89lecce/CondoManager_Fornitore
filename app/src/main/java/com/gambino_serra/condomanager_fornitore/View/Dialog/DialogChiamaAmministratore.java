@@ -35,12 +35,12 @@ public class DialogChiamaAmministratore extends DialogFragment {
                     @TargetApi(Build.VERSION_CODES.M)
                     public void onClick(DialogInterface dialog, int id) {
 
-                        telefono = bundle.get("telefono").toString();
-                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + telefono.trim()));
+                        telefono = "1234567890";
+                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + telefono));
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                         }
-                })//TODO: SISTEMARE COMANDO CHIAMA CON FIREBASE
+                })
 
                 .setNeutralButton("ANNULLA", new DialogInterface.OnClickListener() {
                     @TargetApi(Build.VERSION_CODES.M)

@@ -306,7 +306,6 @@ public class MappaInterventiInCorso extends FragmentActivity implements
 
         //Caricamento interventi su mappa
 
-        //lettura uid condomino -->  codice fiscale stabile, uid amministratore
         uidFornitore = firebaseAuth.getCurrentUser().getUid().toString();
         Query query;
         query = FirebaseDB.getInterventi().orderByChild("fornitore").equalTo(uidFornitore);
@@ -323,12 +322,11 @@ public class MappaInterventiInCorso extends FragmentActivity implements
                 // per ognuno dei figli presenti nello snapshot, ovvero per tutti i figli di un singolo nodo Interv
                 // recuperiamo i dati per inserirli nel MAP
                 for (DataSnapshot child : dataSnapshot.getChildren())
-                {
+                    {
                     ticketInterventoMap.put(child.getKey(), child.getValue());
-                }
+                    }
 
                 visualizzaMarkers(ticketInterventoMap);
-
             }
             @Override
             public void onChildChanged(com.firebase.client.DataSnapshot dataSnapshot, String s) { }
@@ -354,10 +352,7 @@ public class MappaInterventiInCorso extends FragmentActivity implements
      * Il metodo permete di posizionare il marker (non utilizzato)
      */
     @Override
-    public void onMapClick(LatLng latLng) {
-
-
-    }
+    public void onMapClick(LatLng latLng) {}
 
     public void visualizzaMarkers(final Map<String, Object> ticketInterventoMap){
 
@@ -373,8 +368,7 @@ public class MappaInterventiInCorso extends FragmentActivity implements
                 // recuperiamo i dati per inserirli nel MAP
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     ticketInterventoMap2.put(child.getKey(), child.getValue());
-
-                }
+                    }
 
                 // Avvaloriamo una variabile TicketIntervento appositamente creata in modo da inserire poi questo
                 // oggetto all'interno di un Array di interventi che utilizzeremo per popolare la lista Recycle
@@ -391,7 +385,7 @@ public class MappaInterventiInCorso extends FragmentActivity implements
                             ticketInterventoMap2.get("longitudine").toString(),
                             ticketInterventoMap2.get("nome").toString(),
                             ticketInterventoMap2.get("indirizzo").toString()
-                    );
+                            );
 
                     if (markerIntervento.getStato().equals("in corso")) {
                         // inserisce l'oggetto ticket nell'array interventi

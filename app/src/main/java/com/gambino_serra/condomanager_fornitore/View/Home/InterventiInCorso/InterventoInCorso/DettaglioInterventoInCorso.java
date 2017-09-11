@@ -1,16 +1,17 @@
-package com.gambino_serra.condomanager_fornitore.View.Home.InterventiInCorso.InterventoInCorso.DettaglioIntervento;
+package com.gambino_serra.condomanager_fornitore.View.Home.InterventiInCorso.InterventoInCorso;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -24,7 +25,6 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,13 +37,13 @@ public class DettaglioInterventoInCorso extends android.support.v4.app.Fragment 
 
     FloatingActionMenu materialDesignFAM;
     FloatingActionButton floatingActionButton1, floatingActionButton2, floatingActionButton3;
-
     Context context;
 
     String username = "";
     String idIntervento = "";
+    String lat= "";
+    String lon= "";
 
-    // Oggetti di Layout NUOVI
     TextView TidTicketIntervento;
     TextView TAmministratore;
     TextView TdataTicket;
@@ -55,14 +55,10 @@ public class DettaglioInterventoInCorso extends android.support.v4.app.Fragment 
     ImageView ChiamaAmministratore;
     ImageView Mappa;
     TextView TbarraPritorità;
-
-
     private FirebaseAuth firebaseAuth;
     private Firebase firebase;
-
     Map<String, Object> ticketInterventoMap;
     Bundle bundle;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -70,12 +66,10 @@ public class DettaglioInterventoInCorso extends android.support.v4.app.Fragment 
         return view;
         }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
 
     @Override
     public void onStart() {
@@ -151,27 +145,24 @@ public class DettaglioInterventoInCorso extends android.support.v4.app.Fragment 
                 TbarraPritorità.setBackgroundColor(Color.parseColor("#00FF00"));
                 firebase.child(idIntervento).child("priorità").setValue("1");
                 materialDesignFAM.close(true);
-            }
+                }
             });
 
+        ChiamaAmministratore.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String telefono = "1234567890";
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + telefono));
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                }
+            });
 
-
-//        ChiamaAmministratore.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {//TODO: CHIAMA AMMNINISTRATORE
-//                DialogChiamaAmministratore newFragment = new DialogChiamaAmministratore();
-//                newFragment.show(getFragmentManager(), "DialogChiama");
-//                newFragment.setArguments(bundle);
-//                overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
-//                }
-//        });
-
-//        Mappa.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) { //TODO: PULSANTE RAGGIUNGI INTERVENTO
-//                DialogChiamaAmministratore newFragment = new DialogChiamaAmministratore();
-//                newFragment.show(getFragmentManager(), "DialogChiama");
-//                overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
-//                }
-//        });
+        Mappa.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?daddr="+lat+","+lon));
+                startActivity(intent);
+                }
+             });
 
 
         //Firebase retrieve data
@@ -187,7 +178,7 @@ public class DettaglioInterventoInCorso extends android.support.v4.app.Fragment 
 
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     ticketInterventoMap.put(child.getKey(), child.getValue());
-                }
+                    }
 
                 recuperaDettagliTicket(ticketInterventoMap);
             }
@@ -205,9 +196,6 @@ public class DettaglioInterventoInCorso extends android.support.v4.app.Fragment 
             public void onCancelled(FirebaseError firebaseError) { }
         });
     }
-
-
-
 
 
     public void recuperaDettagliTicket(final Map<String, Object> ticketInterventoMap) {
@@ -268,7 +256,8 @@ public class DettaglioInterventoInCorso extends android.support.v4.app.Fragment 
                                 ticketInterventoMap2.get("longitudine").toString()
                         );
 
-                        try {
+                        try
+                            {
                             TdataTicket.setText(ticketIntervento.getDataTicket().toString());
                             Tstabile.setText(ticketIntervento.getNomeStabile().toString());
                             Toggetto.setText(ticketIntervento.getOggetto().toString());
@@ -279,45 +268,48 @@ public class DettaglioInterventoInCorso extends android.support.v4.app.Fragment 
 
                             if ( ! "-".equals( ticketIntervento.getFoto() ) ) {
                                 Picasso.with(context).load(ticketIntervento.getFoto()).fit().centerCrop().into(Tfoto);
+                                }else {
+                                Tfoto.setVisibility(View.INVISIBLE);
                             }
 
+                                lat = ticketIntervento.getLatitudine();
+                                lon = ticketIntervento.getLongitudine();
+
                             TidTicketIntervento.setText(ticketIntervento.getIdTicketIntervento());
-
-
 
                         //Setta priorità floating action button
                             String priorità = ticketIntervento.getPriorità();
                             switch(priorità) {
                                 case "3" :
-                                {
+                                    {
                                     TbarraPritorità.setText("Priorità Alta");
                                     TbarraPritorità.setBackgroundColor(Color.parseColor("#FF0000"));
                                     materialDesignFAM.setMenuButtonColorNormal(Color.parseColor("#FF0000"));
                                     break;
-                                }
+                                    }
 
                                 case "2":
-                                {
+                                    {
                                     TbarraPritorità.setText("Priorità Media");
                                     TbarraPritorità.setBackgroundColor(Color.parseColor("#FFFF00"));
                                     materialDesignFAM.setMenuButtonColorNormal(Color.parseColor("#FFFF00"));
                                     break;
-                                }
+                                    }
 
                                 case "1":
-                                {
+                                    {
                                     TbarraPritorità.setText("Priorità Bassa");
                                     TbarraPritorità.setBackgroundColor(Color.parseColor("#00FF00"));
                                     materialDesignFAM.setMenuButtonColorNormal(Color.parseColor("#00FF00"));
                                     break;
-                                }
+                                    }
 
                                 default:
                             }
-                        } catch (NullPointerException e) {}
+                        }
+                        catch (NullPointerException e) {}
 
                         hideProgressDialog();
-
                     }
 
                     @Override
@@ -337,12 +329,9 @@ public class DettaglioInterventoInCorso extends android.support.v4.app.Fragment 
             @Override
             public void onCancelled(FirebaseError firebaseError) { }
         });
-
-
     }
 
     //Inizio Gestione dialog caricamento dati
-    //
     public ProgressDialog mProgressDialog;
 
     public void showProgressDialog() {
@@ -350,33 +339,29 @@ public class DettaglioInterventoInCorso extends android.support.v4.app.Fragment 
             mProgressDialog = new ProgressDialog(getActivity());
             setMessage();
             mProgressDialog.setIndeterminate(true);
-        }
-
+            }
         mProgressDialog.show();
     }
 
     public void hideProgressDialog() {
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.dismiss();
-        }
+            }
     }
 
     protected void setMessage() {
-
         mProgressDialog.setMessage("Caricamento in corso...");
-    }
+        }
 
     @Override
     public void onStop() {
         super.onStop();
         hideProgressDialog();
-    }
-    //
-    //Fine gestione dialog caricamento dati
+        }
 }
 
 
-// todo: interessa
+// todo:
 //        intervento.addValueEventListener (new ValueEventListener() {
 //            @Override
 //            public void onDataChange(DataSnapshot dataSnapshot) {

@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.gambino_serra.condomanager_fornitore.View.Home.InterventiInCorso.InterventoInCorso.DettaglioIntervento.DettaglioInterventoInCorso;
 import com.gambino_serra.condomanager_fornitore.View.Home.InterventiInCorso.InterventoInCorso.RapportiIntervento.RapportiIntervento;
 
 public class PagerAdapterInterventoInCorso extends FragmentStatePagerAdapter {

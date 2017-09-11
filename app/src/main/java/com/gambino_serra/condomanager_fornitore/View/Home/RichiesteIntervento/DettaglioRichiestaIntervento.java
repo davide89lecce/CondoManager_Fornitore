@@ -196,7 +196,9 @@ public class DettaglioRichiestaIntervento extends AppCompatActivity {
 
                             if ( ! "-".equals( ticketIntervento.getFoto() ) ) {
                                 Picasso.with(getApplicationContext()).load( ticketIntervento.getFoto() ).fit().centerCrop().into(Tfoto) ;
-                                }
+                                }else {
+                                Tfoto.setVisibility(View.INVISIBLE);
+                            }
 
                             TidTicketIntervento.setText(ticketIntervento.getIdTicketIntervento().toString());
                     }

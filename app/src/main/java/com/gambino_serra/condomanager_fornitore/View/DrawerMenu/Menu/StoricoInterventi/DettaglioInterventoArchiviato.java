@@ -3,6 +3,7 @@ package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.StoricoInt
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.firebase.client.ChildEventListener;
@@ -189,6 +190,8 @@ public class DettaglioInterventoArchiviato extends AppCompatActivity {
 
                         if ( ! "-".equals( ticketIntervento.getFoto() ) ) {
                             Picasso.with(getApplicationContext()).load( ticketIntervento.getFoto() ).fit().centerCrop().into(Tfoto) ;
+                        }else {
+                            Tfoto.setVisibility(View.INVISIBLE);
                         }
 
                         TidTicketIntervento.setText(ticketIntervento.getIdTicketIntervento().toString());
