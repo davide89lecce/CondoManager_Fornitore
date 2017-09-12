@@ -31,9 +31,7 @@ public class MainDrawer extends AppCompatActivity {
     private DrawerLayout drawer;
     private View navHeader;
     private Toolbar toolbar;
-    private FloatingActionButton fab;
     private FirebaseAuth firebaseAuth;
-    private Firebase firebase;
     private String nome;
 
     // index to identify current nav menu item

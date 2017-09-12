@@ -72,7 +72,6 @@ public class BachecaRichiesteIntervento extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        //lettura uid condomino -->  codice fiscale stabile, uid amministratore
         uidFornitore = firebaseAuth.getCurrentUser().getUid().toString();
 
         Query query;

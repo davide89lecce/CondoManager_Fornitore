@@ -402,19 +402,21 @@ public class MappaInterventiInCorso extends FragmentActivity implements
                                     .title(markerIntervento.getNomeStabile())
                                     .snippet(markerIntervento.getOggetto().toString())
                                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-                        }else if(markerIntervento.getPriorità().equals("2")){
+                                    }
+                        else if(markerIntervento.getPriorità().equals("2")){
                             map.addMarker(new MarkerOptions()
                                     .position(ltlnHelpers)
                                     .title(markerIntervento.getNomeStabile())
                                     .snippet(markerIntervento.getOggetto().toString())
                                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
-                        }else if(markerIntervento.getPriorità().equals("3")){
+                                    }
+                        else if(markerIntervento.getPriorità().equals("3")){
                             map.addMarker(new MarkerOptions()
                                     .position(ltlnHelpers)
                                     .title(markerIntervento.getNomeStabile())
                                     .snippet(markerIntervento.getOggetto().toString())
                                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
-                        }
+                                    }
                         //Setta l'onclick sul marker e intent a InterventoInCorso
                         map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                             @Override
@@ -426,15 +428,16 @@ public class MappaInterventiInCorso extends FragmentActivity implements
                                         intent.putExtras(bundle);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                         getApplicationContext().startActivity(intent);
+                                        }
                                     }
                                 }
-                            }
                         });
                     }
-
-                } catch (NullPointerException e) {
-                    Toast.makeText(getApplicationContext(), "Non riesco ad aprire l'oggetto " + e.toString(), Toast.LENGTH_LONG).show();
                 }
+                catch (NullPointerException e)
+                    {
+                    Toast.makeText(getApplicationContext(), "Non riesco ad aprire l'oggetto " + e.toString(), Toast.LENGTH_LONG).show();
+                    }
             }
             @Override
             public void onChildChanged(com.firebase.client.DataSnapshot dataSnapshot, String s) { }
@@ -460,11 +463,11 @@ public class MappaInterventiInCorso extends FragmentActivity implements
         public ErrorDialogFragment() {
             super();
             mDialog = null;
-        }
+            }
 
         public void setDialog(Dialog dialog) {
             mDialog = dialog;
-        }
+            }
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {

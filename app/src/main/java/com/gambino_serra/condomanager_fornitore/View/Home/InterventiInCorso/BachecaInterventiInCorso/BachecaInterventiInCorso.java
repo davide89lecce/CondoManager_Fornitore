@@ -40,7 +40,6 @@ public class BachecaInterventiInCorso extends Fragment {
     Context context;
     ImageView BottoneMappa;
 
-
     private FirebaseAuth firebaseAuth;
     private String uidFornitore;
     Map<String, Object> ticketInterventoMap;
@@ -49,23 +48,12 @@ public class BachecaInterventiInCorso extends Fragment {
     public static BachecaInterventiInCorso newInstance() {
         BachecaInterventiInCorso fragment = new BachecaInterventiInCorso();
         return fragment;
-    }
+        }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        /*
-        Query query0;
-        query0 = FirebaseDB.getInterventi().orderByChild("Ogetto");
-        query0.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {}
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {}
-        });
-        */
-    }
+        }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -186,7 +174,7 @@ public class BachecaInterventiInCorso extends Fragment {
                 // recuperiamo i dati per inserirli nel MAP
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     ticketInterventoMap2.put(child.getKey(), child.getValue());
-                }
+                    }
 
 
                 // Avvaloro tutti i dati della card che mi interessano inserendone i relativi dati
@@ -209,51 +197,37 @@ public class BachecaInterventiInCorso extends Fragment {
                     if (ticketIntervento.getStato().equals("in corso")) {
                         // inserisce l'oggetto ticket nell'array interventi
                         interventi.add(ticketIntervento);
-
-                    }
+                        }
 
                     // Sorting interventi per idIntervento dall'ultimo al primo
                     Collections.sort(interventi, new Comparator<CardTicketIntervento>() {
                         @Override
-                        public int compare(CardTicketIntervento intervento, CardTicketIntervento intervento2)
-                        {
-
+                        public int compare(CardTicketIntervento intervento, CardTicketIntervento intervento2) {
                             return  intervento2.compareTo(intervento);
-                        }
+                            }
                     });
 
                     // Utilizziamo l'adapter per popolare la recycler view
                     adapter = new AdapterInterventiInCorso(interventi);
                     recyclerView.setAdapter(adapter);
-
-                } catch (NullPointerException e) {
+                    }
+                catch (NullPointerException e)
+                    {
                     Toast.makeText(getActivity().getApplicationContext(), "Non riesco ad aprire l'oggetto " + e.toString(), Toast.LENGTH_LONG).show();
-                }
-
-
+                    }
             }
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) { }
 
             @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
+            public void onChildRemoved(DataSnapshot dataSnapshot) { }
 
             @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) { }
 
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
+            public void onCancelled(FirebaseError firebaseError) { }
         });
     }
-
-
 }

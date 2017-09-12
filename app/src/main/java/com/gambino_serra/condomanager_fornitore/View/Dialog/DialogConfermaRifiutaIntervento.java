@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.widget.TextView;
-
 import com.firebase.client.Firebase;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
 import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.MainDrawer;

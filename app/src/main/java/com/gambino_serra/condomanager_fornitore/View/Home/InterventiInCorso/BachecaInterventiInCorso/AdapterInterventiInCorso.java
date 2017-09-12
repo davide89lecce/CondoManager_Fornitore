@@ -8,12 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.gambino_serra.condomanager_fornitore.Model.Entity.CardTicketIntervento;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
-
 import java.util.ArrayList;
-
 import static com.gambino_serra.condomanager_fornitore.tesi.R.id.D_Priorità;
 
 
@@ -23,7 +20,6 @@ public class AdapterInterventiInCorso extends RecyclerView.Adapter<AdapterInterv
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView TdataTicket;
         TextView Tindirizzo;
         TextView Toggetto;
         TextView Tstabile;
@@ -39,14 +35,13 @@ public class AdapterInterventiInCorso extends RecyclerView.Adapter<AdapterInterv
             this.Toggetto = (TextView) itemView.findViewById(R.id.D_Oggetto);
             this.Tdata = (TextView) itemView.findViewById(R.id.D_Data);
             this.mLogoPriorità = (ImageView) itemView.findViewById(D_Priorità);
-            //Campo nascosto per recuperare il riferimento
             this.IdTicket = (TextView) itemView.findViewById(R.id.D_IDIntervento);
-        }
+            }
     }
 
     public AdapterInterventiInCorso(ArrayList<CardTicketIntervento> dataset) {
         this.dataset = dataset;
-    }
+        }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -75,9 +70,11 @@ public class AdapterInterventiInCorso extends RecyclerView.Adapter<AdapterInterv
             Toggetto.setText(dataset.get(listPosition).getOggetto());
             TdataTicket.setText(dataset.get(listPosition).getDataTicket());
             IdTicket.setText(dataset.get(listPosition).getIdTicketIntervento());
-        }catch (NullPointerException e){
+            }
+        catch (NullPointerException e)
+            {
             Log.d("HEY", "Mi sono bloccato");
-        }
+            }
 
         // Stringa usata per tenere traccia della priorità e lavorare sull'immagine rappresentata
         String priorità = dataset.get(listPosition).getPriorità();

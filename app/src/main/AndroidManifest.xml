@@ -29,36 +29,41 @@
         <activity
             android:name="com.gambino_serra.condomanager_fornitore.View.DrawerMenu.MainDrawer"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name="com.gambino_serra.condomanager_fornitore.View.Login.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name="com.gambino_serra.condomanager_fornitore.View.Home.InterventiInCorso.BachecaInterventiInCorso.MappaInterventiInCorso"
             android:label="@string/title_mappa_interventi_in_corso"
             android:parentActivityName="com.gambino_serra.condomanager_fornitore.View.DrawerMenu.MainDrawer"
             android:screenOrientation="portrait" />
+
         <activity
             android:name="com.gambino_serra.condomanager_fornitore.View.Home.InterventiInCorso.InterventoInCorso.InterventoInCorso"
             android:label="@string/title_details_intervento"
             android:parentActivityName="com.gambino_serra.condomanager_fornitore.View.DrawerMenu.MainDrawer"
             android:screenOrientation="portrait" />
+
         <activity
             android:name="com.gambino_serra.condomanager_fornitore.View.Home.RichiesteIntervento.DettaglioRichiestaIntervento"
             android:label="@string/title_details_richiesta"
             android:parentActivityName="com.gambino_serra.condomanager_fornitore.View.DrawerMenu.MainDrawer"
             android:screenOrientation="portrait" />
+
         <activity
             android:name="com.gambino_serra.condomanager_fornitore.View.Home.InterventiCompletati.InterventoCompletato.InterventoCompletato"
             android:label="@string/title_details_intervento"
             android:parentActivityName="com.gambino_serra.condomanager_fornitore.View.DrawerMenu.MainDrawer"
             android:screenOrientation="portrait" />
+
         <activity
             android:name="com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.StoricoInterventi.DettaglioInterventoArchiviato"
             android:label="@string/title_details_intervento"

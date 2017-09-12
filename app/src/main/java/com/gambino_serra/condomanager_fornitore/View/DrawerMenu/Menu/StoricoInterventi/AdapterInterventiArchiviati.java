@@ -5,11 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.gambino_serra.condomanager_fornitore.Model.Entity.CardTicketIntervento;
-import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
-
 import java.util.ArrayList;
 
 public class AdapterInterventiArchiviati extends RecyclerView.Adapter<AdapterInterventiArchiviati.MyViewHolder> {
@@ -18,15 +15,10 @@ public class AdapterInterventiArchiviati extends RecyclerView.Adapter<AdapterInt
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView TidTicketIntervento;
-        TextView TuidAmministratore;
         TextView Toggetto;
-        TextView TrapportiIntervento;
         TextView Tdata;
         TextView Tstabile;
-        TextView Tstato;
         TextView TdataUltimoAgg;
-        TextView Tindirizzo;
         TextView IdTicket;
 
         public MyViewHolder(View itemView) {
@@ -36,14 +28,13 @@ public class AdapterInterventiArchiviati extends RecyclerView.Adapter<AdapterInt
             this.Tdata = (TextView) itemView.findViewById(R.id.D_Data);
             this.TdataUltimoAgg = (TextView) itemView.findViewById(R.id.D_UltimoRapporto);
             this.Toggetto = (TextView) itemView.findViewById(R.id.D_Oggetto);
-            //Campo nascosto per recuperare il riferimento
             this.IdTicket = (TextView) itemView.findViewById(R.id.D_IDIntervento);
-        }
+            }
     }
 
     public AdapterInterventiArchiviati(ArrayList<CardTicketIntervento> dataset) {
         this.dataset = dataset;
-    }
+        }
 
     @Override
     public AdapterInterventiArchiviati.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -70,7 +61,7 @@ public class AdapterInterventiArchiviati extends RecyclerView.Adapter<AdapterInt
         TdataUltimoAgg.setText(dataset.get(listPosition).getDataUltimoAggiornamento());
         Toggetto.setText(dataset.get(listPosition).getOggetto());
         IdTicket.setText(dataset.get(listPosition).getIdTicketIntervento());
-    }
+        }
 
     @Override
     public int getItemCount() {

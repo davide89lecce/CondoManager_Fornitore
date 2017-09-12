@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.Fornitore;
@@ -16,8 +15,6 @@ import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.Map;
 

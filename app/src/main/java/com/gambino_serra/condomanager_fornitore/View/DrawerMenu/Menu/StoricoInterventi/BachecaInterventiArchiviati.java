@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
@@ -23,7 +22,6 @@ import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 import com.google.firebase.auth.FirebaseAuth;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,7 +42,7 @@ public class BachecaInterventiArchiviati extends Fragment{
     public static BachecaInterventiArchiviati newInstance() {
         BachecaInterventiArchiviati fragment = new BachecaInterventiArchiviati();
         return fragment;
-    }
+        }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,7 +52,7 @@ public class BachecaInterventiArchiviati extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.tab_interventi_archiviati, container, false);
-    }
+        }
 
     @Override
     public void onStart() {
@@ -75,12 +73,10 @@ public class BachecaInterventiArchiviati extends Fragment{
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        //lettura uid condomino -->  codice fiscale stabile, uid amministratore
         uidFornitore = firebaseAuth.getCurrentUser().getUid().toString();
 
         Query query;
         query = FirebaseDB.getInterventi().orderByChild("fornitore").equalTo(uidFornitore);
-
 
         // la query seleziona solo gli interventi con un determinato fornitore
         //il listener lavora sui figli della query, ovvero su titti gli interventi recuperati
@@ -96,10 +92,9 @@ public class BachecaInterventiArchiviati extends Fragment{
                 // recuperiamo i dati per inserirli nel MAP
                 for ( DataSnapshot child : dataSnapshot.getChildren() ) {
                     ticketInterventoMap.put(child.getKey(), child.getValue());
-                }
+                    }
 
                 recuperaDatiStabile (ticketInterventoMap);
-
             }
 
             @Override
@@ -143,7 +138,6 @@ public class BachecaInterventiArchiviati extends Fragment{
             intent.putExtras(bundle);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
-
         }
     }
 
@@ -162,7 +156,7 @@ public class BachecaInterventiArchiviati extends Fragment{
                 // recuperiamo i dati per inserirli nel MAP
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     ticketInterventoMap2.put(child.getKey(), child.getValue());
-                }
+                    }
 
 
                 // Avvaloro tutti i dati della card che mi interessano inserendone i relativi dati
@@ -180,48 +174,35 @@ public class BachecaInterventiArchiviati extends Fragment{
                             ticketInterventoMap.get("stato").toString(),
                             ticketInterventoMap.get("data_ticket").toString(),
                             ticketInterventoMap.get("data_ultimo_aggiornamento").toString()
-                    );
+                            );
 
                     if (ticketIntervento.getStato().equals("archiviato")) {
                         // inserisce l'oggetto ticket nell'array interventi
                         interventi.add(ticketIntervento);
-
-                    }
+                        }
 
                     // Utilizziamo l'adapter per popolare la recycler view
                     adapter = new AdapterInterventiArchiviati(interventi);
                     recyclerView.setAdapter(adapter);
 
-
-                } catch (NullPointerException e) {
+                    }
+                catch (NullPointerException e)
+                    {
                     Toast.makeText(getActivity().getApplicationContext(), "Non riesco ad aprire l'oggetto " + e.toString(), Toast.LENGTH_LONG).show();
-                }
-
-
+                    }
             }
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) { }
 
             @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
+            public void onChildRemoved(DataSnapshot dataSnapshot) { }
 
             @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) { }
 
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
+            public void onCancelled(FirebaseError firebaseError) { }
         });
     }
-
-
-
 }

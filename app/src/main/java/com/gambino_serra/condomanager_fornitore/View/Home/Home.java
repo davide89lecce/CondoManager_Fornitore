@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.gambino_serra.condomanager_fornitore.View.Home.InterventiCompletati.BachecaInterventiCompletati.BachecaInterventiCompletati;
 import com.gambino_serra.condomanager_fornitore.View.Home.InterventiInCorso.BachecaInterventiInCorso.BachecaInterventiInCorso;
 import com.gambino_serra.condomanager_fornitore.View.Home.RichiesteIntervento.BachecaRichiesteIntervento;
@@ -26,7 +25,6 @@ public class Home extends Fragment {
     private String mParam2;
 
     private BottomNavigationView bottomNavigationView;
-
     private OnFragmentInteractionListener mListener;
 
     public Home() { }
@@ -41,7 +39,7 @@ public class Home extends Fragment {
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
-    }
+        }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -103,7 +101,6 @@ public class Home extends Fragment {
         bottomNavigationView.getMenu().getItem(2).setChecked(false);
     }
 
-
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -127,5 +124,5 @@ public class Home extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
-    }
+        }
 }

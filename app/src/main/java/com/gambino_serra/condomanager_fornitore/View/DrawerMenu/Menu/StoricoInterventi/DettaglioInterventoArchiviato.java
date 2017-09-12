@@ -20,7 +20,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -122,13 +121,9 @@ public class DettaglioInterventoArchiviato extends AppCompatActivity {
     }
 
 
-
-
-
     public void recuperaDettagliTicket(final Map<String, Object> ticketInterventoMap) {
 
         final Map<String, Object> ticketInterventoMap2 = new HashMap<String, Object>();
-
 
         Query query2;
         query2 = FirebaseDB.getStabili().orderByKey().equalTo(ticketInterventoMap.get("stabile").toString());
@@ -141,7 +136,7 @@ public class DettaglioInterventoArchiviato extends AppCompatActivity {
                 // recuperiamo i dati per inserirli nel MAP
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     ticketInterventoMap2.put(child.getKey(), child.getValue());
-                }
+                    }
 
 
                 Firebase nomeAmm = FirebaseDB.getAmministratori()
@@ -188,11 +183,14 @@ public class DettaglioInterventoArchiviato extends AppCompatActivity {
                         Toggetto.setText(ticketIntervento.getOggetto().toString());
                         Trichiesta.setText(ticketIntervento.getRichiesta().toString());
 
-                        if ( ! "-".equals( ticketIntervento.getFoto() ) ) {
+                        if ( ! "-".equals( ticketIntervento.getFoto() ) )
+                            {
                             Picasso.with(getApplicationContext()).load( ticketIntervento.getFoto() ).fit().centerCrop().into(Tfoto) ;
-                        }else {
+                            }
+                        else
+                            {
                             Tfoto.setVisibility(View.INVISIBLE);
-                        }
+                            }
 
                         TidTicketIntervento.setText(ticketIntervento.getIdTicketIntervento().toString());
                     }
@@ -215,9 +213,4 @@ public class DettaglioInterventoArchiviato extends AppCompatActivity {
             public void onCancelled(FirebaseError firebaseError) { }
         });
     }
-
-
-
-
-
 }

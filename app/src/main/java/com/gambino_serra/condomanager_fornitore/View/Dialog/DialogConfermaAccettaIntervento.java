@@ -36,8 +36,6 @@ public class DialogConfermaAccettaIntervento extends DialogFragment {
         final String idTicket= bundle.getString("idTicket");
         firebase = FirebaseDB.getInterventi();
 
-
-
         TextView title =  new TextView(getActivity());
         title.setText("ACCETTAZIONE RICHIESTA D'INTERVENTO");
         title.setGravity(Gravity.CENTER);
@@ -102,4 +100,3 @@ public class DialogConfermaAccettaIntervento extends DialogFragment {
         super.onCancel(dialog);
         }
 }
-

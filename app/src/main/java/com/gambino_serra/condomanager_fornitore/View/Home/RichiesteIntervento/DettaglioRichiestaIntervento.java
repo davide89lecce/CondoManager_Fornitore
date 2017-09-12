@@ -194,13 +194,16 @@ public class DettaglioRichiestaIntervento extends AppCompatActivity {
                             Toggetto.setText(ticketIntervento.getOggetto().toString());
                             Trichiesta.setText(ticketIntervento.getRichiesta().toString());
 
-                            if ( ! "-".equals( ticketIntervento.getFoto() ) ) {
+                            if ( ! "-".equals( ticketIntervento.getFoto() ) )
+                                {
                                 Picasso.with(getApplicationContext()).load( ticketIntervento.getFoto() ).fit().centerCrop().into(Tfoto) ;
-                                }else {
+                                }
+                            else
+                                {
                                 Tfoto.setVisibility(View.INVISIBLE);
-                            }
+                                }
 
-                            TidTicketIntervento.setText(ticketIntervento.getIdTicketIntervento().toString());
+                        TidTicketIntervento.setText(ticketIntervento.getIdTicketIntervento().toString());
                     }
 
                     @Override
