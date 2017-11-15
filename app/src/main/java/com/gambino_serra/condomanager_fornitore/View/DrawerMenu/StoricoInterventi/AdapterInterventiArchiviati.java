@@ -1,4 +1,4 @@
-package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.StoricoInterventi;
+package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.StoricoInterventi;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

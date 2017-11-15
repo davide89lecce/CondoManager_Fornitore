@@ -1,8 +1,9 @@
-package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.StoricoInterventi;
+package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.StoricoInterventi;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -39,6 +40,7 @@ public class DettaglioInterventoArchiviato extends AppCompatActivity {
     TextView Tstabile;
     TextView Tindirizzo;
     ImageView Tfoto;
+    CardView CardFoto;
 
     private Firebase firebaseDB;
     private FirebaseUser firebaseUser;
@@ -62,19 +64,19 @@ public class DettaglioInterventoArchiviato extends AppCompatActivity {
         username = sharedPrefs.getString(LOGGED_USER, "").toString();
 
         if (getIntent().getExtras() != null)
-            {
+        {
             bundle = getIntent().getExtras();
             idIntervento = bundle.get("idIntervento").toString();
             SharedPreferences.Editor editor = sharedPrefs.edit();
             editor.putString("idIntervento", idIntervento);
             editor.apply();
-            }
+        }
         else
-            {
+        {
             idIntervento = sharedPrefs.getString("idIntervento", "").toString();
             bundle = new Bundle();
             bundle.putString("idIntervento", idIntervento);
-            }
+        }
 
         // Avvaloro i nuovi rierimenti al layout
         TdataTicket = (TextView) findViewById(R.id.D_Data);
@@ -85,6 +87,7 @@ public class DettaglioInterventoArchiviato extends AppCompatActivity {
         Trichiesta = (TextView) findViewById(R.id.D_Descrizione);
         Tfoto = (ImageView) findViewById(R.id.D_Foto);
         TidTicketIntervento = (TextView) findViewById(R.id.HiddenID);
+        CardFoto = (CardView) findViewById(R.id.cardView6);
 
         ticketInterventoMap = new HashMap<String, Object>();
         // Avvalora il primo oggetto del map con l'ID dell'intervento recuperato
@@ -101,7 +104,7 @@ public class DettaglioInterventoArchiviato extends AppCompatActivity {
 
                 for(DataSnapshot child : dataSnapshot.getChildren()){
                     ticketInterventoMap.put(child.getKey(),child.getValue());
-                    }
+                }
 
                 recuperaDettagliTicket(ticketInterventoMap);
             }
@@ -136,7 +139,7 @@ public class DettaglioInterventoArchiviato extends AppCompatActivity {
                 // recuperiamo i dati per inserirli nel MAP
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     ticketInterventoMap2.put(child.getKey(), child.getValue());
-                    }
+                }
 
 
                 Firebase nomeAmm = FirebaseDB.getAmministratori()
@@ -159,11 +162,9 @@ public class DettaglioInterventoArchiviato extends AppCompatActivity {
                                 ticketInterventoMap.get("data_ticket").toString(),
                                 ticketInterventoMap.get("data_ultimo_aggiornamento").toString(),
                                 ticketInterventoMap.get("fornitore").toString(),
-                                ticketInterventoMap.get("messaggio_condomino").toString(),
                                 ticketInterventoMap.get("aggiornamento_condomini").toString(),
                                 ticketInterventoMap.get("descrizione_condomini").toString(),
                                 ticketInterventoMap.get("oggetto").toString(),
-                                ticketInterventoMap.get("rapporti_intervento").toString(),
                                 ticketInterventoMap.get("richiesta").toString(),
                                 ticketInterventoMap.get("stabile").toString(),
                                 ticketInterventoMap.get("stato").toString(),
@@ -189,7 +190,7 @@ public class DettaglioInterventoArchiviato extends AppCompatActivity {
                             }
                         else
                             {
-                            Tfoto.setVisibility(View.INVISIBLE);
+                            CardFoto.setVisibility(View.GONE);
                             }
 
                         TidTicketIntervento.setText(ticketIntervento.getIdTicketIntervento().toString());

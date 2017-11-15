@@ -1,4 +1,4 @@
-package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.StoricoInterventi;
+package com.gambino_serra.condomanager_fornitore.View.DrawerMenu.StoricoInterventi;
 
 import android.content.Context;
 import android.content.Intent;

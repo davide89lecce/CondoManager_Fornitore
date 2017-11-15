@@ -41,17 +41,17 @@ public class BachecaRichiesteIntervento extends Fragment {
     public static BachecaRichiesteIntervento newInstance() {
         BachecaRichiesteIntervento fragment = new BachecaRichiesteIntervento();
         return fragment;
-        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.tab_richieste_intervento, container, false);
-        }
+    }
 
     @Override
     public void onStart() {
@@ -92,9 +92,9 @@ public class BachecaRichiesteIntervento extends Fragment {
                 // recuperiamo i dati per inserirli nel MAP
                 for ( DataSnapshot child : dataSnapshot.getChildren() ) {
                     ticketInterventoMap.put(child.getKey(), child.getValue());
-                    }
-                recuperaDatiStabile (ticketInterventoMap);
                 }
+                recuperaDatiStabile (ticketInterventoMap);
+            }
 
             @Override
             public void onChildChanged(com.firebase.client.DataSnapshot dataSnapshot, String s) { }
@@ -137,7 +137,7 @@ public class BachecaRichiesteIntervento extends Fragment {
             intent.putExtras(bundle);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
-            }
+        }
     }
 
 
@@ -155,7 +155,7 @@ public class BachecaRichiesteIntervento extends Fragment {
                 // recuperiamo i dati per inserirli nel MAP
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     ticketInterventoMap2.put(child.getKey(), child.getValue());
-                    }
+                }
 
                 // Avvaloro tutti i dati della card che mi interessano inserendone i relativi dati
                 // anche quelli provenienti dallo stabile sovrascrivendo i codici passati in ticketIntervento
@@ -172,12 +172,12 @@ public class BachecaRichiesteIntervento extends Fragment {
                             ticketInterventoMap.get("stato").toString(),
                             ticketInterventoMap.get("data_ticket").toString(),
                             ticketInterventoMap.get("data_ultimo_aggiornamento").toString()
-                            );
+                    );
 
                     if (ticketIntervento.getStato().equals("in attesa")) {
                         // inserisce l'oggetto ticket nell'array interventi
                         interventi.add(ticketIntervento);
-                        }
+                    }
 
                     // Utilizziamo l'adapter per popolare la recycler view
                     adapter = new AdapterRichiesteIntervento(interventi);
@@ -186,7 +186,7 @@ public class BachecaRichiesteIntervento extends Fragment {
                 }
                 catch (NullPointerException e) {
                     Toast.makeText(getActivity().getApplicationContext(), "Non riesco ad aprire l'oggetto " + e.toString(), Toast.LENGTH_LONG).show();
-                    }
+                }
             }
 
             @Override

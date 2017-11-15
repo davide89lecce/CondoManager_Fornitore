@@ -35,10 +35,10 @@ public class DialogConfermaArchiviaIntervento extends DialogFragment {
         firebase = FirebaseDB.getInterventi();
 
         TextView title =  new TextView(getActivity());
-        title.setText("ARCHIVIAZIONE INTERVENTO");
+        title.setText("ARCHIVIAZIONE");
         title.setGravity(Gravity.CENTER);
         title.setTextSize(30);
-        title.setBackgroundResource(R.color.primarySegnalazione);
+        title.setBackgroundResource(R.color.colorPrimary);
         title.setTextColor(Color.WHITE);
         builder.setCustomTitle(title);
 
@@ -56,14 +56,14 @@ public class DialogConfermaArchiviaIntervento extends DialogFragment {
                         startActivity(intent);
                         getActivity().overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
                         }
-                })
+                    })
 
                 .setNeutralButton("ANNULLA", new DialogInterface.OnClickListener() {
                     @TargetApi(Build.VERSION_CODES.M)
                     public void onClick(DialogInterface dialog, int id) {
                         dismiss();
                         }
-                });
+                    });
 
         return builder.create();
     }

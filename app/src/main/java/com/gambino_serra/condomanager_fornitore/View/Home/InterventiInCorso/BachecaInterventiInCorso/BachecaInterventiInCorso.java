@@ -48,17 +48,17 @@ public class BachecaInterventiInCorso extends Fragment {
     public static BachecaInterventiInCorso newInstance() {
         BachecaInterventiInCorso fragment = new BachecaInterventiInCorso();
         return fragment;
-        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.tab_interventi_in_corso, container, false);
-        }
+    }
 
     @Override
     public void onStart() {
@@ -109,7 +109,7 @@ public class BachecaInterventiInCorso extends Fragment {
                 // recuperiamo i dati per inserirli nel MAP
                 for ( DataSnapshot child : dataSnapshot.getChildren() ) {
                     ticketInterventoMap.put(child.getKey(), child.getValue());
-                    }
+                }
 
                 recuperaDatiStabile (ticketInterventoMap);
 
@@ -156,7 +156,7 @@ public class BachecaInterventiInCorso extends Fragment {
             intent.putExtras(bundle);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
-            }
+        }
     }
 
 
@@ -174,7 +174,7 @@ public class BachecaInterventiInCorso extends Fragment {
                 // recuperiamo i dati per inserirli nel MAP
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     ticketInterventoMap2.put(child.getKey(), child.getValue());
-                    }
+                }
 
 
                 // Avvaloro tutti i dati della card che mi interessano inserendone i relativi dati
@@ -197,24 +197,24 @@ public class BachecaInterventiInCorso extends Fragment {
                     if (ticketIntervento.getStato().equals("in corso")) {
                         // inserisce l'oggetto ticket nell'array interventi
                         interventi.add(ticketIntervento);
-                        }
+                    }
 
                     // Sorting interventi per idIntervento dall'ultimo al primo
                     Collections.sort(interventi, new Comparator<CardTicketIntervento>() {
                         @Override
                         public int compare(CardTicketIntervento intervento, CardTicketIntervento intervento2) {
                             return  intervento2.compareTo(intervento);
-                            }
+                        }
                     });
 
                     // Utilizziamo l'adapter per popolare la recycler view
                     adapter = new AdapterInterventiInCorso(interventi);
                     recyclerView.setAdapter(adapter);
-                    }
+                }
                 catch (NullPointerException e)
-                    {
+                {
                     Toast.makeText(getActivity().getApplicationContext(), "Non riesco ad aprire l'oggetto " + e.toString(), Toast.LENGTH_LONG).show();
-                    }
+                }
             }
 
             @Override

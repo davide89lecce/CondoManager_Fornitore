@@ -8,11 +8,9 @@ public class TicketIntervento {
     private String dataTicket;
     private String dataUltimoAggiornamento;
     private String fornitore;
-    private String messaggioCondomino;
     private String aggiornamentoCondomini;
     private String descrizioneCondomini;
     private String oggetto;
-    private String rapportiIntervento;
     private String richiesta;
     private String stabile;
     private String stato;
@@ -29,11 +27,9 @@ public class TicketIntervento {
                             String dataTicket,
                             String dataUltimoAggiornamento,
                             String fornitore,
-                            String messaggioCondomino,
                             String aggiornamentoCondomini,
                             String descrizioneCondomini,
                             String oggetto,
-                            String rapportiIntervento,
                             String richiesta,
                             String stabile,
                             String stato,
@@ -51,11 +47,9 @@ public class TicketIntervento {
         this.dataTicket = dataTicket;
         this.dataUltimoAggiornamento = dataUltimoAggiornamento;
         this.fornitore = fornitore;
-        this.messaggioCondomino = messaggioCondomino;
         this.aggiornamentoCondomini = aggiornamentoCondomini;
         this.descrizioneCondomini = descrizioneCondomini;
         this.oggetto = oggetto;
-        this.rapportiIntervento = rapportiIntervento;
         this.richiesta = richiesta;
         this.stabile = stabile;
         this.stato = stato;
@@ -110,14 +104,6 @@ public class TicketIntervento {
         this.fornitore = fornitore;
     }
 
-    public String getMessaggioCondomino() {
-        return messaggioCondomino;
-    }
-
-    public void setMessaggioCondomino(String messaggioCondomino) {
-        this.messaggioCondomino = messaggioCondomino;
-    }
-
     public String getAggiornamentoCondomini() {
         return aggiornamentoCondomini;
     }
@@ -140,14 +126,6 @@ public class TicketIntervento {
 
     public void setOggetto(String oggetto) {
         this.oggetto = oggetto;
-    }
-
-    public String getRapportiIntervento() {
-        return rapportiIntervento;
-    }
-
-    public void setRapportiIntervento(String rapportiIntervento) {
-        this.rapportiIntervento = rapportiIntervento;
     }
 
     public String getRichiesta() {

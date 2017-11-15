@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
@@ -23,12 +25,14 @@ import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
 import static android.content.Context.MODE_PRIVATE;
 
-public class RapportiIntervento extends Fragment {
+public class RapportiInterventoInCorso extends Fragment {
 
     private static final String MY_PREFERENCES = "preferences";
     private static final String LOGGED_USER = "username";
@@ -137,7 +141,7 @@ public class RapportiIntervento extends Fragment {
         //il listener lavora sui figli della query, ovvero su titti gli interventi recuperati
         query.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onChildAdded(com.firebase.client.DataSnapshot dataSnapshot, String s) {
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
                 //HashMap temporaneo per immagazzinare i dati di un ticket
                 rapportoInterventoMap = new HashMap<String,Object>();
@@ -154,27 +158,51 @@ public class RapportiIntervento extends Fragment {
                             rapportoInterventoMap.get("data").toString(),
                             rapportoInterventoMap.get("nota_amministratore").toString(),
                             rapportoInterventoMap.get("nota_fornitore").toString(),
-                            rapportoInterventoMap.get("ticket_intervento").toString()
+                            rapportoInterventoMap.get("ticket_intervento").toString(),
+                            rapportoInterventoMap.get("foto").toString()
                             );
 
                     rapporti.add(rapportoIntervento);
 
                     // Utilizziamo l'adapter per popolare la recycler view
-                    adapter = new AdapterRapportiIntervento(rapporti);
+                    adapter = new AdapterRapportiInterventoInCorso(rapporti, getActivity());
                     recyclerView.setAdapter(adapter);
                     }
 
             @Override
-            public void onChildChanged(com.firebase.client.DataSnapshot dataSnapshot, String s) { }
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) { }
 
             @Override
-            public void onChildRemoved(com.firebase.client.DataSnapshot dataSnapshot) { }
+            public void onChildRemoved(DataSnapshot dataSnapshot) { }
 
             @Override
-            public void onChildMoved(com.firebase.client.DataSnapshot dataSnapshot, String s) { }
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) { }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) { }
         });
+    }
+
+    private static class MyOnClickListener extends AppCompatActivity implements View.OnClickListener {
+
+        private final Context context;
+
+        private MyOnClickListener(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        public void onClick(View v) {
+            visualizzaFotoRapporto(v);
+        }
+
+        private void visualizzaFotoRapporto(View v) {
+
+            int selectedItemPosition = recyclerView.getChildPosition(v);
+            RecyclerView.ViewHolder viewHolder = recyclerView.findViewHolderForPosition(selectedItemPosition);
+            TextView textViewName = (TextView) viewHolder.itemView.findViewById(R.id.D_IDIntervento);
+            String selectedName = (String) textViewName.getText();
+
+        }
     }
 }

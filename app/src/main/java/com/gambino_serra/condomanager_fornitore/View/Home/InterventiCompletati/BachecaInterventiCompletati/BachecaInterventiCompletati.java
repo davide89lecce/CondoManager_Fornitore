@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
@@ -20,10 +21,10 @@ import com.firebase.client.Query;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.CardTicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
-import com.gambino_serra.condomanager_fornitore.View.Home.InterventiCompletati.InterventoCompletato.DettaglioInterventoCompletato;
 import com.gambino_serra.condomanager_fornitore.View.Home.InterventiCompletati.InterventoCompletato.InterventoCompletato;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -67,18 +68,14 @@ public class BachecaInterventiCompletati extends Fragment{
         data = new ArrayList<TicketIntervento>();
         ticketInterventoMap = new HashMap<String,Object>();
         interventi = new ArrayList<CardTicketIntervento>();
-
         myOnClickListener = new MyOnClickListener(context);
-
         recyclerView = (RecyclerView) getActivity().findViewById(R.id.my_recycler_view1);
         recyclerView.setHasFixedSize(true);
-
         layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
         uidFornitore = firebaseAuth.getCurrentUser().getUid().toString();
-    }
+        }
 
     @Override
     public void onResume() {
@@ -90,7 +87,7 @@ public class BachecaInterventiCompletati extends Fragment{
         // la query seleziona solo gli interventi con un determinato fornitore il listener lavora sui figli della query, ovvero su titti gli interventi recuperati
         query.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onChildAdded(com.firebase.client.DataSnapshot dataSnapshot, String s) {
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
                 //HashMap temporaneo per immagazzinare i dati di un ticket
                 ticketInterventoMap = new HashMap<String,Object>();
@@ -105,19 +102,19 @@ public class BachecaInterventiCompletati extends Fragment{
             }
 
             @Override
-            public void onChildChanged(com.firebase.client.DataSnapshot dataSnapshot, String s) {
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 for( DataSnapshot child : dataSnapshot.getChildren() ) {
                     if ("stato".equals(child.getKey().toString())) {
-                        BachecaInterventiCompletati.newInstance();
+                        com.gambino_serra.condomanager_fornitore.View.Home.InterventiCompletati.BachecaInterventiCompletati.BachecaInterventiCompletati.newInstance();
                     }
                 }
             }
 
             @Override
-            public void onChildRemoved(com.firebase.client.DataSnapshot dataSnapshot) { }
+            public void onChildRemoved(DataSnapshot dataSnapshot) { }
 
             @Override
-            public void onChildMoved(com.firebase.client.DataSnapshot dataSnapshot, String s) { }
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) { }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) { }

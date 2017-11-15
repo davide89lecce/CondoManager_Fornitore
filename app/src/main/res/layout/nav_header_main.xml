@@ -44,7 +44,7 @@
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="PROFILO FORNITORE"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="@color/white"
+        android:textColor="@color/colorWhite"
         android:textSize="18sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="@+id/img_profile"
@@ -59,12 +59,13 @@
         android:layout_marginLeft="0dp"
         android:layout_marginTop="0dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:tint="@color/white"
+        android:textColor="@color/colorWhite"
+        android:tint="@color/colorWhite"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icona_fornitore"
-        app:layout_constraintVertical_bias="0.545" />
+        app:layout_constraintVertical_bias="0.545"
+        app:srcCompat="@drawable/icona_fornitore" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline3"

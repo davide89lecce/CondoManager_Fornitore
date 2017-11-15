@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -48,6 +49,7 @@ public class DettaglioRichiestaIntervento extends AppCompatActivity {
     ConstraintLayout Accetta;
     ConstraintLayout Rifiuta;
     ImageView ChiamaAmministratore;
+    CardView CardFoto;
 
     private Firebase firebaseDB;
     private FirebaseUser firebaseUser;
@@ -99,6 +101,7 @@ public class DettaglioRichiestaIntervento extends AppCompatActivity {
         Accetta = (ConstraintLayout) findViewById(R.id.btnAccetta);
         Rifiuta = (ConstraintLayout) findViewById(R.id.btnRifiuta);
         ChiamaAmministratore = (ImageView) findViewById(R.id.imageViewChiamaAmministratore);
+        CardFoto = (CardView) findViewById(R.id.cardView6);
 
         ticketInterventoMap = new HashMap<String, Object>();
         // Avvalora il primo oggetto del map con l'ID dell'intervento recuperato
@@ -170,11 +173,9 @@ public class DettaglioRichiestaIntervento extends AppCompatActivity {
                                     ticketInterventoMap.get("data_ticket").toString(),
                                     ticketInterventoMap.get("data_ultimo_aggiornamento").toString(),
                                     ticketInterventoMap.get("fornitore").toString(),
-                                    ticketInterventoMap.get("messaggio_condomino").toString(),
                                     ticketInterventoMap.get("aggiornamento_condomini").toString(),
                                     ticketInterventoMap.get("descrizione_condomini").toString(),
                                     ticketInterventoMap.get("oggetto").toString(),
-                                    ticketInterventoMap.get("rapporti_intervento").toString(),
                                     ticketInterventoMap.get("richiesta").toString(),
                                     ticketInterventoMap.get("stabile").toString(),
                                     ticketInterventoMap.get("stato").toString(),
@@ -194,14 +195,14 @@ public class DettaglioRichiestaIntervento extends AppCompatActivity {
                             Toggetto.setText(ticketIntervento.getOggetto().toString());
                             Trichiesta.setText(ticketIntervento.getRichiesta().toString());
 
-                            if ( ! "-".equals( ticketIntervento.getFoto() ) )
-                                {
-                                Picasso.with(getApplicationContext()).load( ticketIntervento.getFoto() ).fit().centerCrop().into(Tfoto) ;
-                                }
-                            else
-                                {
-                                Tfoto.setVisibility(View.INVISIBLE);
-                                }
+                        if ( ! "-".equals( ticketIntervento.getFoto() ) )
+                            {
+                            Picasso.with(getApplicationContext()).load( ticketIntervento.getFoto() ).fit().centerCrop().into(Tfoto) ;
+                            }
+                        else
+                            {
+                             CardFoto.setVisibility(View.GONE);
+                            }
 
                         TidTicketIntervento.setText(ticketIntervento.getIdTicketIntervento().toString());
                     }

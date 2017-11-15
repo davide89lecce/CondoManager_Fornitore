@@ -36,14 +36,6 @@ public class DialogConfermaAccettaIntervento extends DialogFragment {
         final String idTicket= bundle.getString("idTicket");
         firebase = FirebaseDB.getInterventi();
 
-        TextView title =  new TextView(getActivity());
-        title.setText("ACCETTAZIONE RICHIESTA D'INTERVENTO");
-        title.setGravity(Gravity.CENTER);
-        title.setTextSize(30);
-        title.setBackgroundResource(R.color.primarySegnalazione);
-        title.setTextColor(Color.WHITE);
-        builder.setCustomTitle(title);
-
         builder.setView(inflater.inflate(R.layout.dialog_conferma_accetta_intervento, null))
 
                 .setPositiveButton("SI", new DialogInterface.OnClickListener() {
@@ -57,14 +49,14 @@ public class DialogConfermaAccettaIntervento extends DialogFragment {
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                         getActivity().overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
-                        }
+                    }
                 })
 
                 .setNeutralButton("ANNULLA", new DialogInterface.OnClickListener() {
                     @TargetApi(Build.VERSION_CODES.M)
                     public void onClick(DialogInterface dialog, int id) {
                         dismiss();
-                        }
+                    }
                 });
 
         return builder.create();
@@ -73,30 +65,30 @@ public class DialogConfermaAccettaIntervento extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        }
+    }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        }
+    }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        }
+    }
 
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-        }
+    }
 
     @Override
     public void onCancel(DialogInterface dialog) {
         super.onCancel(dialog);
-        }
+    }
 }

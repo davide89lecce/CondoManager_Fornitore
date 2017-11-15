@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.gambino_serra.condomanager_fornitore.tesi">
 
     <uses-permission android:name="com.damico.gianluca.sei.kiuapp.permission.MAPS_RECEIVE" />
@@ -12,14 +13,16 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission
-        android:name="android.permission.CALL_PHONE"
-        android:required="false" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CALL_PHONE" android:required="false"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" android:required="false" />
+
 
     <application
         android:name="com.gambino_serra.condomanager_fornitore.condomanager_fornitore"
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
+        android:largeHeap="true"
         android:icon="@mipmap/ic_launcher"
         android:label="CondoManager Fornitore"
         android:screenOrientation="portrait"
@@ -27,13 +30,8 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="com.gambino_serra.condomanager_fornitore.View.DrawerMenu.MainDrawer"
-            android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity
-            android:name="com.gambino_serra.condomanager_fornitore.View.Login.LoginActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name="com.gambino_serra.condomanager_fornitore.View.Login.SplashScreen"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -41,32 +39,48 @@
         </activity>
 
         <activity
+            android:name="com.gambino_serra.condomanager_fornitore.View.Login.LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name="com.gambino_serra.condomanager_fornitore.View.DrawerMenu.MainDrawer"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
             android:name="com.gambino_serra.condomanager_fornitore.View.Home.InterventiInCorso.BachecaInterventiInCorso.MappaInterventiInCorso"
-            android:label="@string/title_mappa_interventi_in_corso"
+            android:label="Mappa interventi in corso"
             android:parentActivityName="com.gambino_serra.condomanager_fornitore.View.DrawerMenu.MainDrawer"
             android:screenOrientation="portrait" />
 
         <activity
             android:name="com.gambino_serra.condomanager_fornitore.View.Home.InterventiInCorso.InterventoInCorso.InterventoInCorso"
-            android:label="@string/title_details_intervento"
+            android:label="Dettaglio intervento in corso"
+            android:parentActivityName="com.gambino_serra.condomanager_fornitore.View.DrawerMenu.MainDrawer"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.gambino_serra.condomanager_fornitore.View.Home.InterventiInCorso.InterventoInCorso.RapportiIntervento.InserimentoRapportoIntervento"
+            android:label="Inserimento rapporto d'intervento"
             android:parentActivityName="com.gambino_serra.condomanager_fornitore.View.DrawerMenu.MainDrawer"
             android:screenOrientation="portrait" />
 
         <activity
             android:name="com.gambino_serra.condomanager_fornitore.View.Home.RichiesteIntervento.DettaglioRichiestaIntervento"
-            android:label="@string/title_details_richiesta"
+            android:label="Dettagli richiesta"
             android:parentActivityName="com.gambino_serra.condomanager_fornitore.View.DrawerMenu.MainDrawer"
             android:screenOrientation="portrait" />
 
         <activity
             android:name="com.gambino_serra.condomanager_fornitore.View.Home.InterventiCompletati.InterventoCompletato.InterventoCompletato"
-            android:label="@string/title_details_intervento"
+            android:label="Dettaglio intervento completato"
             android:parentActivityName="com.gambino_serra.condomanager_fornitore.View.DrawerMenu.MainDrawer"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.StoricoInterventi.DettaglioInterventoArchiviato"
-            android:label="@string/title_details_intervento"
+            android:name="com.gambino_serra.condomanager_fornitore.View.DrawerMenu.StoricoInterventi.DettaglioInterventoArchiviato"
+            android:label="Dettaglio intervento archiviato"
             android:parentActivityName="com.gambino_serra.condomanager_fornitore.View.DrawerMenu.MainDrawer"
             android:screenOrientation="portrait" />
 
@@ -88,7 +102,6 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name="com.gambino_serra.condomanager_fornitore.View.Home.InterventiInCorso.InterventoInCorso.RapportiIntervento.InserimentoRapportoIntervento"></activity>
     </application>
 
 </manifest>

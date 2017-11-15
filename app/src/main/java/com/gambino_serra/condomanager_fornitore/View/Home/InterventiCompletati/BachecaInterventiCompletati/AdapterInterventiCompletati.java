@@ -29,12 +29,12 @@ public class AdapterInterventiCompletati extends RecyclerView.Adapter<AdapterInt
             this.Tstabile = (TextView) itemView.findViewById(R.id.D_Condominio);
             this.Toggetto = (TextView) itemView.findViewById(R.id.D_Oggetto);
             this.IdTicket = (TextView) itemView.findViewById(R.id.D_IDIntervento);
-            }
+        }
     }
 
     public AdapterInterventiCompletati(ArrayList<CardTicketIntervento> dataset) {
         this.dataset = dataset;
-        }
+    }
 
     @Override
     public AdapterInterventiCompletati.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -45,7 +45,7 @@ public class AdapterInterventiCompletati extends RecyclerView.Adapter<AdapterInt
 
         AdapterInterventiCompletati.MyViewHolder myViewHolder = new AdapterInterventiCompletati.MyViewHolder(view);
         return myViewHolder;
-        }
+    }
 
     @Override
     public void onBindViewHolder(final AdapterInterventiCompletati.MyViewHolder holder, final int listPosition) {
@@ -61,7 +61,7 @@ public class AdapterInterventiCompletati extends RecyclerView.Adapter<AdapterInt
         Tstabile.setText(dataset.get(listPosition).getNomeStabile());
         Toggetto.setText(dataset.get(listPosition).getOggetto());
         IdTicket.setText(dataset.get(listPosition).getIdTicketIntervento());
-        }
+    }
 
     @Override
     public int getItemCount() {

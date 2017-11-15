@@ -13,7 +13,8 @@
         android:layout_margin="20dp"
         android:fontFamily="sans-serif"
         android:text="CHIAMA AMMINISTRATORE?"
-        android:textSize="20sp"
+        android:textAlignment="center"
+        android:textSize="16sp"
         android:textStyle="bold|italic" />
 
 

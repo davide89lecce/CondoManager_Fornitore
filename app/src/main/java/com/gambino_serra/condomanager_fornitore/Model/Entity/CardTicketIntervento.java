@@ -1,8 +1,7 @@
 package com.gambino_serra.condomanager_fornitore.Model.Entity;
 
 
-
-public class CardTicketIntervento implements Comparable<CardTicketIntervento> {
+public class CardTicketIntervento implements Comparable<CardTicketIntervento>{
 
     private String idTicketIntervento;
     private String idStabile;
@@ -123,3 +122,4 @@ public class CardTicketIntervento implements Comparable<CardTicketIntervento> {
     }
 
 }
+

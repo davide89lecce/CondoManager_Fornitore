@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
 import com.gambino_serra.condomanager_fornitore.View.Home.InterventiCompletati.BachecaInterventiCompletati.BachecaInterventiCompletati;
 import com.gambino_serra.condomanager_fornitore.View.Home.InterventiInCorso.BachecaInterventiInCorso.BachecaInterventiInCorso;
 import com.gambino_serra.condomanager_fornitore.View.Home.RichiesteIntervento.BachecaRichiesteIntervento;
@@ -24,6 +26,7 @@ public class Home extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private TextView TSezione;
     private BottomNavigationView bottomNavigationView;
     private OnFragmentInteractionListener mListener;
 
@@ -55,9 +58,9 @@ public class Home extends Fragment {
         return inflater.inflate(R.layout.activity_main_navigationbar, container, false);
         }
 
-    @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
+        TSezione = (TextView) getActivity().findViewById(R.id.D_Sezione);
         bottomNavigationView = (BottomNavigationView) getActivity().findViewById(R.id.navigation);
 
         bottomNavigationView.setOnNavigationItemSelectedListener
@@ -68,23 +71,26 @@ public class Home extends Fragment {
                         switch (item.getItemId()) {
                             case R.id.action_item1:
                                 selectedFragment = BachecaRichiesteIntervento.newInstance();
+                                TSezione.setText("RICHIESTE DI INTERVENTO");
                                 bottomNavigationView.getMenu().getItem(0).setChecked(true);
                                 bottomNavigationView.getMenu().getItem(1).setChecked(false);
                                 bottomNavigationView.getMenu().getItem(2).setChecked(false);
                                 break;
                             case R.id.action_item2:
                                 selectedFragment = BachecaInterventiInCorso.newInstance();
+                                TSezione.setText("INTERVENTI IN CORSO");
                                 bottomNavigationView.getMenu().getItem(0).setChecked(false);
                                 bottomNavigationView.getMenu().getItem(1).setChecked(true);
                                 bottomNavigationView.getMenu().getItem(2).setChecked(false);
                                 break;
                             case R.id.action_item3:
                                 selectedFragment = BachecaInterventiCompletati.newInstance();
+                                TSezione.setText("INTERVENTI COMPLETATI");
                                 bottomNavigationView.getMenu().getItem(0).setChecked(false);
                                 bottomNavigationView.getMenu().getItem(1).setChecked(false);
                                 bottomNavigationView.getMenu().getItem(2).setChecked(true);
                                 break;
-                            }
+                        }
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.frame_layout, selectedFragment);
                         transaction.commit();
@@ -99,6 +105,8 @@ public class Home extends Fragment {
         bottomNavigationView.getMenu().getItem(0).setChecked(false);
         bottomNavigationView.getMenu().getItem(1).setChecked(true);
         bottomNavigationView.getMenu().getItem(2).setChecked(false);
+        TSezione.setText("INTERVENTI IN CORSO");
+
     }
 
     public void onButtonPressed(Uri uri) {

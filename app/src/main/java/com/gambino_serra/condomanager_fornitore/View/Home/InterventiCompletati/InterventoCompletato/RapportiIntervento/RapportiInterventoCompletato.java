@@ -1,11 +1,11 @@
 package com.gambino_serra.condomanager_fornitore.View.Home.InterventiCompletati.InterventoCompletato.RapportiIntervento;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
@@ -22,11 +21,9 @@ import com.firebase.client.Query;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.CardRapportoIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.Entity.TicketIntervento;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
-import com.gambino_serra.condomanager_fornitore.View.Home.InterventiInCorso.InterventoInCorso.RapportiIntervento.AdapterRapportiIntervento;
-import com.gambino_serra.condomanager_fornitore.View.Home.InterventiInCorso.InterventoInCorso.RapportiIntervento.InserimentoRapportoIntervento;
+import com.gambino_serra.condomanager_fornitore.View.Home.InterventiCompletati.InterventoCompletato.RapportiIntervento.AdapterRapportiInterventoCompletati;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
 import com.google.firebase.auth.FirebaseAuth;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -136,13 +133,14 @@ public class RapportiInterventoCompletato extends Fragment {
                             rapportoInterventoMap.get("data").toString(),
                             rapportoInterventoMap.get("nota_amministratore").toString(),
                             rapportoInterventoMap.get("nota_fornitore").toString(),
-                            rapportoInterventoMap.get("ticket_intervento").toString()
+                            rapportoInterventoMap.get("ticket_intervento").toString(),
+                            rapportoInterventoMap.get("foto").toString()
                             );
 
                     rapporti.add(rapportoIntervento);
 
                     // Utilizziamo l'adapter per popolare la recycler view
-                    adapter = new AdapterRapportiIntervento(rapporti);
+                    adapter = new AdapterRapportiInterventoCompletati(rapporti, getActivity());
                     recyclerView.setAdapter(adapter);
                     }
 
@@ -158,5 +156,28 @@ public class RapportiInterventoCompletato extends Fragment {
             @Override
             public void onCancelled(FirebaseError firebaseError) { }
         });
+    }
+
+    private static class MyOnClickListener extends AppCompatActivity implements View.OnClickListener {
+
+        private final Context context;
+
+        private MyOnClickListener(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        public void onClick(View v) {
+            visualizzaFotoRapporto(v);
+        }
+
+        private void visualizzaFotoRapporto(View v) {
+
+            int selectedItemPosition = recyclerView.getChildPosition(v);
+            RecyclerView.ViewHolder viewHolder = recyclerView.findViewHolderForPosition(selectedItemPosition);
+            TextView textViewName = (TextView) viewHolder.itemView.findViewById(R.id.D_IDIntervento);
+            String selectedName = (String) textViewName.getText();
+
+        }
     }
 }

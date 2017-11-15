@@ -3,7 +3,8 @@ package com.gambino_serra.condomanager_fornitore.View.Home.InterventiInCorso.Int
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import com.gambino_serra.condomanager_fornitore.View.Home.InterventiInCorso.InterventoInCorso.RapportiIntervento.RapportiIntervento;
+
+import com.gambino_serra.condomanager_fornitore.View.Home.InterventiInCorso.InterventoInCorso.RapportiIntervento.RapportiInterventoInCorso;
 
 public class PagerAdapterInterventoInCorso extends FragmentStatePagerAdapter {
     int mNumOfTabs;
@@ -21,7 +22,7 @@ public class PagerAdapterInterventoInCorso extends FragmentStatePagerAdapter {
                 DettaglioInterventoInCorso tab1 = new DettaglioInterventoInCorso();
                 return tab1;
             case 1:
-                RapportiIntervento tab2 = new RapportiIntervento();
+                RapportiInterventoInCorso tab2 = new RapportiInterventoInCorso();
                 return tab2;
 
             default:

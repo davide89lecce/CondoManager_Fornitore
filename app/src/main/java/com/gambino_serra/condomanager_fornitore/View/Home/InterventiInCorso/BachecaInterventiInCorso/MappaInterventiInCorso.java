@@ -113,11 +113,11 @@ public class MappaInterventiInCorso extends FragmentActivity implements
         if (map != null) {
             MappaInterventiInCorsoPermissionsDispatcher.getMyLocationWithCheck(this);
             map.setOnMapClickListener(this);
-            }
+        }
         else
-            {
+        {
             Toast.makeText(this, "Errore caricamento mappe", Toast.LENGTH_SHORT).show();
-            }
+        }
     }
 
     @SuppressWarnings("all")
@@ -194,7 +194,7 @@ public class MappaInterventiInCorso extends FragmentActivity implements
         if (ConnectionResult.SUCCESS == resultCode) {
             Log.d("Location Updates", "Google Play services is available.");
             return true;
-            }
+        }
         else {
             // Ricevo la Error Dialog dai servizi Google Play.
             Dialog errorDialog = GooglePlayServicesUtil.getErrorDialog(resultCode, this, CONNECTION_FAILURE_RESOLUTION_REQUEST);
@@ -205,7 +205,7 @@ public class MappaInterventiInCorso extends FragmentActivity implements
                 ErrorDialogFragment errorFragment = new ErrorDialogFragment();
                 errorFragment.setDialog(errorDialog);
                 errorFragment.show(getFragmentManager(), "Location Updates");
-                }
+            }
             return false;
         }
     }
@@ -219,18 +219,18 @@ public class MappaInterventiInCorso extends FragmentActivity implements
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
-            }
+        }
         Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (location != null)
-            {
+        {
             LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
             map.animateCamera(cameraUpdate);
-            }
+        }
         else
-            {
+        {
             Toast.makeText(this, "Abilita GPS", Toast.LENGTH_SHORT).show();
-            }
+        }
         startLocationUpdates();
     }
 
@@ -244,7 +244,7 @@ public class MappaInterventiInCorso extends FragmentActivity implements
         mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
-            }
+        }
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
     }
 
@@ -257,11 +257,11 @@ public class MappaInterventiInCorso extends FragmentActivity implements
     public void onConnectionSuspended(int i) {
         if (i == CAUSE_SERVICE_DISCONNECTED) {
             Toast.makeText(this, "Disconesso", Toast.LENGTH_SHORT).show();
-            }
+        }
         else if (i == CAUSE_NETWORK_LOST)
-            {
+        {
             Toast.makeText(this, "Rete dati assente", Toast.LENGTH_SHORT).show();
-            }
+        }
     }
 
     /**
@@ -274,18 +274,18 @@ public class MappaInterventiInCorso extends FragmentActivity implements
         // inviato un Intent all'Activity predisposta a risolvere il problema.
         if (connectionResult.hasResolution()) {
             try
-                {
+            {
                 connectionResult.startResolutionForResult(this, CONNECTION_FAILURE_RESOLUTION_REQUEST);
-                }
+            }
             catch (IntentSender.SendIntentException e)//L'eccezione e' sollevata nel caso in cui l'Intent viene eliminato.
-                {
+            {
                 e.printStackTrace();  // Log the error
-                }
+            }
         }
         else
-            {
+        {
             Toast.makeText(getApplicationContext(), "Servizio GPS non disponibile", Toast.LENGTH_LONG).show();
-            }
+        }
     }
 
     /**
@@ -299,7 +299,7 @@ public class MappaInterventiInCorso extends FragmentActivity implements
             public void onClick(View v) {
                 Intent setting = new Intent(MappaInterventiInCorso.this, MainDrawer.class);
                 startActivity(setting);
-                }
+            }
         });
 
         map.clear();
@@ -322,9 +322,9 @@ public class MappaInterventiInCorso extends FragmentActivity implements
                 // per ognuno dei figli presenti nello snapshot, ovvero per tutti i figli di un singolo nodo Interv
                 // recuperiamo i dati per inserirli nel MAP
                 for (DataSnapshot child : dataSnapshot.getChildren())
-                    {
+                {
                     ticketInterventoMap.put(child.getKey(), child.getValue());
-                    }
+                }
 
                 visualizzaMarkers(ticketInterventoMap);
             }
@@ -368,7 +368,7 @@ public class MappaInterventiInCorso extends FragmentActivity implements
                 // recuperiamo i dati per inserirli nel MAP
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     ticketInterventoMap2.put(child.getKey(), child.getValue());
-                    }
+                }
 
                 // Avvaloriamo una variabile TicketIntervento appositamente creata in modo da inserire poi questo
                 // oggetto all'interno di un Array di interventi che utilizzeremo per popolare la lista Recycle
@@ -385,7 +385,7 @@ public class MappaInterventiInCorso extends FragmentActivity implements
                             ticketInterventoMap2.get("longitudine").toString(),
                             ticketInterventoMap2.get("nome").toString(),
                             ticketInterventoMap2.get("indirizzo").toString()
-                            );
+                    );
 
                     if (markerIntervento.getStato().equals("in corso")) {
                         // inserisce l'oggetto ticket nell'array interventi
@@ -402,21 +402,21 @@ public class MappaInterventiInCorso extends FragmentActivity implements
                                     .title(markerIntervento.getNomeStabile())
                                     .snippet(markerIntervento.getOggetto().toString())
                                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-                                    }
+                        }
                         else if(markerIntervento.getPriorità().equals("2")){
                             map.addMarker(new MarkerOptions()
                                     .position(ltlnHelpers)
                                     .title(markerIntervento.getNomeStabile())
                                     .snippet(markerIntervento.getOggetto().toString())
                                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
-                                    }
+                        }
                         else if(markerIntervento.getPriorità().equals("3")){
                             map.addMarker(new MarkerOptions()
                                     .position(ltlnHelpers)
                                     .title(markerIntervento.getNomeStabile())
                                     .snippet(markerIntervento.getOggetto().toString())
                                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
-                                    }
+                        }
                         //Setta l'onclick sul marker e intent a InterventoInCorso
                         map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                             @Override
@@ -428,16 +428,16 @@ public class MappaInterventiInCorso extends FragmentActivity implements
                                         intent.putExtras(bundle);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                         getApplicationContext().startActivity(intent);
-                                        }
                                     }
                                 }
+                            }
                         });
                     }
                 }
                 catch (NullPointerException e)
-                    {
+                {
                     Toast.makeText(getApplicationContext(), "Non riesco ad aprire l'oggetto " + e.toString(), Toast.LENGTH_LONG).show();
-                    }
+                }
             }
             @Override
             public void onChildChanged(com.firebase.client.DataSnapshot dataSnapshot, String s) { }
@@ -463,11 +463,11 @@ public class MappaInterventiInCorso extends FragmentActivity implements
         public ErrorDialogFragment() {
             super();
             mDialog = null;
-            }
+        }
 
         public void setDialog(Dialog dialog) {
             mDialog = dialog;
-            }
+        }
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {

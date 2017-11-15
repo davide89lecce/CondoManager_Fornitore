@@ -7,11 +7,13 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -25,6 +27,7 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,6 +58,8 @@ public class DettaglioInterventoInCorso extends android.support.v4.app.Fragment 
     ImageView ChiamaAmministratore;
     ImageView Mappa;
     TextView TbarraPritorità;
+    CardView CardFoto;
+
     private FirebaseAuth firebaseAuth;
     private Firebase firebase;
     Map<String, Object> ticketInterventoMap;
@@ -102,6 +107,7 @@ public class DettaglioInterventoInCorso extends android.support.v4.app.Fragment 
         ChiamaAmministratore = (ImageView) getActivity().findViewById(R.id.imageViewChiamaAmministratore);
         Mappa = (ImageView) getActivity().findViewById(R.id.btnMappa);
         TbarraPritorità = (TextView) getActivity().findViewById(R.id.D_barraPriorità);
+        CardFoto = (CardView) getActivity().findViewById(R.id.cardView6);
 
         ticketInterventoMap = new HashMap<String, Object>();
         // Avvalora il primo oggetto del map con l'ID dell'intervento recuperato
@@ -159,7 +165,7 @@ public class DettaglioInterventoInCorso extends android.support.v4.app.Fragment 
 
         Mappa.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?daddr="+lat+","+lon));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?daddr="+lat+","+lon));
                 startActivity(intent);
                 }
              });
@@ -239,11 +245,9 @@ public class DettaglioInterventoInCorso extends android.support.v4.app.Fragment 
                                 ticketInterventoMap.get("data_ticket").toString(),
                                 ticketInterventoMap.get("data_ultimo_aggiornamento").toString(),
                                 ticketInterventoMap.get("fornitore").toString(),
-                                ticketInterventoMap.get("messaggio_condomino").toString(),
                                 ticketInterventoMap.get("aggiornamento_condomini").toString(),
                                 ticketInterventoMap.get("descrizione_condomini").toString(),
                                 ticketInterventoMap.get("oggetto").toString(),
-                                ticketInterventoMap.get("rapporti_intervento").toString(),
                                 ticketInterventoMap.get("richiesta").toString(),
                                 ticketInterventoMap.get("stabile").toString(),
                                 ticketInterventoMap.get("stato").toString(),
@@ -266,11 +270,14 @@ public class DettaglioInterventoInCorso extends android.support.v4.app.Fragment 
                             Tindirizzo.setText(ticketIntervento.getIndirizzoStabile().toString());
 
 
-                            if ( ! "-".equals( ticketIntervento.getFoto() ) ) {
+                            if ( ! "-".equals( ticketIntervento.getFoto() ) )
+                                {
                                 Picasso.with(context).load(ticketIntervento.getFoto()).fit().centerCrop().into(Tfoto);
-                                }else {
-                                Tfoto.setVisibility(View.INVISIBLE);
-                            }
+                                }
+                            else
+                                {
+                                CardFoto.setVisibility(View.GONE);
+                                }
 
                                 lat = ticketIntervento.getLatitudine();
                                 lon = ticketIntervento.getLongitudine();

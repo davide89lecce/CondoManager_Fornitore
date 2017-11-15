@@ -14,15 +14,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.gambino_serra.condomanager_fornitore.Model.FirebaseDB.FirebaseDB;
 import com.gambino_serra.condomanager_fornitore.View.Home.Home;
-import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.InformazioniPersonali.InformazioniPersonali;
-import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.Menu.StoricoInterventi.BachecaInterventiArchiviati;
+import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.InformazioniPersonali.InformazioniPersonali;
+import com.gambino_serra.condomanager_fornitore.View.DrawerMenu.StoricoInterventi.BachecaInterventiArchiviati;
 import com.gambino_serra.condomanager_fornitore.tesi.R;
-import com.github.clans.fab.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainDrawer extends AppCompatActivity {
@@ -76,7 +74,7 @@ public class MainDrawer extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 nome = dataSnapshot.getValue(String.class);
-                }
+            }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {}
@@ -89,7 +87,7 @@ public class MainDrawer extends AppCompatActivity {
             navItemIndex = 0;
             CURRENT_TAG = TAG_HOME;
             loadHomeFragment();
-            }
+        }
     }
 
     /***
@@ -108,7 +106,7 @@ public class MainDrawer extends AppCompatActivity {
         if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
             drawer.closeDrawers();
             return;
-            }
+        }
 
         Runnable mPendingRunnable = new Runnable() {
             @Override
@@ -119,13 +117,13 @@ public class MainDrawer extends AppCompatActivity {
                 fragmentTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
                 fragmentTransaction.replace(R.id.frame, fragment, CURRENT_TAG);
                 fragmentTransaction.commitAllowingStateLoss();
-                }
-            };
+            }
+        };
 
         // If mPendingRunnable is not null, then add to the message queue
         if (mPendingRunnable != null) {
             mHandler.post(mPendingRunnable);
-            }
+        }
 
         //Closing drawer on item click
         drawer.closeDrawers();
@@ -159,7 +157,7 @@ public class MainDrawer extends AppCompatActivity {
         navigationView.getMenu().getItem(1).setChecked(false);
         navigationView.getMenu().getItem(2).setChecked(false);
         navigationView.getMenu().getItem(navItemIndex).setChecked(true);
-        }
+    }
 
     private void setUpNavigationView() {
         //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
@@ -195,13 +193,13 @@ public class MainDrawer extends AppCompatActivity {
 
                 //Checking if the item is in checked state or not, if not make it in checked state
                 if (menuItem.isChecked())
-                    {
+                {
                     menuItem.setChecked(false);
-                    }
+                }
                 else
-                    {
+                {
                     menuItem.setChecked(true);
-                    }
+                }
                 menuItem.setChecked(true);
                 loadHomeFragment();
                 return true;
@@ -214,12 +212,12 @@ public class MainDrawer extends AppCompatActivity {
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
-                }
+            }
 
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                }
+            }
         };
 
         //Setting the actionbarToggle to drawer layout
@@ -234,7 +232,7 @@ public class MainDrawer extends AppCompatActivity {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawers();
             return;
-            }
+        }
 
         // This code loads home Menu when back key is pressed when user is in other Menu than home
         if (shouldLoadHomeFragOnBackPress) {
@@ -244,7 +242,7 @@ public class MainDrawer extends AppCompatActivity {
                 CURRENT_TAG = TAG_HOME;
                 loadHomeFragment();
                 return;
-                }
+            }
         }
         super.onBackPressed();
     }

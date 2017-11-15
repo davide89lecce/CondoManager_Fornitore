@@ -5,12 +5,13 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -27,6 +28,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,9 +36,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class DettaglioInterventoCompletato extends android.support.v4.app.Fragment {
     private static final String MY_PREFERENCES = "preferences";
-    private static final String LOGGED_USER = "username";
 
-    String username = "";
     String idIntervento = "";
     String lat= "";
     String lon= "";
@@ -53,6 +53,7 @@ public class DettaglioInterventoCompletato extends android.support.v4.app.Fragme
     ConstraintLayout Archivia;
     ImageView ChiamaAmministratore;
     ImageView Mappa;
+    CardView CardFoto;
 
     private Firebase firebaseDB;
     private FirebaseUser firebaseUser;
@@ -79,37 +80,11 @@ public class DettaglioInterventoCompletato extends android.support.v4.app.Fragme
     public void onStart() {
         super.onStart();
 
-
-
         firebaseAuth = FirebaseAuth.getInstance();
-
         final SharedPreferences sharedPrefs = getActivity().getSharedPreferences(MY_PREFERENCES, MODE_PRIVATE);
-
-
         idIntervento = sharedPrefs.getString("idIntervento", "").toString();
-
         bundle = new Bundle();
         bundle.putString("idIntervento", idIntervento);
-
-        /*
-        username = sharedPrefs.getString(LOGGED_USER, "").toString();
-
-        if (getIntent().getExtras() != null)
-        {
-            bundle = getIntent().getExtras();
-            idIntervento = bundle.get("idIntervento").toString();
-
-            SharedPreferences.Editor editor = sharedPrefs.edit();
-            editor.putString("idIntervento", idIntervento);
-            editor.apply();
-        }
-        else
-        {
-            idIntervento = sharedPrefs.getString("idIntervento", "").toString();
-            bundle = new Bundle();
-            bundle.putString("idIntervento", idIntervento);
-        }*/
-
 
         // Avvaloro i nuovi riferimenti al layout
         TdataTicket = (TextView) getActivity().findViewById(R.id.D_Data);
@@ -123,6 +98,7 @@ public class DettaglioInterventoCompletato extends android.support.v4.app.Fragme
         Archivia = (ConstraintLayout) getActivity().findViewById(R.id.btnArchivia);
         ChiamaAmministratore = (ImageView) getActivity().findViewById(R.id.imageViewChiamaAmministratore);
         Mappa = (ImageView) getActivity().findViewById(R.id.btnMappa);
+        CardFoto = (CardView) getActivity().findViewById(R.id.cardView6);
 
         ticketInterventoMap = new HashMap<String, Object>();
         // Avvalora il primo oggetto del map con l'ID dell'intervento recuperato
@@ -151,7 +127,7 @@ public class DettaglioInterventoCompletato extends android.support.v4.app.Fragme
 
         Mappa.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?daddr="+lat+","+lon));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?daddr="+lat+","+lon));
                 startActivity(intent);
                 }
             });
@@ -172,7 +148,7 @@ public class DettaglioInterventoCompletato extends android.support.v4.app.Fragme
                     ticketInterventoMap.put(child.getKey(),child.getValue());
                     }
 
-                recuperaDettagliTicket(ticketInterventoMap);
+                    recuperaDettagliTicket(ticketInterventoMap);
             }
 
             @Override
@@ -225,11 +201,9 @@ public class DettaglioInterventoCompletato extends android.support.v4.app.Fragme
                                 ticketInterventoMap.get("data_ticket").toString(),
                                 ticketInterventoMap.get("data_ultimo_aggiornamento").toString(),
                                 ticketInterventoMap.get("fornitore").toString(),
-                                ticketInterventoMap.get("messaggio_condomino").toString(),
                                 ticketInterventoMap.get("aggiornamento_condomini").toString(),
                                 ticketInterventoMap.get("descrizione_condomini").toString(),
                                 ticketInterventoMap.get("oggetto").toString(),
-                                ticketInterventoMap.get("rapporti_intervento").toString(),
                                 ticketInterventoMap.get("richiesta").toString(),
                                 ticketInterventoMap.get("stabile").toString(),
                                 ticketInterventoMap.get("stato").toString(),
@@ -250,13 +224,16 @@ public class DettaglioInterventoCompletato extends android.support.v4.app.Fragme
                             TAmministratore.setText(ticketIntervento.getNomeAmministratore().toString());
                             Trichiesta.setText(ticketIntervento.getRichiesta().toString());
                             Tindirizzo.setText(ticketIntervento.getIndirizzoStabile().toString());
-                            TidTicketIntervento.setText(ticketIntervento.getIdTicketIntervento().toString());
+                            TidTicketIntervento.setText(ticketIntervento.getIdTicketIntervento().toString() );
 
-                            if ( ! "-".equals( ticketIntervento.getFoto() ) ) {
+                            if ( ! "-".equals( ticketIntervento.getFoto() ) )
+                                {
                                 Picasso.with(getActivity().getApplicationContext()).load(ticketIntervento.getFoto()).fit().centerCrop().into(Tfoto);
-                                }else {
-                                Tfoto.setVisibility(View.INVISIBLE);
-                            }
+                                }
+                            else
+                                {
+                                 CardFoto.setVisibility(View.GONE);
+                                }
 
                                  lat = ticketIntervento.getLatitudine();
                                  lon = ticketIntervento.getLongitudine();

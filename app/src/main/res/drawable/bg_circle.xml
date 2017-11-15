@@ -4,7 +4,7 @@
     android:shape="oval">
 
     <solid
-        android:color="@color/cardview_shadow_start_color"/>
+        android:color="@color/grey_500"/>
 
     <size
         android:width="120dp"

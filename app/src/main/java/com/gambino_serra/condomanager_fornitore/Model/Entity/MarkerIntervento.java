@@ -15,19 +15,30 @@ public class MarkerIntervento {
     private String nomeStabile;
     private String indirizzoStabile;
 
-    public MarkerIntervento(String idTicketIntervento, String dataTicket, String oggetto, String richiesta, String stabile, String stato, String priorità, String latitudine, String longitudine, String nomeStabile, String indirizzoStabile) {
-        this.idTicketIntervento = idTicketIntervento;
-        this.dataTicket = dataTicket;
-        this.oggetto = oggetto;
-        this.richiesta = richiesta;
-        this.stabile = stabile;
-        this.stato = stato;
-        this.priorità = priorità;
-        this.latitudine = latitudine;
-        this.longitudine = longitudine;
-        this.nomeStabile = nomeStabile;
-        this.indirizzoStabile = indirizzoStabile;
-    }
+    public MarkerIntervento(String idTicketIntervento,
+                            String dataTicket,
+                            String oggetto,
+                            String richiesta,
+                            String stabile,
+                            String stato,
+                            String priorità,
+                            String latitudine,
+                            String longitudine,
+                            String nomeStabile,
+                            String indirizzoStabile) {
+
+                                    this.idTicketIntervento = idTicketIntervento;
+                                    this.dataTicket = dataTicket;
+                                    this.oggetto = oggetto;
+                                    this.richiesta = richiesta;
+                                    this.stabile = stabile;
+                                    this.stato = stato;
+                                    this.priorità = priorità;
+                                    this.latitudine = latitudine;
+                                    this.longitudine = longitudine;
+                                    this.nomeStabile = nomeStabile;
+                                    this.indirizzoStabile = indirizzoStabile;
+                                }
 
     public String getIdTicketIntervento() {
         return idTicketIntervento;

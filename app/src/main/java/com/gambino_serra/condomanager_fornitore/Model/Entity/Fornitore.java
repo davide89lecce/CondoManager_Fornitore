@@ -12,16 +12,24 @@ public class Fornitore {
     private String indirizzo;
     private String email;
 
-    public Fornitore(String uid, String nome, String nome_azienda, String categoria, String partita_iva, String telefono, String indirizzo, String email) {
-        this.uid = uid;
-        this.nome = nome;
-        this.nome_azienda = nome_azienda;
-        this.categoria = categoria;
-        this.partita_iva = partita_iva;
-        this.telefono = telefono;
-        this.indirizzo = indirizzo;
-        this.email = email;
-    }
+    public Fornitore(String uid,
+                     String nome,
+                     String nome_azienda,
+                     String categoria,
+                     String partita_iva,
+                     String telefono,
+                     String indirizzo,
+                     String email) {
+
+                            this.uid = uid;
+                            this.nome = nome;
+                            this.nome_azienda = nome_azienda;
+                            this.categoria = categoria;
+                            this.partita_iva = partita_iva;
+                            this.telefono = telefono;
+                            this.indirizzo = indirizzo;
+                            this.email = email;
+                        }
 
     public String getUid() {
         return uid;

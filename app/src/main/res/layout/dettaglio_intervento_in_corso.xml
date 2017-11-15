@@ -7,13 +7,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/backgroundSegnalazione">
+    android:background="@color/background">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/color_white"
         android:elevation="10dp"
         android:orientation="horizontal"
         android:weightSum="1"
@@ -42,7 +41,6 @@
                 android:id="@+id/cardViewA"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/color_white"
                 app:cardCornerRadius="3dp"
                 app:cardElevation="3dp"
                 app:cardUseCompatPadding="true"
@@ -55,8 +53,8 @@
 
                 <TextView
                     android:id="@+id/Hidden_ID"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
                     android:text="TextView"
                     android:visibility="invisible" />
 
@@ -73,7 +71,7 @@
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
                         android:layout_marginStart="8dp"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="8dp"
                         app:cardCornerRadius="0dp"
                         app:cardElevation="0dp"
                         app:layout_constraintHorizontal_bias="0.0"

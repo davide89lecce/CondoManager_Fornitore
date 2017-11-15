@@ -36,12 +36,12 @@ public class AdapterInterventiInCorso extends RecyclerView.Adapter<AdapterInterv
             this.Tdata = (TextView) itemView.findViewById(R.id.D_Data);
             this.mLogoPriorità = (ImageView) itemView.findViewById(D_Priorità);
             this.IdTicket = (TextView) itemView.findViewById(R.id.D_IDIntervento);
-            }
+        }
     }
 
     public AdapterInterventiInCorso(ArrayList<CardTicketIntervento> dataset) {
         this.dataset = dataset;
-        }
+    }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -70,11 +70,11 @@ public class AdapterInterventiInCorso extends RecyclerView.Adapter<AdapterInterv
             Toggetto.setText(dataset.get(listPosition).getOggetto());
             TdataTicket.setText(dataset.get(listPosition).getDataTicket());
             IdTicket.setText(dataset.get(listPosition).getIdTicketIntervento());
-            }
+        }
         catch (NullPointerException e)
-            {
+        {
             Log.d("HEY", "Mi sono bloccato");
-            }
+        }
 
         // Stringa usata per tenere traccia della priorità e lavorare sull'immagine rappresentata
         String priorità = dataset.get(listPosition).getPriorità();
@@ -82,19 +82,19 @@ public class AdapterInterventiInCorso extends RecyclerView.Adapter<AdapterInterv
         switch(priorità) {
             case "3" :
                 {
-                mLogoPriorità.setBackgroundColor(Color.RED);
+                mLogoPriorità.setBackgroundColor(Color.parseColor("#FF6666"));
                 break;
                 }
 
             case "2":
                 {
-                mLogoPriorità.setBackgroundColor(Color.YELLOW);
+                mLogoPriorità.setBackgroundColor(Color.parseColor("#FFFF66"));
                 break;
                 }
 
             case "1":
                 {
-                mLogoPriorità.setBackgroundColor(Color.GREEN);
+                mLogoPriorità.setBackgroundColor(Color.parseColor("#66FF66"));
                 break;
                 }
 
